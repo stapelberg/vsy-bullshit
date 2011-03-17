@@ -1,0 +1,94 @@
+Protokolldokumentation
+
+Als grundlegende Technik kommt HTTP + JSON zum Einsatz.
+
+Wir gehen davon aus, dass Spielernamen eindeutig sind. Weiter Authentifikation
+ist nicht nötig, alle haben sich lieb.
+
+Generell gilt, dass Responses auf POSTs immer "success" und "error" in der
+Response haben. "success" ist ein Boolean. Sofern er auf false steht, enthält
+"error" eine passende Fehlermeldung, die dem Benutzer angezeigt werden sollte.
+
+-------------------------------
+Request: GET /CurrentGames
+Body: <ignoriert>
+Response:
+[
+ {"id":"3984843...",
+  "participants": [
+    "Atsutane",
+    "sECuRE"
+   ]
+ },
+ {"id":"333...",
+  "participants": [ ]
+ }
+]
+
+-------------------------------
+Request: POST /RegisterPlayer
+Body: {"nickname":"sECuRE"}
+Response:
+{"success":true,
+ "error":"",
+ "token":"939393"}
+
+Das token muss später mitgeschickt werden, wenn der Spieler ein Spiel aufmacht
+oder einem Spiel beitritt. Auf diese Weise kann man am Anfang einen Namen
+eingeben und es kann geprüft werden, ob es derzeit schon einen Spieler mit
+diesem Namen gibt. 24 Stunden nach der letzten Aktivität verfällt das Token.
+
+-------------------------------
+Request: POST /CreateGame
+Body: {"token":"939393", "size":3}
+Response:
+{"success":true,
+ "error":"",
+ "id":"3984843...",
+ "words":[
+   "Win-Win",
+   "Return of Investment",
+   "Blah",
+   "Management"
+ ]}
+
+Die Wörter müssen von links oben nach rechts verteilt werden, z.B. bei einem
+3x3 Feld folgendermaßen:
+
+Win-Win | Return of Investment | Blah
+Management |
+
+-------------------------------
+Request: POST /JoinGame
+Body: {"token":"93939393", "id":"398484..."}
+Response:
+{"success":true,
+ "error":""}
+
+-------------------------------
+Request: POST /LeaveGame
+Body: {"token":"93939393", "id":"398484..."}
+Response:
+{"success":true,
+ "error":""}
+
+-------------------------------
+Request: POST /MakeMove
+Body: {"token":"93939393", "id":"398484...", "field":7}
+Response:
+{"success":true,
+ "error":""}
+
+Die Feldnummer wird ebenfalls von links oben nach rechts durchgezählt.
+
+-------------------------------
+Request: GET /PollMessages
+Body: {"token":"93939393", "id":"398484.."}
+Response:
+[ "Player Alex has won the game!" ]
+
+Meist wird hier ein leeres Array zurückgegeben. Sobald eine Nachricht kommt,
+wird das aktuelle Spiel abgebrochen und die Nachricht angezeigt.
+
+-------------------------------
+
