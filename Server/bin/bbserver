@@ -1,0 +1,14 @@
+#!/usr/bin/env perl
+# vim:ts=4:sw=4:expandtab
+# use plackup -Ilib --port 8000 bin/bbserver
+
+use strict;
+use warnings;
+use BBServer;
+use Plack::Builder;
+
+my $app = BBServer->webapp;
+
+builder {
+    $app;
+};
