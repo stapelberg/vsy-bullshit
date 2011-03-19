@@ -10,12 +10,16 @@ use Tatsumaki::Handler;
 
 # Handlers
 use BBServer::Handler::CurrentGames;
+use BBServer::Handler::RegisterPlayer;
+use BBServer::Handler::CreateGame;
 
 sub webapp {
     my $class = shift;
 
     my $app = Tatsumaki::Application->new([
         '/CurrentGames' => 'BBServer::Handler::CurrentGames',
+        '/RegisterPlayer' => 'BBServer::Handler::RegisterPlayer',
+        '/CreateGame' => 'BBServer::Handler::CreateGame',
     ]);
 
     $app->psgi_app;
