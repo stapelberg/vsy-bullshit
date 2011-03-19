@@ -20,6 +20,21 @@ sub error {
     };
 }
 
+sub get {
+    my ($self) = @_;
+
+    my $result;
+    try {
+        $result = $self->handle_request;
+    } catch {
+        $result = $self->error('Error in handler: ' . $_);
+    };
+
+    $self->response->content_type('application/json');
+    $self->write(encode_json($result));
+    $self->finish;
+}
+
 sub post {
     my ($self) = @_;
 

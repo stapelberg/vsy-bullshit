@@ -2,21 +2,29 @@
 package BBServer::Handler::CurrentGames;
 
 use strict;
-use parent qw(Tatsumaki::Handler);
+use parent qw(BBServer::Handler::Base);
 use JSON::XS;
 use Data::Dumper;
+use Games;
 use v5.10;
 our $VERSION = '0.01';
 __PACKAGE__->asynchronous(1);
 
-sub get {
-    my ($self) = @_;
+sub describe_game {
+    my ($game) = @_;
 
-    my $players = Players->new;
+    return {
+        id => $_->id,
+        participants => [
+            map { $_->nickname } $_->participants
+        ]
+    };
+}
 
-    $self->response->content_type('application/json');
-    $self->write(Dumper($players->players));
-    $self->finish;
+sub handle_request {
+    my ($self, $request) = @_;
+
+    return [ map { describe_game($_) } Games->instance->games ];
 }
 
 1
