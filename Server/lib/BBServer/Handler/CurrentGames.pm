@@ -15,9 +15,7 @@ sub describe_game {
 
     return {
         id => $_->id,
-        participants => [
-            map { $_->nickname } $_->participants
-        ]
+        participants => [ $_->participants ]
     };
 }
 

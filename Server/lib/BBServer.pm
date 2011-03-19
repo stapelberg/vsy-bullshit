@@ -14,16 +14,20 @@ use BBServer::Handler::RegisterPlayer;
 use BBServer::Handler::CreateGame;
 use BBServer::Handler::JoinGame;
 use BBServer::Handler::LeaveGame;
+use BBServer::Handler::MakeMove;
+use BBServer::Handler::PollMessages;
 
 sub webapp {
     my $class = shift;
 
     my $app = Tatsumaki::Application->new([
-        '/CurrentGames' => 'BBServer::Handler::CurrentGames',
-        '/RegisterPlayer' => 'BBServer::Handler::RegisterPlayer',
-        '/CreateGame' => 'BBServer::Handler::CreateGame',
-        '/JoinGame' => 'BBServer::Handler::JoinGame',
-        '/LeaveGame' => 'BBServer::Handler::LeaveGame',
+        '/CurrentGames'     => 'BBServer::Handler::CurrentGames',
+        '/RegisterPlayer'   => 'BBServer::Handler::RegisterPlayer',
+        '/CreateGame'       => 'BBServer::Handler::CreateGame',
+        '/JoinGame'         => 'BBServer::Handler::JoinGame',
+        '/LeaveGame'        => 'BBServer::Handler::LeaveGame',
+        '/MakeMove'         => 'BBServer::Handler::MakeMove',
+        '/PollMessages'     => 'BBServer::Handler::PollMessages',
     ]);
 
     $app->psgi_app;
