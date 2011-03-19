@@ -79,7 +79,7 @@ Response:
 {"success":true,
  "error":""}
 
-Die Feldnummer wird ebenfalls von links oben nach rechts durchgezählt.
+Die Feldnummer wird ebenfalls von links oben nach rechts durchgezählt, beginnend mit 0.
 
 -------------------------------
 Request: POST /PollMessages
