@@ -1,0 +1,6 @@
+# Temporary directories
+Build/
+Bin/
+GeneratedFiles/
+
+# File Types
