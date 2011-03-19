@@ -82,10 +82,13 @@ Response:
 Die Feldnummer wird ebenfalls von links oben nach rechts durchgezählt.
 
 -------------------------------
-Request: GET /PollMessages
+Request: POST /PollMessages
 Body: {"token":"93939393", "id":"398484.."}
 Response:
-[ "Player Alex has won the game!" ]
+{"success":true,
+ "error":"",
+ "messages": [ "Player Alex has won the game!" ]
+}
 
 Meist wird hier ein leeres Array zurückgegeben. Sobald eine Nachricht kommt,
 wird das aktuelle Spiel abgebrochen und die Nachricht angezeigt.
