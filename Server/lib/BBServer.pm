@@ -15,7 +15,7 @@ use BBServer::Handler::CreateGame;
 use BBServer::Handler::JoinGame;
 use BBServer::Handler::LeaveGame;
 use BBServer::Handler::MakeMove;
-use BBServer::Handler::PollMessages;
+use BBServer::Handler::CheckWinner;
 
 sub webapp {
     my $class = shift;
@@ -27,7 +27,7 @@ sub webapp {
         '/JoinGame'         => 'BBServer::Handler::JoinGame',
         '/LeaveGame'        => 'BBServer::Handler::LeaveGame',
         '/MakeMove'         => 'BBServer::Handler::MakeMove',
-        '/PollMessages'     => 'BBServer::Handler::PollMessages',
+        '/CheckWinner'      => 'BBServer::Handler::CheckWinner',
     ]);
 
     $app->psgi_app;
