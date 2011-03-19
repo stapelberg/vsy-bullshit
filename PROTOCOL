@@ -82,16 +82,17 @@ Response:
 Die Feldnummer wird ebenfalls von links oben nach rechts durchgezählt, beginnend mit 0.
 
 -------------------------------
-Request: POST /PollMessages
+Request: POST /CheckWinner
 Body: {"token":"93939393", "id":"398484.."}
 Response:
 {"success":true,
  "error":"",
- "messages": [ "Player Alex has won the game!" ]
+ "winner": null
 }
 
-Meist wird hier ein leeres Array zurückgegeben. Sobald eine Nachricht kommt,
-wird das aktuelle Spiel abgebrochen und die Nachricht angezeigt.
+Sofern jemand das Spiel gewonnen hat, wird dessen Nickname in "winner" als
+String zurückgegeben. Der Client sollte dann das Spiel beenden und nicht mehr
+nach dem Gewinner fragen.
 
 -------------------------------
 
