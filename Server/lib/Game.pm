@@ -100,8 +100,14 @@ sub _build_words {
     my ($self) = @_;
     my $wordfile = _slurp 'wordlists/default.txt';
     my @words = split("\n", $wordfile);
-    # TODO: random $self->size * $self->size auswählen
-    return [ @words ];
+    my @chosen;
+    my $necessary = $self->size * $self->size;
+    while (@chosen < $necessary) {
+        my $idx = int(rand(@words - 1));
+        push @chosen, $words[$idx];
+        splice(@words, $idx, 1);
+    }
+    return [ @chosen ];
 }
 
 sub _build_winning_fields {

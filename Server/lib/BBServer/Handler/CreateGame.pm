@@ -16,11 +16,13 @@ sub handle_request {
 
     return $self->error('No token') unless defined($token);
     return $self->error('Game size missing') unless exists $request->{size};
-    return $self->error('Game size invalid') unless $request->{size} =~ /^[0-9]+$/;
+    my $size = $request->{size};
+    return $self->error('Game size invalid') unless $size =~ /^[0-9]+$/;
+    return $self->error('Game size unreasonable') if $size < 3 or $size > 6;
 
     my $player = Players->instance->by_token($token);
 
-    my $game = Game->new(size => $request->{size});
+    my $game = Game->new(size => $size);
     $game->add_player($player);
 
     Games->instance->add_game($game);
