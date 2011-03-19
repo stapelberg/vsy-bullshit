@@ -1,5 +1,5 @@
 # vim:ts=4:sw=4:expandtab
-package BBServer::Handler::PollMessages;
+package BBServer::Handler::CheckWinner;
 
 use strict;
 use parent qw(BBServer::Handler::Base);
@@ -22,11 +22,10 @@ sub handle_request {
     my $game = Games->instance->by_id($request->{id});
     return $self->error('No such game') unless defined($game);
 
-    # TODO: actually return messages
+    my $winner = $game->winner;
+    $winner = $winner->nickname if defined($winner);
 
-    return {
-        messages => []
-    };
+    return { winner => $winner };
 }
 
 1
