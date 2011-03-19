@@ -19,11 +19,11 @@ has 'words' => (
 
 has '_participants' => (
     traits => [ 'Array' ],
-    is => 'ro',
+    is => 'rw',
     isa => 'ArrayRef[Player]',
     default => sub { [] },
     handles => {
-        add_player => 'push',
+        _add_player => 'push',
         participants => 'elements',
     }
 );
@@ -48,6 +48,29 @@ sub build_words {
     my @words = split("\n", $wordfile);
     # TODO: random $self->size * $self->size auswählen
     return [ @words ];
+}
+
+sub participates {
+    my ($self, $player) = @_;
+
+    my @matches = grep { $_ eq $player } $self->participants;
+    return (@matches > 0);
+}
+
+sub add_player {
+    my ($self, $player) = @_;
+
+    return undef if $self->participates($player);
+
+    $self->_add_player($player);
+
+    return 1;
+}
+
+sub del_player {
+    my ($self, $player) = @_;
+
+    $self->_participants([ grep { $_ ne $player } $self->participants ]);
 }
 
 __PACKAGE__->meta->make_immutable;

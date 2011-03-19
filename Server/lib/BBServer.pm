@@ -12,6 +12,8 @@ use Tatsumaki::Handler;
 use BBServer::Handler::CurrentGames;
 use BBServer::Handler::RegisterPlayer;
 use BBServer::Handler::CreateGame;
+use BBServer::Handler::JoinGame;
+use BBServer::Handler::LeaveGame;
 
 sub webapp {
     my $class = shift;
@@ -20,6 +22,8 @@ sub webapp {
         '/CurrentGames' => 'BBServer::Handler::CurrentGames',
         '/RegisterPlayer' => 'BBServer::Handler::RegisterPlayer',
         '/CreateGame' => 'BBServer::Handler::CreateGame',
+        '/JoinGame' => 'BBServer::Handler::JoinGame',
+        '/LeaveGame' => 'BBServer::Handler::LeaveGame',
     ]);
 
     $app->psgi_app;
