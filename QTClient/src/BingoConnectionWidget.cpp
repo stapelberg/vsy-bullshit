@@ -30,8 +30,8 @@ namespace Bingo {
 
 	// -------------------------------------------------------------------------
 	void BingoConnectionWidget::connectClient() {
-		// We allow letters, special german characters and numbers in nicknames.
-		QRegExpValidator validator(QRegExp("[a-z|A-Z|ö|ä|ü|ß|0-9]{2,30}"), 0);
+		// We allow letters and numbers in nicknames.
+		QRegExpValidator validator(QRegExp("[a-z|A-Z|0-9]{2,30}"), 0);
 		int pos = 0;
 		// needed for compatibility with older QT versions.
 		QString text = ui.username->text();
