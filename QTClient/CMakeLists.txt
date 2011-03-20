@@ -29,7 +29,8 @@ file(GLOB_RECURSE VSYBBingo_SRCS ./src/*.cpp)
 file(GLOB VSYBBingo_Common_Headers ./include/*.h )
 
 set( VSYBBingo_MOC_HDRS
-  include/BingoMainWindow.h
+ # include/BingoMainWindow.h
+  ${VSYBBingo_Common_Headers}
 )
 
 include_directories ( 
@@ -52,11 +53,9 @@ SET( VSYBBingo_RCS
 #add_definitions( -Wall  )
   
 # by default only QtCore and QtGui modules are enabled
-# so enable additonal libs
-set( QT_USE_QNETWORK TRUE )
-  
-find_package( Qt4 REQUIRED )
-  
+# so enable additonal libs  
+find_package( Qt4 REQUIRED)
+set( QT_USE_QTNETWORK TRUE )
 #------------------------------------------------------------------------------
 # add some useful macros and variables
 # (QT_USE_FILE is a variable defined by FIND_PACKAGE( Qt4 ) that contains a path to CMake script)
@@ -96,13 +95,21 @@ set(qjson_SRCS ${qjson_SRCS} qjson/json_parser.cc)
 # MSVC Project Source Grouping
 SOURCE_GROUP("Source Files\\QJSON\\" FILES  ${qjson_SRCS})
 SOURCE_GROUP("Header Files\\QJSON\\" FILES  ${qjson_HDRS})
-
+SOURCE_GROUP("GeneratedFiles\\" FILES 
+	${VSYBBingo_MOC_SRCS} 
+	${qjson_MOC_SRCS} 
+	${VSYBBingo_RC_SRC} 
+	
+) 
+SOURCE_GROUP("Resources\\" FILES ${RESOURCE_FILES})
+SOURCE_GROUP("UI\\" FILES ${VSYBBingo_UIS} )
+#SOURCE_GROUP("Translations\\" FILES ${VSYBBingo_Translations} )
 
 #------------------------------------------------------------------------------
 # Executable File and Linker directives
 add_executable( 
 	${Bingo_EXECUTABLE} 
-	#WIN32 MACOSX_BUNDLE 
+	WIN32 MACOSX_BUNDLE 
 	${VSYBBingo_MOC_SRCS}
 	${qjson_HDRS}
 	${qjson_MOC_SRCS}
@@ -112,9 +119,11 @@ add_executable(
 	${VSYBBingo_UI_HDRS} 
 	${VSYBBingo_Common_Headers}
 	${RESOURCE_FILES}
+
 )
 
 target_link_libraries( 
 	${Bingo_EXECUTABLE}
 	${QT_LIBRARIES} 
+	${QT_QTNETWORK_LIBRARIES}
 )

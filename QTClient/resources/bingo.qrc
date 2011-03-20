@@ -1,3 +1,8 @@
 <RCC>
-  <qresource prefix="newPrefix"/>
+  <qresource prefix="Bingo">
+    <file>icons/01-refresh.png</file>
+    <file>logo.png</file>
+    <file>working.gif</file>
+    <file>dropdown.png</file>
+  </qresource>
 </RCC>

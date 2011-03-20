@@ -1,0 +1,25 @@
+Hinweis:
+-------------------------------------------------------------------
+
+1) und 2) gilt nur fuer Windows bzw. Mac OS X. 
+Unter Linux die Bibliotheken mit dem paketmanager installieren.
+Ubuntu: apt-get install libqt4-dev cmake cmake-qt-gui
+
+-------------------------------------------------------------------
+
+1) CMake herunterladen: http://www.cmake.org/cmake/resources/software.html
+
+-------------------------------------------------------------------
+
+2) QT SDK herunterladen: http://qt.nokia.com/downloads
+
+-------------------------------------------------------------------
+
+3) CMake GUI starten, dieses Verzeichnis auswählen, einen Ordner fuer
+den Buildprozess und die temporären Dateien auswaehlen, kann irgendwo sein.
+Alternativ via cmake commandline.
+
+-------------------------------------------------------------------
+
+4) In den Build-Ordner navigieren und das Projekt entsprechend kompilieren.
+Die Binaries befinden sich immer hier (im Bin/ Unterordner!)
