@@ -15,8 +15,8 @@ Ubuntu: apt-get install libqt4-dev cmake cmake-qt-gui
 
 -------------------------------------------------------------------
 
-3) CMake GUI starten, dieses Verzeichnis ausw‰hlen, einen Ordner fuer
-den Buildprozess und die tempor‰ren Dateien auswaehlen, kann irgendwo sein.
+3) CMake GUI starten, dieses Verzeichnis ausw√§hlen, einen Ordner fuer
+den Buildprozess und die tempor√§ren Dateien ausw√§hlen, kann irgendwo sein.
 Alternativ via cmake commandline.
 
 -------------------------------------------------------------------
