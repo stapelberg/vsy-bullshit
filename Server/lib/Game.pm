@@ -47,7 +47,22 @@ Unique identifier for this game.
 
 =cut
 has 'id' => (is => 'ro', isa => 'Str', builder => '_build_id');
+=head2 name
 
+Name for this game. Can be specified by the user, defaults to "Unbenannt " plus
+the first few characters of the game id.
+
+=cut
+has 'name' => (is => 'ro', isa => 'Str', default => sub {
+    my ($self) = @_;
+    'Unbenannt ' . substr($self->id, 0, 5)
+});
+=head2 created
+
+UNIX timestamp representing the creation time of this game object.
+
+=cut
+has 'created' => (is => 'ro', isa => 'Int', default => sub { time() });
 =head2 words
 
 The words which this game contains. For a size of 3, you will get an ArrayRef
