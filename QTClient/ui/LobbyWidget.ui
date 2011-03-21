@@ -241,7 +241,7 @@ padding: 5px;
        </widget>
       </item>
       <item row="3" column="0" colspan="2">
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="joinGameButton">
         <property name="styleSheet">
          <string notr="true">background-color: qlineargradient(spread:pad, x1:0.545, y1:1, x2:0.528273, y2:0, stop:0 rgba(207, 207, 207, 255), stop:1 rgba(255, 255, 255, 255));
   border-style: outset;

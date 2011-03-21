@@ -20,6 +20,7 @@ namespace Bingo {
 			connect(ui.createGame, SIGNAL(clicked()), this, SLOT(createNewGame()));
 			connect(ui.refreshButton, SIGNAL(clicked()), this, SLOT(refreshList()));
 			connect(ui.currentGamesList, SIGNAL(itemSelectionChanged()), this, SLOT(viewGameInfo()));
+			connect(ui.joinGameButton, SIGNAL(clicked()), this, SLOT(joinGame()));
 	}
 
 	// -------------------------------------------------------------------------
@@ -44,13 +45,50 @@ namespace Bingo {
 				QString gameID = m.toMap()["id"].toString();
 				gameInformation[gameID] =
 					m.toMap()["participants"].toList();
-
 				ui.currentGamesList->addItem(gameID);
 			}
 
 		} else if(type == JSON_CREATE_GAME) {
-			refreshList();
+			QVariantMap gameData = data.toMap();
+			QString gameID = gameData["id"].toString();
+			QList<QString> words;
+			
+			foreach(QVariant word, gameData["words"].toList()) {
+				words.push_back(word.toString());
+			}
+
+			bingoMain->setCurrentGame(gameID, words);
+			bingoMain->setActiveWidget(WIDGET_GAME);
+
+		} else if (type == JSON_JOIN_GAME){
+			bingoMain->setActiveWidget(WIDGET_GAME);
 		}
+	}
+
+	// -------------------------------------------------------------------------	
+	void BingoLobbyWidget::joinGame() {
+		QString gameID = ui.currentGamesList->currentItem()->text();
+
+		// TODO: Get words from current game.
+		QList<QString> words;
+
+		bingoMain->setCurrentGame(gameID, words);
+		
+		JSONJoinGame joinRequest;
+		joinRequest.setToken(bingoMain->getToken());
+		joinRequest.setID(gameID);
+
+		bingoMain->jsonRequest("JoinGame", &joinRequest);
+	}
+	
+	// -------------------------------------------------------------------------
+	void BingoLobbyWidget::activate() {
+	   this->refreshList();
+	}
+	
+	// -------------------------------------------------------------------------
+	void BingoLobbyWidget::deactivate() {
+	
 	}
 
 	// -------------------------------------------------------------------------
@@ -62,6 +100,7 @@ namespace Bingo {
 			ui.participants->addItem(v.toString());
 		}
 	}
+
 	// -------------------------------------------------------------------------
 	void BingoLobbyWidget::createNewGame() {
 		JSONCreateGame request;

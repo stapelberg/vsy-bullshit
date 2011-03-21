@@ -30,7 +30,11 @@ namespace Bingo {
 		WIDGET_LOBBY = 1,
 		WIDGET_GAME = 2
 	};
-
+	
+	typedef struct {
+		QString id;
+		QList<QString> words;
+	} GameData;
 	/**
 	* @brief The Main Window, also serving as the main control class, routing all
 	* requests and storing global information.
@@ -87,7 +91,11 @@ namespace Bingo {
 		* @see WidgetIdentifiers
 		*/
 		void setActiveWidget(int widget);
-	public slots:
+		void setCurrentGame(const QString& id, QList<QString> words);
+
+		const GameData& getCurrentGame() const;
+
+public slots:
 
 	protected:
 		void closeEvent(QCloseEvent *event);
@@ -101,6 +109,7 @@ namespace Bingo {
 		// Global Data
 		QString playerToken;
 		QString nickname;
+		GameData currentGame;
 
 		void setupApplication();
 		void loadServerList(QString file);

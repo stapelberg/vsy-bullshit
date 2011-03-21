@@ -30,7 +30,9 @@ namespace Bingo {
 		 * Callback function for requested JSON Data. 
 		 */
 		virtual void receiveJSON(JSONRequestType type, const QVariant& data) = 0;
-
+		
+		virtual void activate() = 0;
+		virtual void deactivate() = 0;
 	protected:
 		BingoMainWindow* bingoMain;
 	};

@@ -27,6 +27,8 @@ namespace Bingo {
 
 		// Implements BingoWidget
 		void receiveJSON(JSONRequestType type, const QVariant& data);
+		void activate();
+		void deactivate();
 
 	protected:
 		void show();
@@ -35,7 +37,7 @@ namespace Bingo {
 		void createNewGame();
 		void refreshList();
 		void viewGameInfo();
-
+		void joinGame();
 	private:
 		Ui::LobbyWidget ui;
 		QMap<QString, QList<QVariant> > gameInformation;

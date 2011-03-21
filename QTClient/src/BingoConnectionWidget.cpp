@@ -60,5 +60,14 @@ namespace Bingo {
 			bingoMain->setToken(data.toMap()["token"].toString());
 		}
 	}
-
+  
+	// -------------------------------------------------------------------------
+	void BingoConnectionWidget::activate() {
+	
+	}
+	
+	// -------------------------------------------------------------------------
+	void BingoConnectionWidget::deactivate() {
+	
+	}
 }

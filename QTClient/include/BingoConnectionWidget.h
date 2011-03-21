@@ -25,6 +25,8 @@ namespace Bingo {
 	
 		// Implements BingoWidget
 		void receiveJSON(JSONRequestType type, const QVariant& data);
+		void activate();
+		void deactivate();
 
 	private slots:
 		void connectClient();

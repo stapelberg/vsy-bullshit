@@ -14,7 +14,8 @@ enum JSONRequestType {
 	JSON_Get = 0,
 	JSON_REGISTER_PLAYER = 1,
 	JSON_CURRENT_GAMES = 2,
-	JSON_CREATE_GAME = 3
+	JSON_CREATE_GAME = 3,
+	JSON_JOIN_GAME = 4
 }; 
 
 #endif

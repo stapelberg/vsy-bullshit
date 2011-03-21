@@ -21,6 +21,7 @@
 // Custom Widgets
 #include "BingoConnectionWidget.h"
 #include "BingoLobbyWidget.h"
+#include "BingoGameWidget.h"
 
 namespace Bingo {
 	// -------------------------------------------------------------------------
@@ -65,6 +66,11 @@ namespace Bingo {
 		widgets.push_back(new BingoLobbyWidget(this, ui.container));
 		widgets.at(WIDGET_LOBBY)->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 		widgets.at(WIDGET_LOBBY)->hide();
+
+		// Game
+		widgets.push_back(new BingoGameWidget(this, ui.container));
+		widgets.at(WIDGET_GAME)->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+		widgets.at(WIDGET_GAME)->hide();
 
 		// Make the connect screen visible
 		ui.containerLayout->addWidget(widgets.at(activeWidget), 1, 1);
@@ -148,9 +154,26 @@ namespace Bingo {
 	// -------------------------------------------------------------------------
 	void BingoMainWindow::setActiveWidget(int widget) {
 		widgets[activeWidget]->hide();
+		widgets[activeWidget]->deactivate();	
+		
 		activeWidget = widget;
+		
 		widgets[activeWidget]->show();
+		widgets[activeWidget]->activate();
 	}
+
+	// -------------------------------------------------------------------------
+	void BingoMainWindow::setCurrentGame(const QString& id, QList<QString> words) {
+		// Copy data to current Game information
+		currentGame.id = id;
+		currentGame.words = words;
+	}
+
+	// -------------------------------------------------------------------------
+	const GameData& BingoMainWindow::getCurrentGame() const {
+		return currentGame;
+	}
+
 	// -------------------------------------------------------------------------
 	void BingoMainWindow::reportError(const QString& msg) {
 		ui.indicator->setVisible(false);

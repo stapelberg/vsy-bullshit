@@ -51,7 +51,7 @@ public:
 	JSONRegisterPlayer(QObject* parent = 0) : JSONRequest(parent) {}
 	~JSONRegisterPlayer() {}
 
-	QString nickname() const { return name; };
+	QString nickname() const { return name; }
 	void setNickname(const QString& name) { this->name = name;}
 	JSONRequestType getType() { return JSON_REGISTER_PLAYER; }
 
@@ -64,26 +64,55 @@ private:
 // Create New Game
 class JSONCreateGame : public JSONRequest {
 
-		Q_OBJECT
+	Q_OBJECT
 
-		Q_PROPERTY(QString token READ token WRITE setToken)
-		Q_PROPERTY(QString size READ size WRITE setSize)
+	Q_PROPERTY(QString token READ token WRITE setToken)
+	Q_PROPERTY(QString size READ size WRITE setSize)
+
 public:
 
-		JSONCreateGame(QObject* parent = 0) : JSONRequest(parent) {}
-		~JSONCreateGame() {}
+	JSONCreateGame(QObject* parent = 0) : JSONRequest(parent) {}
+	~JSONCreateGame() {}
 
-		QString token() const { return _token; };
-		void setToken(const QString& token) { this->_token = token;}
+	QString token() const { return _token; }
+	void setToken(const QString& token) { this->_token = token;}
 
-		QString size() const { return _size; };
-		void setSize(const QString& size) { this->_size = size;}
+	QString size() const { return _size; }
+	void setSize(const QString& size) { this->_size = size;}
 
-		JSONRequestType getType() { return JSON_CREATE_GAME; }
+	JSONRequestType getType() { return JSON_CREATE_GAME; }
+
 private:
 	QString _token;
 	QString _size;
 
 };
 
+// -----------------------------------------------------------------------------
+// Join Game
+class JSONJoinGame : public JSONRequest {
+
+	Q_OBJECT
+
+	Q_PROPERTY(QString token READ token WRITE setToken)
+	Q_PROPERTY(QString id READ id WRITE setID)
+
+public:
+
+	JSONJoinGame(QObject* parent = 0) : JSONRequest(parent) {}
+	~JSONJoinGame() {}
+
+	QString token() const { return _token; }
+	void setToken(const QString& token) { this->_token = token;}
+									   
+	QString id() const { return _id; }
+	void setID(const QString& ID) { this->_id = ID;}
+
+	JSONRequestType getType() { return JSON_JOIN_GAME; }
+
+private:
+	QString _token;
+	QString _id;
+
+};
 #endif
