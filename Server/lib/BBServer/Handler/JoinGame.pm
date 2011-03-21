@@ -25,7 +25,7 @@ sub handle_request {
         return $self->error('Already participating');
     }
 
-    return {};
+    return { words => $game->words };
 }
 
 1

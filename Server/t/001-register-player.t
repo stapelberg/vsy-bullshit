@@ -108,6 +108,7 @@ is_deeply($json->[0]->{participants}, [ ] , 'no participants');
 # re-join the game
 $json = post('JoinGame', { token => $token, id => $id });
 is($json->{success}, JSON::XS::true, 'Game joined');
+cmp_ok(@{$json->{words}}, '>', 0, '> 0 words in reply');
 
 # check that we can see the game and we are in it again
 $json = get('CurrentGames');

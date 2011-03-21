@@ -63,7 +63,8 @@ Request: POST /JoinGame
 Body: {"token":"93939393", "id":"398484..."}
 Response:
 {"success":true,
- "error":""}
+ "error":"",
+ "words":["foo", "bar"]}
 
 -------------------------------
 Request: POST /LeaveGame
