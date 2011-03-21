@@ -21,11 +21,12 @@ sub handle_request {
 
     my $game = Games->instance->by_id($request->{id});
     return $self->error('No such game') unless defined($game);
-    if (!$game->add_player($player)) {
-        return $self->error('Already participating');
-    }
 
-    return { words => $game->words };
+    # Even if we fail, we just continue. The player can have the words again,
+    # if he wants to. (Makes reload handling in JavaScript easier)
+    $game->add_player($player);
+
+    return { size => $game->size, words => $game->words };
 }
 
 1

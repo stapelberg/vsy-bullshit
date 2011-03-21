@@ -16,6 +16,7 @@ use BBServer::Handler::JoinGame;
 use BBServer::Handler::LeaveGame;
 use BBServer::Handler::MakeMove;
 use BBServer::Handler::CheckWinner;
+use BBServer::Handler::GUI;
 
 sub webapp {
     my $class = shift;
@@ -28,6 +29,7 @@ sub webapp {
         '/LeaveGame'        => 'BBServer::Handler::LeaveGame',
         '/MakeMove'         => 'BBServer::Handler::MakeMove',
         '/CheckWinner'      => 'BBServer::Handler::CheckWinner',
+        '/gui/(.*)'        => 'BBServer::Handler::GUI',
     ]);
 
     $app->psgi_app;

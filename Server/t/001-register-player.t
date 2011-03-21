@@ -125,7 +125,7 @@ is_deeply($json->[0]->{participants}, [ $nickname ] , 'player nickname matches')
 
 # join again, should fail because we are already participating
 $json = post('JoinGame', { token => $token, id => $id });
-is($json->{success}, JSON::XS::false, 'Cannot join game again');
+is($json->{success}, JSON::XS::true, 'Joining game again succeeds');
 
 # check that we can see the game and we are in it again
 $json = get('CurrentGames');
