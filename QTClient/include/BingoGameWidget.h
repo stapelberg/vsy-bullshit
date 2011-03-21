@@ -11,13 +11,12 @@
 #include "BingoWidget.h"
 #include "ui_GameWidget.h"
 
+#include <QTimer>
+
 namespace Bingo {
 	/**
-	 * @brief The lobby where the user can choose a game.
-	 * @note This Widget requires the "Network" class to be already instantiated,
-	 * i.e. a server should already be selectee.
-	 * @see BingoConnectionWidget
-	 */
+	*
+	*/
 	class BingoGameWidget : public BingoWidget {
 		Q_OBJECT
 
@@ -29,8 +28,12 @@ namespace Bingo {
 		void activate();
 		void deactivate();
 
+	private slots:
+		void updatePlayerList();
+
 	private:
 		Ui::GameWidget ui;
+		QTimer* playerListUpdate;
 	};
 }
 #endif
