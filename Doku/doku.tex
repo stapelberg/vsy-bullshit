@@ -1,0 +1,109 @@
+\documentclass[12pt, a4paper]{scrartcl}
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{palatino,avant}
+\usepackage{amsmath,amssymb,amsthm,mathabx,mathrsfs,stmaryrd}
+%\usepackage{txfonts}
+\usepackage{pb-diagram}
+\usepackage[pdftex,bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,colorlinks=true,filecolor=black,
+                linkcolor=red,urlcolor=blue,plainpages=false,pdfpagelabels,citecolor=black,
+                pdftitle={VSY-Dokumentation},pdfauthor={Michael Stapelberg}]{hyperref}
+\begin{document}
+\pagestyle{fancy}
+\chead{VSY}
+\lhead{}
+% New paragraph
+\newcommand{\np}{\bigskip\noindent}
+
+% No indention at new paragraphs
+\setlength{\parindent}{0pt}
+
+\section{Architektur}
+
+Als Architektur haben wir uns für ein Client/Server-Modell entschieden, da es
+deutlich einfacher zu implementieren ist als ein Peer-to-peer-Netz. Bei
+letzterem gibt es das Problem des Nachrichtentransports: Entweder müssen alle
+Peers sich mit allen anderen verbinden um in der Lage zu sein, Nachrichten an
+alle zu senden (Full-Mesh) oder man braucht eine Form der
+Nachrichtenweitergabe. Bei einem Client/Server-Modell entfällt diese
+Problematik. Weiterhin ist bei dieser Architektur der Bezug zur tatsächlichen
+Praxis höher, bei der Peer-to-Peer-Netze selten eingesetzt werden\footnote{Eine
+bekannte Ausnahme stellt World of Warcraft mit dem BitTorrent-gestützten Update
+Downloader dar}.
+
+\subsection{Basis-Protokoll: HTTP}
+
+Das grundlegende Protokoll, welches wir verwenden, ist HTTP. In der Praxis
+verwendet man aus mehreren Gründen gerne HTTP:
+\begin{itemize}
+	\item Das Protokoll verwendet ASCII (statt Binärdaten) in einem
+	einfachen, für Menschen lesbaren, Format.
+
+	\item Implementationen sind in jeder ernstzunehmenden
+	Programmiersprache ver\-füg\-bar und in der Regel weitreichend getestet.
+
+	\item HTTP ist in den meisten Firewalls freigeschaltet, weil das World
+	Wide Web eine so weit verbreitet Technologie des Internets darstellt.
+
+	\item Zusätzliche Software wie Load-Balancer, Proxies, etc. sind für
+	HTTP bereits verfügbar (auch als direkt in Hardware implementierte und
+	somit sehr performante Varianten).
+\end{itemize}
+
+\subsection{Serialisierung: JSON}
+
+Zum Serialisieren von Daten verwenden wir für beide Seiten (also für Requests
+vom Client an den Server und für Antworten des Servers zum Client) die
+JavaScript Object Notation (JSON).
+\np
+
+Der geringe Umfang von JSON (Arrays, Maps/Hashes, Strings, Numbers) macht es
+einfach, entsprechende Bibliotheken in allen ernstzunehmenden
+Programmiersprachen zu implementieren. Außerdem ist JSON (bei geeigneter
+Formatierung) leicht für Menschen lesbar. Im Gegensatz zu XML ist der Overhead
+sehr gering.
+
+\subsection{Protokoll}
+
+Mithilfe von HTTP und JSON haben wir eine Protokolldefinition erstellt (siehe
+Datei \texttt{PROTOCOL}), welche festhält, welche URLs mit welchen Parametern
+aufgerufen werden, was dieser Aufruf bewirkt und mit welcher Antwort man zu
+rechnen hat.
+
+\clearpage
+
+\section{Server}
+
+Wir haben den Server in Perl implementiert, da Perl eine moderne Sprache ist,
+die es einem ermöglicht, in kurzer Zeit sauber strukturierte und performante
+Programme zu schreiben.
+\np
+
+Auf folgende Module haben wir aufgebaut:
+\begin{description}
+	\item[Moose] Ein modernes Objektsystem für Perl. Vereinfacht die
+	Implementation von objekt-orientierten Modulen
+
+	\item[Tatsumaki] Ein asynchrones und hoch-performantes Web-Framework
+	(auf Basis des Web-Stacks Plack und dem Event-basierten AnyEvent)
+
+	\item[JSON::XS] Ein Modul zum Enkodieren/Dekodieren von JSON,
+	implementiert in C für hohe Geschwindigkeit.
+
+	\item[Test::More] Ein Modul zum Implementieren von Test-Cases.
+\end{description}
+
+Wie in der Perl-Welt üblich sind wir nach dem Modell des \textsc{Test Driven
+Development} vorgegangen. Das heißt, wir haben zunächst die Testcases
+implementiert (siehe Verzeichnis \texttt{t/}) und anschließend die
+Implementation so durchgeführt, dass alle Tests erfolgreich ausgeführt werden.
+\np
+
+
+
+\end{document}
