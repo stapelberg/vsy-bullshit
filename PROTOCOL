@@ -18,10 +18,14 @@ Response:
   "participants": [
     "Atsutane",
     "sECuRE"
-   ]
+   ],
+   "name":"foo",
+   "created":123
  },
  {"id":"333...",
-  "participants": [ ]
+  "participants": [ ],
+   "name":"Unbenannt 29eaa93",
+   "created":456
  }
 ]
 
@@ -45,6 +49,7 @@ Response:
 {"success":true,
  "error":"",
  "id":"3984843...",
+ "name":"foo",
  "words":[
    "Win-Win",
    "Return of Investment",

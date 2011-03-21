@@ -169,18 +169,6 @@ border:0px;</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="3" colspan="3">
-    <widget class="QLabel" name="label_6">
-     <property name="styleSheet">
-      <string notr="true">background:transparent;
-border:0px;
-font-weight:bold;</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
    <item row="4" column="3" colspan="3">
     <widget class="QGroupBox" name="groupBox">
      <property name="styleSheet">
@@ -356,17 +344,29 @@ font-weight:bold;</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="1" colspan="5">
+   <item row="2" column="1" colspan="4">
     <widget class="QLabel" name="playerNickLabel">
      <property name="styleSheet">
       <string notr="true">background:transparent;
 border:0px;</string>
      </property>
      <property name="text">
-      <string>#</string>
+      <string/>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="5">
+    <widget class="QPushButton" name="disconnectButton">
+     <property name="styleSheet">
+      <string notr="true">QPushButton::pressed {
+     border-style: inset;
+ }</string>
+     </property>
+     <property name="text">
+      <string>Disconnect</string>
      </property>
     </widget>
    </item>

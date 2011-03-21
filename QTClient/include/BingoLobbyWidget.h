@@ -38,9 +38,12 @@ namespace Bingo {
 		void refreshList();
 		void viewGameInfo();
 		void joinGame();
+		void disconnect();
+
 	private:
 		Ui::LobbyWidget ui;
 		QMap<QString, QList<QVariant> > gameInformation;
+		QString lastGameID;
 	};
 }
 

@@ -22,14 +22,20 @@ sub handle_request {
 
     my $player = Players->instance->by_token($token);
 
-    my $game = Game->new(size => $size);
+    my $game;
+    if (exists $request->{name}) {
+        $game = Game->new(size => $size, name => $request->{name});
+    } else {
+        $game = Game->new(size => $size);
+    }
     $game->add_player($player);
 
     Games->instance->add_game($game);
 
     return {
         id => $game->id,
-        words => $game->words
+        words => $game->words,
+        name => $game->name
     };
 }
 
