@@ -88,12 +88,20 @@ $json = post('CreateGame', { token => $token, size => 3 });
 is($json->{success}, JSON::XS::true, 'Game created');
 ok(exists $json->{id}, 'game id included in reply');
 ok(exists $json->{words}, 'game words included in reply');
+ok(exists $json->{name}, 'game name included in reply');
+like($json->{name}, qr/^Unbenannt /, 'game name starts with "Unbenannt"');
 is(@{$json->{words}}, 9, 'nine words for a 3x3 game delivered');
 my $id = $json->{id};
 
+$json = post('CreateGame', { token => $token, size => 3, name => 'fnord' });
+is($json->{success}, JSON::XS::true, 'Game created');
+ok(exists $json->{name}, 'game name included in reply');
+is($json->{name}, 'fnord', 'game name is "fnord"');
+
+
 # check that we can see the game
 $json = get('CurrentGames');
-is(@{$json}, 1, 'one game exists');
+is(@{$json}, 2, 'two games exists');
 is_deeply($json->[0]->{participants}, [ $nickname ] , 'player nickname matches');
 
 # leave the game
@@ -102,7 +110,7 @@ is($json->{success}, JSON::XS::true, 'Game left');
 
 # check that it still exists, but participants is empty
 $json = get('CurrentGames');
-is(@{$json}, 1, 'one game exists');
+is(@{$json}, 2, 'still two games existing');
 is_deeply($json->[0]->{participants}, [ ] , 'no participants');
 
 # re-join the game
@@ -112,7 +120,7 @@ cmp_ok(@{$json->{words}}, '>', 0, '> 0 words in reply');
 
 # check that we can see the game and we are in it again
 $json = get('CurrentGames');
-is(@{$json}, 1, 'one game exists');
+is(@{$json}, 2, 'two games exists');
 is_deeply($json->[0]->{participants}, [ $nickname ] , 'player nickname matches');
 
 # join again, should fail because we are already participating
@@ -121,7 +129,7 @@ is($json->{success}, JSON::XS::false, 'Cannot join game again');
 
 # check that we can see the game and we are in it again
 $json = get('CurrentGames');
-is(@{$json}, 1, 'one game exists');
+is(@{$json}, 2, 'two games exists');
 is_deeply($json->[0]->{participants}, [ $nickname ] , 'player nickname matches');
 
 # check for winner
