@@ -1,14 +1,14 @@
 Java Client für Bullshit-Bingo für die VSY Vorlesung
 
 GUI:
-Die grafische Obefläche besteht aus zwei JFrames, dem Hauptframe mit Menübar
-und dem Spielpanel sowie das Frame zur Spielverwaltung, hier werden die Server-
+Die grafische Oberfläche besteht aus einem JFrames, mit Menübar um das L&F zu wahren,
+dem Spielpanel sowie das Panel zur Spielverwaltung, hier werden die Server-
 und Nutzerdaten konfiguriert, Spielauswahl und Erstellung finden ebenfalls an
 dieser Stelle statt.
 
 Klassen:
 	- JavaBullshitBingo: Hauptframe, enthält main()
-	- GameManagementFrame: Frame zur Spielverwaltung
+	- GameManagementPanel: Panel zur Spielverwaltung
 	- MenuBar: Die Menübar des Hauptframe
 	- BullshitButton: modifizierter JButton, ActionListener ruft den MakeMove Call
 		mit dem position-Attribut auf und deaktiviert anschließend den Button.
