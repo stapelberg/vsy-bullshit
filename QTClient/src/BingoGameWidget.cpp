@@ -125,7 +125,6 @@ namespace Bingo {
 			int pos = index.row()*ui.wordTable->columnCount()+index.column();
 			request.setField(pos);
 			bingoMain->jsonRequest("MakeMove", &request);
-			bingoMain->reportError(tr("%1").arg(pos));
 		}
 		ui.wordTable->item(index.row(), index.column())->setFlags(Qt::NoItemFlags);
 		

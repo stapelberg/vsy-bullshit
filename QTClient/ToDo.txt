@@ -1,0 +1,8 @@
+Some features, which are missing or require work:
+
+(Ordered by Priority)
+
+# Add a Dynamic Table for Games up to 6x6
+# Persistent storage for the Session Token, i.e. inbetween disconnects or restarts
+# Currently, it is impossible to distinguish Games with the same name
+# Some constrols are missing proper CSS.
