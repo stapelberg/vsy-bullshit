@@ -153,6 +153,8 @@ namespace Bingo {
 
 	// -------------------------------------------------------------------------
 	void BingoMainWindow::setActiveWidget(int widget) {
+		ui.errorMessage->setVisible(false);
+
 		widgets[activeWidget]->hide();
 		widgets[activeWidget]->deactivate();	
 		
@@ -163,10 +165,13 @@ namespace Bingo {
 	}
 
 	// -------------------------------------------------------------------------
-	void BingoMainWindow::setCurrentGame(const QString& id, QList<QString> words) {
+	void BingoMainWindow::setCurrentGame(const QString& id, const QString& name, 
+		QList<QString> words, int size) {
 		// Copy data to current Game information
 		currentGame.id = id;
 		currentGame.words = words;
+		currentGame.name = name;
+		currentGame.size = size;
 	}
 
 	// -------------------------------------------------------------------------
@@ -176,6 +181,7 @@ namespace Bingo {
 
 	// -------------------------------------------------------------------------
 	void BingoMainWindow::reportError(const QString& msg) {
+		//QMessageBox::critical(this,tr("Bingo"),msg,QMessageBox::Ok);
 		ui.indicator->setVisible(false);
 		ui.errorMessage->setVisible(true);
 		ui.errorMessage->setText(msg.isEmpty() ? tr("Unknown Error occurred.") : msg);

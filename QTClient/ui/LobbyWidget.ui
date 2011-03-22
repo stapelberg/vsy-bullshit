@@ -31,10 +31,78 @@ border:0px;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="topMargin">
-    <number>15</number>
-   </property>
-   <item row="4" column="1" rowspan="9" colspan="2">
+   <item row="0" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="5">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1">
+    <widget class="QToolButton" name="refreshButton">
+     <property name="styleSheet">
+      <string notr="true">padding: 1px;</string>
+     </property>
+     <property name="text">
+      <string>R</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources/bingo.qrc">
+       <normaloff>:/Bingo/icons/01-refresh.png</normaloff>:/Bingo/icons/01-refresh.png</iconset>
+     </property>
+     <property name="autoRaise">
+      <bool>false</bool>
+     </property>
+     <property name="arrowType">
+      <enum>Qt::NoArrow</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">background:transparent;
+border:0px;
+font-weight:bold;</string>
+     </property>
+     <property name="text">
+      <string>Current Games</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" rowspan="3" colspan="2">
     <widget class="QListWidget" name="currentGamesList">
      <property name="styleSheet">
       <string notr="true">background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgba(231, 231, 231, 255), stop:1 rgba(255, 255, 255, 255));
@@ -45,144 +113,60 @@ border:0px;
 padding: 5px;
 </string>
      </property>
-    </widget>
-   </item>
-   <item row="8" column="3" colspan="3">
-    <widget class="QLineEdit" name="lineEdit">
-     <property name="inputMask">
-      <string/>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
      </property>
-     <property name="placeholderText">
-      <string>Enter Gamename</string>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
-    </widget>
-   </item>
-   <item row="12" column="3" colspan="3">
-    <widget class="QPushButton" name="createGame">
-     <property name="styleSheet">
-      <string notr="true">QPushButton::pressed {
-     border-style: inset;
- }</string>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
      </property>
-     <property name="text">
-      <string>Create Game</string>
+     <property name="viewMode">
+      <enum>QListView::ListMode</enum>
      </property>
     </widget>
    </item>
-   <item row="7" column="3">
-    <widget class="QLabel" name="label_3">
-     <property name="styleSheet">
-      <string notr="true">background:transparent;
-border:0px;</string>
-     </property>
-     <property name="text">
-      <string>Create your own Game:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="3" colspan="2">
-    <widget class="QLabel" name="label_2">
-     <property name="styleSheet">
-      <string notr="true">background:transparent;
-border:0px;</string>
-     </property>
-     <property name="text">
-      <string>Size:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="5">
-    <widget class="QComboBox" name="comboBox">
-     <property name="styleSheet">
-      <string notr="true"> QComboBox::drop-down {
-     subcontrol-origin: padding;
-     subcontrol-position: top right;
-     width: 15px;
-
-     border-left-width: 1px;
-     border-left-color: darkgray;
-     border-left-style: solid; /* just a single line */
-     border-top-right-radius: 3px; /* same radius as the QComboBox */
-     border-bottom-right-radius: 3px;
- }
-
- QComboBox::down-arrow {
-     image: url(:/Bingo/dropdown.png);
- }
-
- QComboBox::down-arrow:on { /* shift the arrow when popup is open */
-     top: 1px;
-     left: 1px;
- }</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="3" colspan="3">
-    <widget class="QLabel" name="label_4">
-     <property name="styleSheet">
-      <string notr="true">background:transparent;
-border:0px;
-font-weight:bold;</string>
-     </property>
-     <property name="text">
-      <string>- or -</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="4" colspan="2">
-    <widget class="QComboBox" name="comboBox_2">
-     <property name="styleSheet">
-      <string notr="true"> QComboBox::drop-down {
-     subcontrol-origin: padding;
-     subcontrol-position: top right;
-     width: 15px;
-
-     border-left-width: 1px;
-     border-left-color: darkgray;
-     border-left-style: solid; /* just a single line */
-     border-top-right-radius: 3px; /* same radius as the QComboBox */
-     border-bottom-right-radius: 3px;
- }
-
- QComboBox::down-arrow {
-     image: url(:/Bingo/dropdown.png);
- }
-
- QComboBox::down-arrow:on { /* shift the arrow when popup is open */
-     top: 1px;
-     left: 1px;
- }</string>
-     </property>
-    </widget>
-   </item>
-   <item row="11" column="3">
-    <widget class="QLabel" name="label_5">
-     <property name="styleSheet">
-      <string notr="true">background:transparent;
-border:0px;</string>
-     </property>
-     <property name="text">
-      <string>Word List</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="3" colspan="3">
+   <item row="2" column="3" colspan="2">
     <widget class="QGroupBox" name="groupBox">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
+      </font>
+     </property>
      <property name="styleSheet">
-      <string notr="true">background:transparent;
-border:0px;</string>
+      <string notr="true"> QGroupBox::title {
+     subcontrol-origin: margin;
+     subcontrol-position: top center; /* position at the top center */
+  border-style: outset;
+     border-top-width: 1px;
+     border-color: gray;
+	 padding:2px;
+     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                       stop: 0 #FFOECE, stop: 1 #FFFFFF);
+ }
+</string>
      </property>
      <property name="title">
       <string>Current Game Information</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
+      <property name="topMargin">
+       <number>16</number>
+      </property>
       <item row="0" column="0" colspan="2">
        <widget class="QLabel" name="label_7">
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="styleSheet">
-         <string notr="true">font-weight:bold;</string>
+         <string notr="true">background:transparent;
+border:0px;</string>
         </property>
         <property name="text">
          <string>Participants:</string>
@@ -206,39 +190,12 @@ border:0px;</string>
 padding: 5px;
 </string>
         </property>
-        <item>
-         <property name="text">
-          <string>Neues Element</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Neues Element</string>
-         </property>
-        </item>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label_8">
-        <property name="styleSheet">
-         <string notr="true">font-weight:bold;</string>
-        </property>
-        <property name="text">
-         <string>Size:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0" colspan="2">
+      <item row="2" column="0" colspan="2">
        <widget class="QPushButton" name="joinGameButton">
         <property name="styleSheet">
-         <string notr="true">background-color: qlineargradient(spread:pad, x1:0.545, y1:1, x2:0.528273, y2:0, stop:0 rgba(207, 207, 207, 255), stop:1 rgba(255, 255, 255, 255));
-  border-style: outset;
-     border-width: 1px;
-     border-radius: 5px;
-     border-color: gray;
-padding: 5px;
-
-QPushButton::pressed {
+         <string notr="true">QPushButton::pressed {
      border-style: inset;
  }</string>
         </property>
@@ -247,33 +204,146 @@ QPushButton::pressed {
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QLabel" name="label_9">
-        <property name="text">
-         <string>#x#</string>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="3" colspan="2">
+    <widget class="QLabel" name="label_4">
+     <property name="styleSheet">
+      <string notr="true">background:transparent;
+border:0px;
+font-weight:bold;</string>
+     </property>
+     <property name="text">
+      <string>- or -</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="3" colspan="2">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"> QGroupBox::title {
+     subcontrol-origin: margin;
+     subcontrol-position: top center; /* position at the top center */
+  border-style: outset;
+     border-top-width: 1px;
+     border-color: gray;
+	 padding:2px;
+     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                       stop: 0 #FFOECE, stop: 1 #FFFFFF);
+ }
+</string>
+     </property>
+     <property name="title">
+      <string>Create your own Game</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <property name="topMargin">
+       <number>16</number>
+      </property>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="styleSheet">
+         <string notr="true">background:transparent;
+border:0px;</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <property name="text">
+         <string>Name</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="gameName">
+        <property name="inputMask">
+         <string/>
+        </property>
+        <property name="placeholderText">
+         <string>Enter Gamename</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="styleSheet">
+         <string notr="true">background:transparent;
+border:0px;</string>
+        </property>
+        <property name="text">
+         <string>Size:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="gameSize">
+        <property name="styleSheet">
+         <string notr="true"> QComboBox::drop-down {
+     subcontrol-origin: padding;
+     subcontrol-position: top right;
+     width: 15px;
+
+     border-left-width: 1px;
+     border-left-color: darkgray;
+     border-left-style: solid; /* just a single line */
+     border-top-right-radius: 3px; /* same radius as the QComboBox */
+     border-bottom-right-radius: 3px;
+ }
+
+ QComboBox::down-arrow {
+     image: url(:/Bingo/dropdown.png);
+ }
+
+ QComboBox::down-arrow:on { /* shift the arrow when popup is open */
+     top: 1px;
+     left: 1px;
+ }</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>3x3</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>4x4</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>5x5</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>6x6</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QPushButton" name="createGame">
+        <property name="styleSheet">
+         <string notr="true">QPushButton::pressed {
+     border-style: inset;
+ }</string>
+        </property>
+        <property name="text">
+         <string>Create Game</string>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="0" column="2" colspan="4">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="13" column="2" colspan="4">
+   <item row="5" column="2">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -286,65 +356,19 @@ QPushButton::pressed {
      </property>
     </spacer>
    </item>
-   <item row="0" column="0" rowspan="14">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="6" rowspan="11">
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="3" column="2">
-    <widget class="QLabel" name="label">
+   <item row="1" column="4">
+    <widget class="QPushButton" name="disconnectButton">
      <property name="styleSheet">
-      <string notr="true">background:transparent;
-border:0px;
-font-weight:bold;</string>
+      <string notr="true">QPushButton::pressed {
+     border-style: inset;
+ }</string>
      </property>
      <property name="text">
-      <string>Current Games</string>
+      <string>Disconnect</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="QToolButton" name="refreshButton">
-     <property name="styleSheet">
-      <string notr="true">padding: 1px;</string>
-     </property>
-     <property name="text">
-      <string>R</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources/bingo.qrc">
-       <normaloff>:/Bingo/icons/01-refresh.png</normaloff>:/Bingo/icons/01-refresh.png</iconset>
-     </property>
-     <property name="autoRaise">
-      <bool>false</bool>
-     </property>
-     <property name="arrowType">
-      <enum>Qt::NoArrow</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1" colspan="4">
+   <item row="1" column="3">
     <widget class="QLabel" name="playerNickLabel">
      <property name="styleSheet">
       <string notr="true">background:transparent;
@@ -355,18 +379,6 @@ border:0px;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="5">
-    <widget class="QPushButton" name="disconnectButton">
-     <property name="styleSheet">
-      <string notr="true">QPushButton::pressed {
-     border-style: inset;
- }</string>
-     </property>
-     <property name="text">
-      <string>Disconnect</string>
      </property>
     </widget>
    </item>

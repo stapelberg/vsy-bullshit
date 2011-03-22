@@ -25,10 +25,17 @@ namespace Bingo {
 
 	// -------------------------------------------------------------------------
 	BingoLobbyWidget::BingoLobbyWidget(BingoMainWindow* parentWindow, QWidget* parent)
-		: BingoWidget(parentWindow, parent) 
+		: BingoWidget(parentWindow, parent),
+			gameListUpdateTimer(new QTimer(this))
 	{
 		ui.setupUi(this);
+		ui.participants->clear();
 
+
+		gameListUpdateTimer->setInterval(10000);
+		gameListUpdateTimer->stop();
+
+		connect(gameListUpdateTimer,SIGNAL(timeout()),this,SLOT(gListTimerTimeout()));
 		connect(ui.createGame, SIGNAL(clicked()), this, SLOT(createNewGame()));
 		connect(ui.refreshButton, SIGNAL(clicked()), this, SLOT(refreshList()));
 		connect(ui.currentGamesList, SIGNAL(itemSelectionChanged()), this, SLOT(viewGameInfo()));
@@ -52,33 +59,58 @@ namespace Bingo {
 			ui.currentGamesList->clear();
 
 			foreach(QVariant m, data.toList()) {
-				QString gameID = m.toMap()["id"].toString();
-				gameInformation[gameID] =
-					m.toMap()["participants"].toList();
-				ui.currentGamesList->addItem(gameID);
+				QVariantMap& info = m.toMap(); 
+				QString gameName = info["name"].toString();
+
+				if(gameName.isEmpty()) {
+					gameName = info["id"].toString();
+					gameName.truncate(9);
+					gameName.prepend("UnnamedGame_");
+				}
+				
+				gameInformation[gameName].name = gameName;
+				gameInformation[gameName].id = info["id"].toString();
+
+				gameInformation[gameName].participants =
+					info["participants"].toList();
+				ui.currentGamesList->addItem(gameName);
 			}
 
 		} else if(type == JSON_CREATE_GAME) {
 			QVariantMap gameData = data.toMap();
 			QString gameID = gameData["id"].toString();
+			QString size = ui.gameSize->currentText();
+			size.truncate(1);
 
-			bingoMain->setCurrentGame(gameID, createWordList(gameData));
+			bingoMain->setCurrentGame(gameID, 
+				gameData["name"].toString(),
+				createWordList(gameData),
+				size.toInt());
+
 			bingoMain->setActiveWidget(WIDGET_GAME);
 
 		} else if (type == JSON_JOIN_GAME){
-			bingoMain->setCurrentGame(lastGameID, createWordList(data.toMap()));
+			QVariantMap gameData  = data.toMap();
+			bingoMain->setCurrentGame(gameInformation[lastGameName].id, 
+				lastGameName, 
+				createWordList(gameData),
+				gameData["size"].toInt());
 			bingoMain->setActiveWidget(WIDGET_GAME);
 		}
 	}
 
 	// -------------------------------------------------------------------------	
 	void BingoLobbyWidget::joinGame() {
-		lastGameID = ui.currentGamesList->currentItem()->text();
-		JSONJoinGame joinRequest;
-		joinRequest.setToken(bingoMain->getToken());
-		joinRequest.setID(lastGameID);
+		if(ui.currentGamesList->selectedItems().size() > 0) {
+			lastGameName = ui.currentGamesList->currentItem()->text();
+			JSONJoinGame joinRequest;
+			joinRequest.setToken(bingoMain->getToken());
+			joinRequest.setID(gameInformation[lastGameName].id);
 
-		bingoMain->jsonRequest("JoinGame", &joinRequest);
+			bingoMain->jsonRequest("JoinGame", &joinRequest);
+		} else {
+			bingoMain->reportError(tr("No Game selected."));
+		}
 	}
 		
 	// -------------------------------------------------------------------------
@@ -88,31 +120,42 @@ namespace Bingo {
 		
 	// -------------------------------------------------------------------------
 	void BingoLobbyWidget::activate() {
-	   this->refreshList();
-	  	ui.playerNickLabel->setText(tr("Connected as %1").arg(bingoMain->getNick()));
+	  this->refreshList();
+	  ui.playerNickLabel->setText(tr("Connected as %1").arg(bingoMain->getNick()));
+	  this->gameListUpdateTimer->start();
 	}
 	
 	// -------------------------------------------------------------------------
 	void BingoLobbyWidget::deactivate() {
-	
+		this->gameListUpdateTimer->stop();
 	}
 
 	// -------------------------------------------------------------------------
 	void BingoLobbyWidget::viewGameInfo() {
-		ui.participants->clear();
-		QString currentItem = ui.currentGamesList->currentItem()->text();
-		
-		foreach(QVariant v, gameInformation[currentItem]) {
-			ui.participants->addItem(v.toString());
+		if(!gameInformation.isEmpty() 
+			&& ui.currentGamesList->selectedItems().size() > 0) { 
+			ui.participants->clear();	
+			lastGameName = ui.currentGamesList->currentItem()->text();
+			
+			foreach(QVariant v, gameInformation[lastGameName].participants) {
+				ui.participants->addItem(v.toString());
+			}
 		}
 	}
 
 	// -------------------------------------------------------------------------
 	void BingoLobbyWidget::createNewGame() {
-		JSONCreateGame request;
-		request.setToken(bingoMain->getToken());
-		request.setSize("3");
+		if(ui.gameName->text().isEmpty()) {
+			bingoMain->reportError("No Game Name was provided.");
+		} else { 
+			JSONCreateGame request;
+			request.setToken(bingoMain->getToken());
+			request.setName(ui.gameName->text());
+			QString size = ui.gameSize->currentText();
+			size.truncate(1);
+			request.setSize(size);
 
-		bingoMain->jsonRequest("CreateGame",&request);
+			bingoMain->jsonRequest("CreateGame",&request);
+		}
 	}
 }

@@ -33,6 +33,8 @@ namespace Bingo {
 	
 	typedef struct {
 		QString id;
+		QString name;
+		int size;
 		QList<QString> words;
 	} GameData;
 	/**
@@ -91,7 +93,8 @@ namespace Bingo {
 		* @see WidgetIdentifiers
 		*/
 		void setActiveWidget(int widget);
-		void setCurrentGame(const QString& id, QList<QString> words);
+		void setCurrentGame(const QString& id, 
+			const QString& name, QList<QString> words, int size);
 
 		const GameData& getCurrentGame() const;
 
