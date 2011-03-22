@@ -60,20 +60,23 @@ namespace Bingo {
 
 			foreach(QVariant m, data.toList()) {
 				QVariantMap& info = m.toMap(); 
-				QString gameName = info["name"].toString();
 
-				if(gameName.isEmpty()) {
-					gameName = info["id"].toString();
-					gameName.truncate(9);
-					gameName.prepend("UnnamedGame_");
-				}
+				if(info["winner"].toString().isEmpty()) {
+					QString gameName = info["name"].toString();
+
+					if(gameName.isEmpty()) {
+						gameName = info["id"].toString();
+						gameName.truncate(9);
+						gameName.prepend("UnnamedGame_");
+					}
 				
-				gameInformation[gameName].name = gameName;
-				gameInformation[gameName].id = info["id"].toString();
+					gameInformation[gameName].name = gameName;
+					gameInformation[gameName].id = info["id"].toString();
 
-				gameInformation[gameName].participants =
-					info["participants"].toList();
-				ui.currentGamesList->addItem(gameName);
+					gameInformation[gameName].participants =
+						info["participants"].toList();
+					ui.currentGamesList->addItem(gameName);
+				} 
 			}
 
 		} else if(type == JSON_CREATE_GAME) {
