@@ -69,6 +69,7 @@ Body: {"token":"93939393", "id":"398484..."}
 Response:
 {"success":true,
  "error":"",
+ "size":3,
  "words":["foo", "bar"]}
 
 -------------------------------
