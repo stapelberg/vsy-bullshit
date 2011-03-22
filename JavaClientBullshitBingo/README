@@ -8,7 +8,7 @@ dieser Stelle statt.
 
 Klassen:
 	- JavaBullshitBingo: Hauptframe, enthält main()
-	- GameManagementPanel: Panel zur Spielverwaltung
+	- ManagementPanel: Panel zur Spielverwaltung
 	- MenuBar: Die Menübar des Hauptframe
 	- BullshitButton: modifizierter JButton, ActionListener ruft den MakeMove Call
 		mit dem position-Attribut auf und deaktiviert anschließend den Button.
@@ -20,3 +20,6 @@ Klassen:
 	- Settings: statische Klasse, die die notwendigen Daten sichert, Spielername,
 		Token, SessionID, etc.
 
+Zusätzlich verwendete Komponenten:
+ - http://hc.apache.org/
+ - https://github.com/douglascrockford/JSON-java
