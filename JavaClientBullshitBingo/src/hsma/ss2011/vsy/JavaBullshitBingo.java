@@ -11,18 +11,19 @@ import javax.swing.JLabel;
  * @since 20110320
  */
 public class JavaBullshitBingo extends JFrame {
+	private ManagementPanel gameManagement;
 	
 	public JavaBullshitBingo() {
 		this.setName("BullshitBingo");
 		this.setTitle("BullshitBingo");
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
 		this.setLayout(new BorderLayout());
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		this.add(new MenuBar(), BorderLayout.NORTH);
 		
 		// TODO Draw the panel
-		this.add(new JLabel("Hier gibt es nichts zu sehen"));
+		this.gameManagement = new ManagementPanel();
+		this.add(this.gameManagement, BorderLayout.CENTER);
 		
 		this.pack();
 	}

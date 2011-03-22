@@ -12,17 +12,12 @@ import javax.swing.JMenuItem;
  */
 public class MenuBar extends JMenuBar implements ActionListener {
 	private JMenu file;
-	private JMenuItem fileGameManagement;
+	private JMenuItem fileDisconnect;
 	private JMenuItem fileQuit;
-	
-	private GameManagementFrame gameManagement;
 	
 	public MenuBar() {
 		this.generateFileMenu();
 		this.add(file);
-		
-		// Create the Frame handling the connection/game settings.
-		this.gameManagement = new GameManagementFrame();
 	}
 	
 	/**
@@ -31,21 +26,21 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	private void generateFileMenu() {
 		file = new JMenu("Datei");
 
-		fileGameManagement = new JMenuItem("Spielverwaltung");
-		fileGameManagement.addActionListener(this);
+		fileDisconnect = new JMenuItem("Verbindung trennen");
+		fileDisconnect.addActionListener(this);
 
 		fileQuit = new JMenuItem("Beenden");
 		fileQuit.addActionListener(this);
 
 		// Add items to the menu
-		file.add(fileGameManagement);
+		file.add(fileDisconnect);
 		file.add(fileQuit);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.fileGameManagement) {
-			this.gameManagement.setVisible(true);
+		if (e.getSource() == this.fileDisconnect) {
+			// TODO disconnect and clean the settings.
 		} else if (e.getSource() == this.fileQuit) {
 			System.exit(0);
 		} 
