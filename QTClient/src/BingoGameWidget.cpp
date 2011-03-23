@@ -92,12 +92,16 @@ namespace Bingo {
 	void BingoGameWidget::activate() {
 		playerListUpdate->start();					 
 		
+		int size = bingoMain->getCurrentGame().size;
+		ui.wordTable->setColumnCount(size);
+		ui.wordTable->setRowCount(size);
+
 		int i = 0;
 		int y = 0;
 		foreach(QString word, bingoMain->getCurrentGame().words) {
 			ui.wordTable->setItem(i,y, new QTableWidgetItem(word));
 			i++;
-			if(i == ui.wordTable->columnCount()) {
+			if(i == size && y < size) {
 				i = 0;
 				y++;
 			}
