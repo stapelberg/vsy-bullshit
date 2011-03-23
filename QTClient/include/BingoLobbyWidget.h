@@ -11,8 +11,16 @@
 
 #include "BingoWidget.h"
 #include "ui_LobbyWidget.h"
+#include <QTimer>
 
 namespace Bingo {
+
+	typedef struct {
+		QString id;
+		QString creationTime;
+		QString name;
+		QList<QVariant> participants;
+	} GameInfo;
 	/**
 	 * @brief The lobby where the user can choose a game.
 	 * @note This Widget requires the "Network" class to be already instantiated,
@@ -39,11 +47,14 @@ namespace Bingo {
 		void viewGameInfo();
 		void joinGame();
 		void disconnect();
+		void gListTimerTimeout() { refreshList(); }
 
 	private:
 		Ui::LobbyWidget ui;
-		QMap<QString, QList<QVariant> > gameInformation;
-		QString lastGameID;
+		QMap<QString, GameInfo > gameInformation;
+		QString lastGameName;
+
+		QTimer* gameListUpdateTimer;
 	};
 }
 

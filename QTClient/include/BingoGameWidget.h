@@ -30,10 +30,13 @@ namespace Bingo {
 
 	private slots:
 		void updatePlayerList();
-
+		void leave();
+		void wordClicked(const QModelIndex & index);
+		void checkWinner();
 	private:
 		Ui::GameWidget ui;
 		QTimer* playerListUpdate;
+		QTimer* gameTimer;
 	};
 }
 #endif

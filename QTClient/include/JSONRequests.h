@@ -67,6 +67,7 @@ class JSONCreateGame : public JSONRequest {
 	Q_OBJECT
 
 	Q_PROPERTY(QString token READ token WRITE setToken)
+	Q_PROPERTY(QString name READ getName WRITE setName)
 	Q_PROPERTY(QString size READ size WRITE setSize)
 
 public:
@@ -77,6 +78,9 @@ public:
 	QString token() const { return _token; }
 	void setToken(const QString& token) { this->_token = token;}
 
+	QString getName() const { return _name; }
+	void setName(const QString& name) { this->_name = name;}
+
 	QString size() const { return _size; }
 	void setSize(const QString& size) { this->_size = size;}
 
@@ -85,6 +89,7 @@ public:
 private:
 	QString _token;
 	QString _size;
+	QString _name;
 
 };
 
@@ -114,5 +119,45 @@ private:
 	QString _token;
 	QString _id;
 
+};
+
+class JSONLeaveGame : public JSONJoinGame {
+public:
+	JSONRequestType getType() { return JSON_LEAVE_GAME; }
+};
+
+class JSONCheckWinner : public JSONJoinGame {
+public:
+	JSONRequestType getType() { return JSON_CHECK_WINNER; }
+};
+
+class JSONMakeMove : public JSONRequest {
+
+	Q_OBJECT
+
+		Q_PROPERTY(QString token READ token WRITE setToken)
+		Q_PROPERTY(QString id READ id WRITE setID)
+		Q_PROPERTY(int field READ field WRITE setField)
+
+public:
+
+	JSONMakeMove(QObject* parent = 0) : JSONRequest(parent) {}
+	~JSONMakeMove() {}
+
+	QString token() const { return _token; }
+	void setToken(const QString& token) { this->_token = token;}
+
+	QString id() const { return _id; }
+	void setID(const QString& ID) { this->_id = ID;}
+	
+	int field() const { return _field; }
+	void setField(int field) { _field = field; }
+
+	JSONRequestType getType() { return JSON_MAKE_MOVE; }
+
+private:
+	QString _token;
+	QString _id;
+	int _field;
 };
 #endif

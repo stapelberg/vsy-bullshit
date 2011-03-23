@@ -48,6 +48,10 @@ namespace Bingo {
 		* waiting for a reply
 		*/
 		bool requestInProgress();
+
+		const QString& getServerAddress() const {
+			return address;
+		}
 	private slots:
 		void replyFinished(QNetworkReply*);
 		void slotError(QNetworkReply::NetworkError error);

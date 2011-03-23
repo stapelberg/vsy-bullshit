@@ -18,7 +18,8 @@ sub describe_game {
         participants => [ $_->participants ],
         name => $_->name,
         created => $_->created,
-        size => $_->size
+        size => $_->size,
+        winner => (defined($_->winner) ? $_->winner->nickname : undef),
     };
 }
 
