@@ -59,7 +59,7 @@ namespace Bingo {
 			ui.currentGamesList->clear();
 
 			foreach(QVariant m, data.toList()) {
-				QVariantMap& info = m.toMap(); 
+				QVariantMap info = m.toMap(); 
 
 				if(info["winner"].toString().isEmpty()) {
 					QString gameName = info["name"].toString();

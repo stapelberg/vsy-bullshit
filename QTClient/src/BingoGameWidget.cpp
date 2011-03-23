@@ -116,8 +116,7 @@ namespace Bingo {
 	// -------------------------------------------------------------------------
 	void BingoGameWidget::deactivate() {
 		gameTimer->stop();
-	  playerListUpdate->stop();
-	
+		playerListUpdate->stop();
 	}
 
 	// -------------------------------------------------------------------------

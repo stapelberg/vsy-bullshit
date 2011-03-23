@@ -3,6 +3,7 @@
     <file>icons/01-refresh.png</file>
     <file>logo.png</file>
     <file>working.gif</file>
+    <file>icon.png</file>
     <file>dropdown.png</file>
   </qresource>
 </RCC>

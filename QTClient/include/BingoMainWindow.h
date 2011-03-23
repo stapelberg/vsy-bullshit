@@ -98,6 +98,9 @@ namespace Bingo {
 
 		const GameData& getCurrentGame() const;
 
+		Network* getNetwork() {
+			return network;
+		}
 public slots:
 
 	protected:

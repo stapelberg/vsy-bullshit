@@ -9,6 +9,7 @@
 #include "BingoConnectionWidget.h"
 #include "BingoMainWindow.h"
 #include "JSONRequests.h"
+#include "Network.h"
 
 namespace Bingo {
 
@@ -39,6 +40,14 @@ namespace Bingo {
 
 		if(!ui.username->text().isEmpty()
 			&& validator.validate(text, pos) == QRegExpValidator::Acceptable) {
+			if(!bingoMain->getToken().isEmpty()
+				&& bingoMain->getNick().compare(ui.username->text()) == 0
+				&& bingoMain->getNetwork() != 0
+				&& bingoMain->getNetwork()->getServerAddress().compare(
+				ui.serverList->currentText()) == 0) 
+			{
+				bingoMain->setActiveWidget(WIDGET_LOBBY);
+			} else {
 				// Connect
 				bingoMain->setupNetwork(ui.serverList->currentText());
 
@@ -47,6 +56,7 @@ namespace Bingo {
 				requestData.setNickname(ui.username->text());
 
 				bingoMain->jsonRequest("RegisterPlayer",  &requestData);
+			}	
 		} else {
 			bingoMain->reportError(tr("Username missing or invalid."));
 		}
