@@ -116,8 +116,56 @@ public class GameManagement {
 	}
 
 	public String createGame(String name, int size) {
+		String error = null;
+		HttpPost request = new HttpPost(baseURL.toString() + "CreateGame");
+		HttpResponse responseFromServer = null;
+		HttpEntity entity = null;
+		BufferedReader reader = null;
+		JSONObject responseAsJSON = null;
 		
-		return null;
+		HttpClient httpclient = new DefaultHttpClient();
+		
+		try {
+			// Create Post: { "token":"$Token", "id":"$ID" }
+			String msg = "{ \"token\":" + this.token + "\", ";
+				msg += "\"size\":" + size + ", ";
+				msg += "\"name\":\"" + name + "\" }";
+			request.setEntity(new ByteArrayEntity(msg.getBytes()));
+			responseFromServer = httpclient.execute(request);
+			
+			entity = responseFromServer.getEntity();
+			if (entity != null) {
+				InputStream stream = entity.getContent();
+				reader = new BufferedReader(new InputStreamReader(stream), 8192);
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		/* if it worked, return the words in an Array else return
+		 * the error message in a 1 field Array.
+		 */
+		try {
+			responseAsJSON = new JSONObject(new JSONTokener(reader));
+			if (responseAsJSON.getBoolean("success")) {
+				this.size = size; // so now that the game is open, we keep the size
+				this.gameID = responseAsJSON.getString("id");
+				
+				JSONArray w = responseAsJSON.getJSONArray("words");
+				
+				this.words = new String[w.length()];
+				for (int i=0; i<words.length; i++)
+					this.words[i] = w.getString(i);
+			} else { // request failed
+				error = responseAsJSON.getString("error");
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return error;
 	}
 	
 	/**
@@ -172,7 +220,7 @@ public class GameManagement {
 	 */
 	public String joinGame(String gameId) {
 		String error = null;
-		HttpPost request = new HttpPost(baseURL.toString() + "RegisterPlayer");
+		HttpPost request = new HttpPost(baseURL.toString() + "JoinGame");
 		HttpResponse responseFromServer = null;
 		HttpEntity entity = null;
 		BufferedReader reader = null;
@@ -226,7 +274,7 @@ public class GameManagement {
 	 */
 	public String leaveGame() {
 		String errorMessage = null;
-		HttpPost request = new HttpPost(baseURL.toString() + "RegisterPlayer");
+		HttpPost request = new HttpPost(baseURL.toString() + "LeaveGame");
 		HttpResponse responseFromServer = null;
 		HttpEntity entity = null;
 		BufferedReader reader = null;
@@ -271,7 +319,7 @@ public class GameManagement {
 	 */
 	public String makeMove(int field) {
 		String errorMessage = null;
-		HttpPost request = new HttpPost(baseURL.toString() + "RegisterPlayer");
+		HttpPost request = new HttpPost(baseURL.toString() + "MakeMove");
 		HttpResponse responseFromServer = null;
 		HttpEntity entity = null;
 		BufferedReader reader = null;
