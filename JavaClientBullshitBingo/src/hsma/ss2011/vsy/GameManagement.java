@@ -25,6 +25,7 @@ public class GameManagement {
 	private String nick;
 	private String token;
 	private String gameID;
+	private String[] words;
 	private int size;
 	
 	public GameManagement(String server, int port, String nick) throws MalformedURLException {
@@ -33,6 +34,11 @@ public class GameManagement {
 		this.token = null;
 		this.gameID = null;
 		this.size = -1;
+		this.words = null;
+	}
+	
+	public String[] getWords() {
+		return words;
 	}
 	
 	public int getSize() {
@@ -109,6 +115,11 @@ public class GameManagement {
 		return gameSessions;
 	}
 
+	public String createGame(String name, int size) {
+		
+		return null;
+	}
+	
 	/**
 	 * Register the player at the server and save the token for this session
 	 * @return A error message if there was a problem.
@@ -152,6 +163,61 @@ public class GameManagement {
 		}
 		
 		return errorMessage;
+	}
+	
+	/**
+	 * Join a game, words are kept in here
+	 * @param gameId
+	 * @return null if everything's fine, else the error message.
+	 */
+	public String joinGame(String gameId) {
+		String error = null;
+		HttpPost request = new HttpPost(baseURL.toString() + "RegisterPlayer");
+		HttpResponse responseFromServer = null;
+		HttpEntity entity = null;
+		BufferedReader reader = null;
+		JSONObject responseAsJSON = null;
+		
+		HttpClient httpclient = new DefaultHttpClient();
+		
+		try {
+			// Create Post: { "token":"$Token", "id":"$ID" }
+			String msg = "{ \"token\":" + this.token + "\", \"id\":\"" + this.gameID + "\" }";
+			request.setEntity(new ByteArrayEntity(msg.getBytes()));
+			responseFromServer = httpclient.execute(request);
+			
+			entity = responseFromServer.getEntity();
+			if (entity != null) {
+				InputStream stream = entity.getContent();
+				reader = new BufferedReader(new InputStreamReader(stream), 8192);
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		/* if it worked, return the words in an Array else return
+		 * the error message in a 1 field Array.
+		 */
+		try {
+			responseAsJSON = new JSONObject(new JSONTokener(reader));
+			if (responseAsJSON.getBoolean("success")) {
+				this.size = responseAsJSON.getInt("size");
+				
+				JSONArray w = responseAsJSON.getJSONArray("words");
+				
+				this.words = new String[w.length()];
+				for (int i=0; i<words.length; i++)
+					this.words[i] = w.getString(i);
+			} else { // request failed
+				error = responseAsJSON.getString("error");
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return error;
 	}
 	
 	/**
