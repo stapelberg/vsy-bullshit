@@ -24,15 +24,23 @@ public class GameManagement {
 	private URL baseURL;
 	private String nick;
 	private String token;
-	private HttpClient httpclient;
+	private String gameID;
 	
 	public GameManagement(String server, int port, String nick) throws MalformedURLException {
 		this.baseURL = new URL("http", server, port, "/");
 		this.nick = nick;
-		this.httpclient = new DefaultHttpClient();
 		this.token = null;
+		this.gameID = null;
 	}
 	
+	public String getGameID() {
+		return gameID;
+	}
+
+	public void setGameID(String gameID) {
+		this.gameID = gameID;
+	}
+
 	/**
 	 * Request the currently running game sessions from the server.
 	 * @return The current game sessions or null if no exist.
@@ -44,6 +52,8 @@ public class GameManagement {
 		HttpEntity entity = null;
 		BufferedReader reader = null;
 		JSONArray responseAsJSON = null;
+		
+		HttpClient httpclient = new DefaultHttpClient();
 		
 		/* Request for the raw list of currently running sessions
 		 */
@@ -65,44 +75,32 @@ public class GameManagement {
 		 */
 		try {
 			responseAsJSON = new JSONArray(new JSONTokener(reader));
-			gameSessions = this.extractCurrentGames(responseAsJSON);
+			gameSessions = (responseAsJSON.length()>0) ? new GameSession[responseAsJSON.length()] : null;
+			
+			// Convert the JSONArray to a GameSession Array
+			for (int i=0; i < gameSessions.length; i++) {
+				JSONObject item = responseAsJSON.getJSONObject(i);
+				JSONArray participants = item.getJSONArray("participants");
+				
+				GameSession entry = new GameSession();
+				entry.setCreated(item.getInt("created"));
+				entry.setId(item.getString("id"));
+				entry.setName("name");
+				
+				// extract the playernames from the participants JSONArray
+				String[] players = new String[participants.length()];
+				for (int j=0; j< players.length; j++)
+					players[j] = participants.getString(j);
+				entry.setParticipants(players);
+				
+				gameSessions[i] = entry;
+				item = null; // just to make sure, that nothing happens by accident
+			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		
 		return gameSessions;
-	}
-	
-	/**
-	 * Extract the information about the running sessions from the JSONArray
-	 * @param rawData the JSONArray containing the raw data.
-	 * @return The currently running sessions or null if no session exists.
-	 * @throws JSONException 
-	 */
-	private GameSession[] extractCurrentGames(JSONArray rawData) throws JSONException {
-		GameSession[] sessions = (rawData.length()>0) ? new GameSession[rawData.length()] : null;
-		
-		// Convert the JSONArray to a GameSession Array
-		for (int i=0; i < sessions.length; i++) {
-			JSONObject item = rawData.getJSONObject(i);
-			JSONArray participants = item.getJSONArray("participants");
-			
-			GameSession entry = new GameSession();
-			entry.setCreated(item.getInt("created"));
-			entry.setId(item.getString("id"));
-			entry.setName("name");
-			
-			// extract the playernames from the participants JSONArray
-			String[] players = new String[participants.length()];
-			for (int j=0; j< players.length; j++)
-				players[j] = participants.getString(j);
-			entry.setParticipants(players);
-			
-			sessions[i] = entry;
-			item = null; // just to make sure, that nothing happens by accident
-		}
-		
-		return sessions;
 	}
 
 	/**
@@ -117,12 +115,56 @@ public class GameManagement {
 		BufferedReader reader = null;
 		JSONObject responseAsJSON = null;
 		
-		/* Request for the raw list of currently running sessions
-		 */
+		HttpClient httpclient = new DefaultHttpClient();
+		
 		try {
 			// Create Post: { "nickname":"$NICK" }
 			request.setEntity(new ByteArrayEntity(("{ \"nickname\":\""+this.nick+"\" }").getBytes()));
 			responseFromServer = httpclient.execute(request);
+			entity = responseFromServer.getEntity();
+			
+			if (entity != null) {
+				InputStream stream = entity.getContent();
+				reader = new BufferedReader(new InputStreamReader(stream), 8192);
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		/* Check if it worked, set the token else return the error message
+		 */
+		try {
+			responseAsJSON = new JSONObject(new JSONTokener(reader));
+			if (responseAsJSON.getBoolean("success"))
+				this.token = responseAsJSON.getString("token");
+			else
+				errorMessage = responseAsJSON.getString("error");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return errorMessage;
+	}
+	
+	
+	public String leaveGame() {
+		String errorMessage = null;
+		HttpPost request = new HttpPost(baseURL.toString() + "RegisterPlayer");
+		HttpResponse responseFromServer = null;
+		HttpEntity entity = null;
+		BufferedReader reader = null;
+		JSONObject responseAsJSON = null;
+		
+		HttpClient httpclient = new DefaultHttpClient();
+		
+		try {
+			// Create Post: { "token":"$Token", "id":"$ID" }
+			String msg = "{ \"token\":" + this.token + "\", \"id\":\"" + this.gameID + "\" }";
+			request.setEntity(new ByteArrayEntity(msg.getBytes()));
+			responseFromServer = httpclient.execute(request);
+			
 			entity = responseFromServer.getEntity();
 			if (entity != null) {
 				InputStream stream = entity.getContent();
@@ -134,19 +176,16 @@ public class GameManagement {
 			e.printStackTrace();
 		}
 		
-		/* Now convert the raw response into a JSONArray
-		 * and extract the information from that.
+		/* Check if it worked if not return the error message
 		 */
 		try {
 			responseAsJSON = new JSONObject(new JSONTokener(reader));
-			if (responseAsJSON.getBoolean("success"))
-				this.token = responseAsJSON.getString("token");
-			else
+			if (!responseAsJSON.getBoolean("success"))
 				errorMessage = responseAsJSON.getString("error");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Nick: "+this.nick+"\tToken: "+this.token);
+		
 		return errorMessage;
 	}
 }
