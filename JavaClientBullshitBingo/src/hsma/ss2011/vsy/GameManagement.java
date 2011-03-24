@@ -25,12 +25,18 @@ public class GameManagement {
 	private String nick;
 	private String token;
 	private String gameID;
+	private int size;
 	
 	public GameManagement(String server, int port, String nick) throws MalformedURLException {
 		this.baseURL = new URL("http", server, port, "/");
 		this.nick = nick;
 		this.token = null;
 		this.gameID = null;
+		this.size = -1;
+	}
+	
+	public int getSize() {
+		return size;
 	}
 	
 	public String getGameID() {
@@ -148,7 +154,10 @@ public class GameManagement {
 		return errorMessage;
 	}
 	
-	
+	/**
+	 * Leave the current game
+	 * @return null if everythings fine, else the error message
+	 */
 	public String leaveGame() {
 		String errorMessage = null;
 		HttpPost request = new HttpPost(baseURL.toString() + "RegisterPlayer");
@@ -162,6 +171,53 @@ public class GameManagement {
 		try {
 			// Create Post: { "token":"$Token", "id":"$ID" }
 			String msg = "{ \"token\":" + this.token + "\", \"id\":\"" + this.gameID + "\" }";
+			request.setEntity(new ByteArrayEntity(msg.getBytes()));
+			responseFromServer = httpclient.execute(request);
+			
+			entity = responseFromServer.getEntity();
+			if (entity != null) {
+				InputStream stream = entity.getContent();
+				reader = new BufferedReader(new InputStreamReader(stream), 8192);
+			}
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		/* Check if it worked if not return the error message
+		 */
+		try {
+			responseAsJSON = new JSONObject(new JSONTokener(reader));
+			if (!responseAsJSON.getBoolean("success"))
+				errorMessage = responseAsJSON.getString("error");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return errorMessage;
+	}
+	
+	/**
+	 * Send the server which field was activated
+	 * @param field the number of the field
+	 * @return
+	 */
+	public String makeMove(int field) {
+		String errorMessage = null;
+		HttpPost request = new HttpPost(baseURL.toString() + "RegisterPlayer");
+		HttpResponse responseFromServer = null;
+		HttpEntity entity = null;
+		BufferedReader reader = null;
+		JSONObject responseAsJSON = null;
+		
+		HttpClient httpclient = new DefaultHttpClient();
+		
+		try {
+			// Create Post: { "token":"$Token", "id":"$ID", "field":$FIELD }
+			String msg = "{ \"token\":" + this.token + "\",";
+				msg += " \"id\":\"" + this.gameID + "\",";
+				msg += "\"field\":"+field+" }";
 			request.setEntity(new ByteArrayEntity(msg.getBytes()));
 			responseFromServer = httpclient.execute(request);
 			
