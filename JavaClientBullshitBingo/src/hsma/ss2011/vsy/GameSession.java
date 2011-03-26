@@ -5,6 +5,7 @@ public class GameSession {
 	private String[] participants;
 	private String name;
 	private int created;
+	private int size;
 	
 	/**
 	 * Use this constructor only if you want to set everything using
@@ -15,13 +16,15 @@ public class GameSession {
 		this.participants = null;
 		this.name = null;
 		this.created = -1;
+		this.size = 0;
 	}
 	
-	public GameSession(String id, String name, String[] participants, int created) {
+	public GameSession(String id, String name, String[] participants, int created, int size) {
 		this.id = id;
 		this.participants = participants;
 		this.name = name;
 		this.created = created;
+		this.size = size;
 	}
 	
 	public String getId() {
@@ -47,5 +50,13 @@ public class GameSession {
 	}
 	public void setCreated(int created) {
 		this.created = created;
+	}
+	
+	public int getSize() {
+		return size;
+	}
+	
+	public void setSize(int size) {
+		this.size = size;
 	}
 }
