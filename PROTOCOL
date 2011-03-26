@@ -21,11 +21,13 @@ Response:
    ],
    "name":"foo",
    "created":123
+   "size":3
  },
  {"id":"333...",
   "participants": [ ],
    "name":"Unbenannt 29eaa93",
    "created":456
+   "size":5
  }
 ]
 
@@ -44,12 +46,11 @@ diesem Namen gibt. 24 Stunden nach der letzten Aktivität verfällt das Token.
 
 -------------------------------
 Request: POST /CreateGame
-Body: {"token":"939393", "size":3}
+Body: {"token":"939393", "size":3, "name":"bar"}
 Response:
 {"success":true,
  "error":"",
  "id":"3984843...",
- "name":"foo",
  "words":[
    "Win-Win",
    "Return of Investment",
