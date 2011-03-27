@@ -61,7 +61,7 @@ public class GameManagement {
 		
 		response = reqHandler.getRequest("CurrentGames");
 		gameSessions = (response.length()>0) ? new GameSession[response.length()] : null;
-			
+		
 		// Convert the JSONArray to a GameSession Array
 		for (int i=0; i < gameSessions.length; i++) {
 			JSONObject item = response.getJSONObject(i);
@@ -105,7 +105,7 @@ public class GameManagement {
 		request.put("name", name);
 		
 		response = reqHandler.postRequest("CreateGame", request);
-
+		
 		if (response.getBoolean("success")) {
 			this.size = size; // so now that the game is open, we save the size
 			this.gameID = response.getString("id");
@@ -209,5 +209,29 @@ public class GameManagement {
 		
 		if (!response.getBoolean("success"))
 			this.error = response.getString("error");
+	}
+	
+	/**
+	 * Check if someone has won this game
+	 * @return The name of the winner or null if there's no winner yet.
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws JSONException
+	 */
+	public String checkWinner() throws ClientProtocolException, IOException, JSONException {
+		JSONObject request = new JSONObject();
+		JSONObject response = null;
+		String winner = null;
+		
+		request.put("token", this.token);
+		request.put("id", this.gameID);
+		response = reqHandler.postRequest("CheckWinner", request);
+		
+		if (response.getBoolean("success"))
+			winner = response.getString("winner");
+		else
+			this.error = response.getString("error");
+		
+		return winner;
 	}
 }
