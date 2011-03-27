@@ -20,14 +20,16 @@ Response:
     "sECuRE"
    ],
    "name":"foo",
-   "created":123
-   "size":3
+   "created":123,
+   "size":3,
+   "winner":null
  },
  {"id":"333...",
   "participants": [ ],
    "name":"Unbenannt 29eaa93",
-   "created":456
-   "size":5
+   "created":456,
+   "size":5,
+   "winner":null
  }
 ]
 
