@@ -3,6 +3,7 @@ package hsma.ss2011.vsy;
 public class GameSession {
 	private String id;
 	private String[] participants;
+	private String winner;
 	private String name;
 	private int created;
 	private int size;
@@ -33,18 +34,28 @@ public class GameSession {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
 	public String[] getParticipants() {
 		return participants;
 	}
 	public void setParticipants(String[] participants) {
 		this.participants = participants;
 	}
+	
+	public String getWinner() {
+		return winner;
+	}
+	public void setWinner(String winner) {
+		this.winner = winner;
+	}
+	
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public int getCreated() {
 		return created;
 	}
@@ -55,7 +66,6 @@ public class GameSession {
 	public int getSize() {
 		return size;
 	}
-	
 	public void setSize(int size) {
 		this.size = size;
 	}

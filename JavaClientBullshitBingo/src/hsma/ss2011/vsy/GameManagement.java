@@ -72,6 +72,7 @@ public class GameManagement {
 			entry.setId(item.getString("id"));
 			entry.setName(item.getString("name"));
 			entry.setSize(item.getInt("size"));
+			entry.setWinner(item.getString("winner"));
 			
 			// extract the playernames from the participants JSONArray
 			String[] players = new String[participants.length()];
