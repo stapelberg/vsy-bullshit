@@ -63,7 +63,7 @@ public class GameManagement {
 		gameSessions = (response.length()>0) ? new GameSession[response.length()] : null;
 		
 		// Convert the JSONArray to a GameSession Array
-		for (int i=0; i < gameSessions.length; i++) {
+		for (int i=0; i < response.length(); i++) {
 			JSONObject item = response.getJSONObject(i);
 			JSONArray participants = item.getJSONArray("participants");
 			
