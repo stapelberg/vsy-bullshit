@@ -7,21 +7,39 @@
 \usepackage{listings}
 \usepackage{booktabs}
 \usepackage{palatino,avant}
-\usepackage{amsmath,amssymb,amsthm,mathabx,mathrsfs,stmaryrd}
-%\usepackage{txfonts}
-\usepackage{pb-diagram}
+\usepackage[ngerman]{babel}
 \usepackage[pdftex,bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,colorlinks=true,filecolor=black,
                 linkcolor=red,urlcolor=blue,plainpages=false,pdfpagelabels,citecolor=black,
                 pdftitle={VSY-Dokumentation},pdfauthor={Michael Stapelberg}]{hyperref}
 \begin{document}
 \pagestyle{fancy}
 \chead{VSY}
-\lhead{}
+\lhead{Bullshit-Bingo}
 % New paragraph
 \newcommand{\np}{\bigskip\noindent}
 
 % No indention at new paragraphs
 \setlength{\parindent}{0pt}
+
+\lstset{%
+	basicstyle=\small\ttfamily,%
+	frame=single,%
+}
+
+
+\author{\\
+von\\
+Faraz Ahmed\\
+Felix Bruckner\\
+Dennis Cisowski\\
+Michael Stapelberg\\
+Thorsten Töpper\\
+~}
+\title{Dokumentation Bullshit-Bingo}
+\subtitle{Vorlesung Verteilte Systeme im SS2011}
+
+\maketitle
+\clearpage
 
 \tableofcontents
 
@@ -89,16 +107,23 @@ Programme zu schreiben.
 
 Auf folgende Module haben wir aufgebaut:
 \begin{description}
-	\item[Moose] Ein modernes Objektsystem für Perl. Vereinfacht die
-	Implementation von objekt-orientierten Modulen
+	\item[Moose] Moose\footnote{\url{http://www.iinteractive.com/moose/}}
+	ist ein modernes Objektsystem für Perl. Vereinfacht die Implementation
+	von objekt-orientierten Modulen.
 
 	\item[Tatsumaki] Ein asynchrones und hoch-performantes Web-Framework
-	(auf Basis des Web-Stacks Plack und dem Event-basierten AnyEvent)
+	(auf Basis des Web-Stacks Plack und dem Event-basierten AnyEvent).
+
+	Ein anderes, sehr beliebtes Framework, welches wir ebenfalls hätten
+	verwenden können, ist
+	Dancer\footnote{\url{http://www.perldancer.org/}}.
 
 	\item[JSON::XS] Ein Modul zum Enkodieren/Dekodieren von JSON,
 	implementiert in C für hohe Geschwindigkeit.
 
-	\item[Test::More] Ein Modul zum Implementieren von Test-Cases.
+	\item[Test::More] Ein Modul zum Implementieren von Test-Cases,
+	begleitet von exzellenter
+	Dokumentation\footnote{\url{http://search.cpan.org/perldoc?Test::Tutorial}}.
 \end{description}
 
 Wie in der Perl-Welt üblich sind wir nach dem Modell des \textsc{Test Driven
@@ -147,7 +172,7 @@ die man in Java hat.
 \np
 
 Betrachten wir dazu ein Beispiel aus unserem Code:
-\begin{verbatim}
+\begin{lstlisting}[language=Ruby]
   alert = AlertDialog.Builder.new(self)
   input = EditText.new(self)
   alert.setView input
@@ -157,10 +182,10 @@ Betrachten wir dazu ein Beispiel aus unserem Code:
     Log.d('bullshit', "User entered #{text}")
     RegisterTask.new(activity).execute text
   end
-\end{verbatim}
+\end{lstlisting}
 
 Das Analogon in Java sähe folgendermaßen aus:
-\begin{verbatim}
+\begin{lstlisting}[language=Java]
   Builder alert = new AlertDialog.Builder(this);
   final EditText input = EditText.new(this);
   alert.setView(input);
@@ -173,7 +198,7 @@ Das Analogon in Java sähe folgendermaßen aus:
         RegisterTask.new(activity).execute(text);
      }
    });
-\end{verbatim}
+\end{lstlisting}
 
 Es ist schnell zu erkennen, dass durch die fehlenden Typen, Klammern, Semikola
 und insbesondere durch die Blocksyntax im Vergleich zu anonymen Klassen der
@@ -251,7 +276,7 @@ Spieler sowie die ID des aktuellen Spiels).
 \np
 
 Eine typische Funktion sieht beispielsweise so aus:
-\begin{verbatim}
+\begin{lstlisting}
 function click_field(token, game, cnt) {
   $.post(
     '/MakeMove',
@@ -265,7 +290,7 @@ function click_field(token, game, cnt) {
     }
   );
 };
-\end{verbatim}
+\end{lstlisting}
 
 Mit dem \textdollar{}-Zeichen greift man auf jQuery zu, in diesem Fall rufen
 wir die \texttt{post}-Funktion auf, welche einen HTTP POST-Request an die
