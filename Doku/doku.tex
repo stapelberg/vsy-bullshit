@@ -23,6 +23,7 @@
 
 \lstset{%
 	basicstyle=\small\ttfamily,%
+	showstringspaces=false,%
 	frame=single,%
 }
 
@@ -126,11 +127,24 @@ Auf folgende Module haben wir aufgebaut:
 	Dokumentation\footnote{\url{http://search.cpan.org/perldoc?Test::Tutorial}}.
 \end{description}
 
+\subsection{Test Driven Development}
+
 Wie in der Perl-Welt üblich sind wir nach dem Modell des \textsc{Test Driven
 Development} vorgegangen. Das heißt, wir haben zunächst die Testcases
 implementiert (siehe Verzeichnis \texttt{t/}) und anschließend die
 Implementation so durchgeführt, dass alle Tests erfolgreich ausgeführt werden.
 \np
+
+Folgendermaßen sieht einer unserer Tests aus:
+\begin{lstlisting}[language=Perl]
+my $json = post('CreateGame', { token => $token, size => 3 });
+is($json->{success}, JSON::XS::true, 'Game created');
+ok(exists $json->{id}, 'game id included in reply');
+ok(exists $json->{words}, 'game words included in reply');
+ok(exists $json->{name}, 'game name included in reply');
+like($json->{name}, qr/^Unbenannt /, 'name starts with "Unbenannt"');
+is(@{$json->{words}}, 9, 'nine words for a 3x3 game delivered');
+\end{lstlisting}
 
 \clearpage
 \section{Qt-Client}
