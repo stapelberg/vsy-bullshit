@@ -23,6 +23,9 @@
 % No indention at new paragraphs
 \setlength{\parindent}{0pt}
 
+\tableofcontents
+
+\clearpage
 \section{Architektur}
 
 Als Architektur haben wir uns für ein Client/Server-Modell entschieden, da es
@@ -104,6 +107,177 @@ implementiert (siehe Verzeichnis \texttt{t/}) und anschließend die
 Implementation so durchgeführt, dass alle Tests erfolgreich ausgeführt werden.
 \np
 
+\clearpage
+\section{Qt-Client}
 
+Qt (gesprochen: cute) ist ein GUI-Framework für C++, welches
+plattformunabhängig zur Verfügung steht und von Nokia entwickelt wird.
+\np
+
+% TODO: mehr über den qt-client
+
+\clearpage
+\section{Java-Client}
+
+Im Studium an der HS-Mannheim lernt man Java. Den kleinsten gemeinsamen Nenner
+in Sachen Programmiersprache auf die Praxis-Probe zu stellen ist daher nur
+logisch.
+\np
+
+% TODO: mehr über den java-client
+
+\clearpage
+
+\section{Android-Client}
+
+Da wir bereits Erfahrung mit der Programmierung von Android-Anwendungen haben,
+lag es nahe, eine simple Android-GUI zu entwickeln.
+
+\subsection{Implementation}
+
+Damit es ein wenig interessanter wird, haben wir uns entschlossen, diesen in
+der recht neuen Programmiersprache Mirah\footnote{\url{http://www.mirah.org/}}
+zu implementieren. Mirah ist eine Ruby-ähnliche Sprache auf Basis der
+JVM\footnote{Java Virtual Machine}, die im Gegensatz zu anderen JVM-basierten
+Sprachen ohne Standardlibrary daherkommt (und somit keine mehrere MB große
+Android Packages erzeugt) und keinen Geschwindigkeitsnachteil mit sich bringt
+(wie andere Scriptsprachen). Bestechend an Mirah ist die stark an Ruby
+angelehnte Syntax, bei der vor allem die andauernden Typdefinitionen wegfallen,
+die man in Java hat.
+\np
+
+Betrachten wir dazu ein Beispiel aus unserem Code:
+\begin{verbatim}
+  alert = AlertDialog.Builder.new(self)
+  input = EditText.new(self)
+  alert.setView input
+  alert.setTitle 'Your nickname:'
+  alert.setPositiveButton 'Register' do |dialog, which|
+    text = input.getText.toString.trim
+    Log.d('bullshit', "User entered #{text}")
+    RegisterTask.new(activity).execute text
+  end
+\end{verbatim}
+
+Das Analogon in Java sähe folgendermaßen aus:
+\begin{verbatim}
+  Builder alert = new AlertDialog.Builder(this);
+  final EditText input = EditText.new(this);
+  alert.setView(input);
+  alert.setTitle('Your nickname:');
+  alert.setPositiveButton('Register',
+    new DialogInterface.OnClickListener() {
+      public void onClick(DialogInterface dialog, int which) {
+        String text = input.getText().toString().trim();
+        Log.d('bullshit', "User entered " + text);
+        RegisterTask.new(activity).execute(text);
+     }
+   });
+\end{verbatim}
+
+Es ist schnell zu erkennen, dass durch die fehlenden Typen, Klammern, Semikola
+und insbesondere durch die Blocksyntax im Vergleich zu anonymen Klassen der
+Code in Mirah schlanker und einfacher zu lesen ist. Dies ist ein großer Vorteil
+beim Programmieren, denn dadurch wird es einfacher, Code zu schreiben (und
+insbesondere zu warten), sich in fremden Code einzuarbeiten und Code Reviews
+durchzuführen.
+
+\subsection{Techniken}
+
+Der Android-Client verwendet die folgenden wesentlichen Bausteine der
+Android-Plattform:
+
+\begin{description}
+	\item[AndroidHttpClient] ist eine angepasste Version des Apache
+	HTTP-Clients, die sinnvolle Standardeinstellungen für ein mobiles
+	Endgerät mitbringt. Die Klasse verwendet knappe Timeouts, teilt
+	Instanzen aus einem Pool zu (zwecks Wie\-der\-ver\-wen\-dung) und kann mit
+	GZIP-komprimierten Antworten umgehen.
+
+	\item[AsyncTask] stellt eine Aktion dar, die größtenteils im
+	Hintergrund ausgeführt wird. Android-Anwendungen laufen standardmäßig
+	im sogenannten UI-Thread ab. Die soeben erwähnte
+	AndroidHttpClient-Klasse verweigert allerdings aus Effizienzgründen
+	ihre Arbeit, wenn man versucht, sie im UI-Thread zu nutzen. Damit soll
+	erreicht werden, dass Anwendungen niemals auf Netzwerkzugriff
+	blockieren und somit unresponsiv erscheinen.
+
+	Die AsyncTask-Klasse bietet drei Methoden: onPreExecute, doInBackground
+	und onPostExecute. Hiervon laufen alle Methoden außer doInBackground im
+	UI-Thread ab. In der doInBackground-Methode erledigen wir alle Requests
+	zum Server, in den anderen beiden Methoden zeigen wir ggf.
+	Fortschrittsdialoge an (beispielsweise beim Betreten des Spiels, nicht
+	aber bei den Abfragen nach einem Gewinner).
+
+	\item[Activity, Intent] Eine Activity stellt eine Bildschirmansicht in
+	einer Anwendung dar. Wir haben zwei Activities implementiert: Den
+	Startbildschirm mit der Übersicht über die derzeit verfügbaren Spiele
+	und den Spielbildschirm selbst. Die Frage nach dem Nickname oder das
+	Mitteilen eines Gewinners passiert über Dialoge, hierfür verwenden wir
+	keine eigene Activity.
+
+	Ein Intent beschreibt eine Absicht, mit der man das Android-System dazu
+	veranlasst, zu einer neuen Bildschirmansicht zu wechseln. In unserem
+	Fall wechseln wir damit vom Startbildschirm zum eigentlichen Spiel. Den
+	Wechsel zurück zum Startbildschirm löst entweder der Benutzer durch den
+	Zurück-Button (am Telefon) aus oder das Bestätigen der
+	Gewinnermitteilung.
+\end{description}
+
+\subsection{Großes Geheimnis}
+
+Hier folgt ein großes Geheimnis :-).
+
+\clearpage
+\section{AJAX-Client}
+
+Zwar sind aller guter Dinge drei, aber wenn alle Welt vom Web 2.0 mit
+AJAX\--An\-wen\-dung\-en spricht, wollen wir natürlich etwas Praxiserfahrung damit
+sammeln und haben kurzerhand unsere vierte Oberfläche als Webanwendung
+implementiert.
+\np
+
+Zum Einsatz kommt hierbei die JavaScript-Bibliothek
+jQuery\footnote{\url{http://www.jquery.com/}}, welche JavaScript in eine kaum
+wiederzuerkennende Sprache verwandelt. Sie stellt Hilfsfunktionen für nahezu
+alles, was man mit JavaScript treiben könnte (DOM-Manipulation, asynchrone
+JSON- oder XMLHTTPRequests, Animationen, etc…).
+\np
+
+Weiterhin verwenden wir das
+bbq-Plugin\footnote{\url{http://benalman.com/projects/jquery-bbq-plugin/}} um
+innerhalb der URL als Fragmente unseren State zu speichern (das Token für den
+Spieler sowie die ID des aktuellen Spiels).
+\np
+
+Eine typische Funktion sieht beispielsweise so aus:
+\begin{verbatim}
+function click_field(token, game, cnt) {
+  $.post(
+    '/MakeMove',
+    JSON.stringify({ token: token, id: game, field: cnt }),
+    function(reply) {
+      if (reply.success) {
+        return;
+      }
+
+      alert('Fehler: ' + reply.error);
+    }
+  );
+};
+\end{verbatim}
+
+Mit dem \textdollar{}-Zeichen greift man auf jQuery zu, in diesem Fall rufen
+wir die \texttt{post}-Funktion auf, welche einen HTTP POST-Request an die
+übergebene URL schickt. Als zweites Argument serialisieren wir die
+JavaScript-Datenstruktur nach JSON und als letztes Argument übergeben wir eine
+Callback-Funktion, die aufgerufen wird, sobald die Antwort vom Server gelesen
+wurde. Da es sich hierbei um den Click-Handler für ein Feld handelt, passiert
+bei Erfolg nichts weiter (der Server hat zur Kenntnis genommen, dass das Feld
+markiert wurde).
+\np
+
+Wir waren erstaunt darüber, in wie wenig Zeilen Code sich ein Client für unser
+Bullshit-Bingo in JavaScript mithilfe von jQuery realisieren lässt.
 
 \end{document}
