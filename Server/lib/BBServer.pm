@@ -16,6 +16,7 @@ use BBServer::Handler::JoinGame;
 use BBServer::Handler::LeaveGame;
 use BBServer::Handler::MakeMove;
 use BBServer::Handler::CheckWinner;
+use BBServer::Handler::GetWordlists;
 use BBServer::Handler::GUI;
 
 sub webapp {
@@ -29,7 +30,8 @@ sub webapp {
         '/LeaveGame'        => 'BBServer::Handler::LeaveGame',
         '/MakeMove'         => 'BBServer::Handler::MakeMove',
         '/CheckWinner'      => 'BBServer::Handler::CheckWinner',
-        '/gui/(.*)'        => 'BBServer::Handler::GUI',
+        '/GetWordlists'     => 'BBServer::Handler::GetWordlists',
+        '/gui/(.*)'         => 'BBServer::Handler::GUI',
     ]);
 
     $app->psgi_app;

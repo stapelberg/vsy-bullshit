@@ -34,6 +34,14 @@ Response:
 ]
 
 -------------------------------
+Request: GET /GetWordlists
+Body: <ignoriert>
+Response:
+[ "wahl", "default" ]
+
+Gibt die verfügbaren Wortlisten zurück.
+
+-------------------------------
 Request: POST /RegisterPlayer
 Body: {"nickname":"sECuRE"}
 Response:
