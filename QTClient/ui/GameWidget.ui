@@ -6,88 +6,34 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>985</width>
-    <height>489</height>
+    <width>1023</width>
+    <height>575</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="1">
-    <widget class="QListWidget" name="playerList">
-     <property name="maximumSize">
-      <size>
-       <width>200</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
+   <item row="2" column="1" colspan="2">
     <widget class="QLabel" name="gameName">
+     <property name="styleSheet">
+      <string notr="true">background:transparent;</string>
+     </property>
      <property name="text">
       <string>#Game#</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QPushButton" name="leaveButton">
-     <property name="styleSheet">
-      <string notr="true">QPushButton {
-background-color: qlineargradient(spread:pad, x1:0.545, y1:1, x2:0.528273, y2:0, stop:0 rgba(207, 207, 207, 255), stop:1 rgba(255, 255, 255, 255));
-  border-style: outset;
-     border-width: 1px;
-     border-radius: 5px;
-     border-color: gray;
-padding: 5px;
-}
-QPushButton::pressed {
-     border-style: inset;
- }</string>
-     </property>
-     <property name="text">
-      <string>Leave</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" rowspan="3">
-    <widget class="QFrame" name="frame">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+   <item row="4" column="1" colspan="2">
+    <widget class="QTableWidget" name="wordTable">
      <property name="minimumSize">
       <size>
        <width>0</width>
        <height>0</height>
       </size>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_2">
-      <property name="margin">
-       <number>0</number>
-      </property>
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <item row="1" column="0">
-       <widget class="QTableWidget" name="wordTable">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"> QTableView {
+     <property name="styleSheet">
+      <string notr="true"> QTableView {
 	background:transparent;
 }
 
@@ -111,83 +57,201 @@ background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:1, y2:0, stop:0 rgb
 text-decoration:line-through;
 border-color:blue;
 }</string>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Plain</enum>
-        </property>
-        <property name="lineWidth">
-         <number>0</number>
-        </property>
-        <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAlwaysOff</enum>
-        </property>
-        <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarAlwaysOff</enum>
-        </property>
-        <property name="autoScroll">
-         <bool>false</bool>
-        </property>
-        <property name="editTriggers">
-         <set>QAbstractItemView::NoEditTriggers</set>
-        </property>
-        <property name="tabKeyNavigation">
-         <bool>false</bool>
-        </property>
-        <property name="showDropIndicator" stdset="0">
-         <bool>false</bool>
-        </property>
-        <property name="dragDropOverwriteMode">
-         <bool>false</bool>
-        </property>
-        <property name="alternatingRowColors">
-         <bool>false</bool>
-        </property>
-        <property name="selectionMode">
-         <enum>QAbstractItemView::NoSelection</enum>
-        </property>
-        <property name="textElideMode">
-         <enum>Qt::ElideNone</enum>
-        </property>
-        <property name="showGrid">
-         <bool>true</bool>
-        </property>
-        <property name="gridStyle">
-         <enum>Qt::NoPen</enum>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-        <property name="cornerButtonEnabled">
-         <bool>true</bool>
-        </property>
-        <attribute name="horizontalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="horizontalHeaderDefaultSectionSize">
-         <number>160</number>
-        </attribute>
-        <attribute name="horizontalHeaderHighlightSections">
-         <bool>true</bool>
-        </attribute>
-        <attribute name="horizontalHeaderMinimumSectionSize">
-         <number>100</number>
-        </attribute>
-        <attribute name="verticalHeaderVisible">
-         <bool>false</bool>
-        </attribute>
-        <attribute name="verticalHeaderDefaultSectionSize">
-         <number>50</number>
-        </attribute>
-       </widget>
-      </item>
-     </layout>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAsNeeded</enum>
+     </property>
+     <property name="autoScroll">
+      <bool>false</bool>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="tabKeyNavigation">
+      <bool>false</bool>
+     </property>
+     <property name="showDropIndicator" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="dragDropOverwriteMode">
+      <bool>false</bool>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>false</bool>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::NoSelection</enum>
+     </property>
+     <property name="textElideMode">
+      <enum>Qt::ElideNone</enum>
+     </property>
+     <property name="showGrid">
+      <bool>true</bool>
+     </property>
+     <property name="gridStyle">
+      <enum>Qt::NoPen</enum>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+     <property name="cornerButtonEnabled">
+      <bool>true</bool>
+     </property>
+     <attribute name="horizontalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>160</number>
+     </attribute>
+     <attribute name="horizontalHeaderHighlightSections">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="horizontalHeaderMinimumSectionSize">
+      <number>100</number>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>50</number>
+     </attribute>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="label_2">
+   <item row="4" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="1" rowspan="2" colspan="2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="8" column="1" rowspan="2" colspan="2">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="4" column="3">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="7" column="1" colspan="2">
+    <widget class="QListWidget" name="playerList">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777214</height>
+      </size>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>24</width>
+       <height>24</height>
+      </size>
+     </property>
+     <property name="flow">
+      <enum>QListView::LeftToRight</enum>
+     </property>
+     <property name="layoutMode">
+      <enum>QListView::SinglePass</enum>
+     </property>
+     <property name="spacing">
+      <number>8</number>
+     </property>
+     <property name="viewMode">
+      <enum>QListView::IconMode</enum>
+     </property>
+     <property name="uniformItemSizes">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
+    <widget class="QPushButton" name="leaveButton">
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+background-color: qlineargradient(spread:pad, x1:0.545, y1:1, x2:0.528273, y2:0, stop:0 rgba(207, 207, 207, 255), stop:1 rgba(255, 255, 255, 255));
+  border-style: outset;
+     border-width: 1px;
+     border-radius: 5px;
+     border-color: gray;
+padding: 5px;
+}
+QPushButton::pressed {
+     border-style: inset;
+ }</string>
+     </property>
+     <property name="text">
+      <string>Leave</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QLabel" name="label">
+     <property name="styleSheet">
+      <string notr="true">background:transparent;</string>
+     </property>
      <property name="text">
       <string>Players:</string>
      </property>
@@ -195,6 +259,8 @@ border-color:blue;
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources/bingo.qrc"/>
+ </resources>
  <connections/>
 </ui>

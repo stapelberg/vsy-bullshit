@@ -9,6 +9,7 @@
 #include <QNetworkAccessManager>
 #include <QVariantMap>
 #include <QMap>
+#include <QMessageBox>
 
 #include "BingoMainWindow.h"
 #include "Network.h"
@@ -57,7 +58,7 @@ namespace Bingo {
 		QNetworkReply* reply;
 
 		 // If JSONRequest Data was passed, we post the request-data.
-		 if(data && !data->get()) {
+		 if(!data->get()) {
 			QVariantMap variant = QJson::QObjectHelper::qobject2qvariant(data);
 			reply = manager->post(request, serializer.serialize(variant));
 		 } else {
@@ -65,9 +66,8 @@ namespace Bingo {
 		 }
 		 
 		 // Map Object address to request type
-		 if(data) {
-			requests[_addr(reply)] =  data->getType();
-		 }
+		requests[_addr(reply)] =  data->getType();
+
 
 		 connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),
 			 this, SLOT(slotError(QNetworkReply::NetworkError)));
@@ -83,7 +83,7 @@ namespace Bingo {
 		if(ok) {
 			parent->jsonResult(result, requests[_addr(reply)]);
 		} else {
-			parent->reportError(reply->errorString());
+			parent->reportError(parser.errorString());
 		}
 
 		requests.remove(_addr(reply));

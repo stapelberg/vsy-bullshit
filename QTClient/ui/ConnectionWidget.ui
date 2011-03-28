@@ -35,7 +35,7 @@ QPushButton::pressed {
    <property name="sizeConstraint">
     <enum>QLayout::SetDefaultConstraint</enum>
    </property>
-   <item row="1" column="1" colspan="3">
+   <item row="1" column="1" colspan="4">
     <widget class="QFrame" name="frame_2">
      <property name="minimumSize">
       <size>
@@ -60,7 +60,7 @@ border:0 px;</string>
      <layout class="QVBoxLayout" name="verticalLayout"/>
     </widget>
    </item>
-   <item row="2" column="1" colspan="3">
+   <item row="2" column="1" colspan="4">
     <widget class="QComboBox" name="serverList">
      <property name="statusTip">
       <string/>
@@ -101,10 +101,14 @@ border:0 px;</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1" colspan="3">
+   <item row="3" column="1" colspan="4">
     <widget class="QLineEdit" name="username">
      <property name="styleSheet">
-      <string notr="true">padding: 3.5px;</string>
+      <string notr="true">background-image:url(:/Bingo/icons/user_small.png);
+background-repeat:no-repeat;
+padding-left:25px;
+background-position: left center;
+background-origin: padding;</string>
      </property>
      <property name="inputMask">
       <string/>
@@ -136,7 +140,7 @@ border:0 px;</string>
      </property>
     </spacer>
    </item>
-   <item row="1" column="4">
+   <item row="1" column="5">
     <spacer name="horizontalSpacer_2">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -149,8 +153,14 @@ border:0 px;</string>
      </property>
     </spacer>
    </item>
-   <item row="4" column="2">
+   <item row="4" column="2" colspan="2">
     <widget class="QPushButton" name="connectButton">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">QPushButton::pressed {
      border-style: inset;
@@ -159,12 +169,16 @@ border:0 px;</string>
      <property name="text">
       <string>Connect</string>
      </property>
+     <property name="icon">
+      <iconset resource="../resources/bingo.qrc">
+       <normaloff>:/Bingo/icons/plug-connect.png</normaloff>:/Bingo/icons/plug-connect.png</iconset>
+     </property>
      <property name="flat">
       <bool>false</bool>
      </property>
     </widget>
    </item>
-   <item row="5" column="1" colspan="3">
+   <item row="5" column="2" colspan="3">
     <spacer name="verticalSpacer_2">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -177,7 +191,7 @@ border:0 px;</string>
      </property>
     </spacer>
    </item>
-   <item row="0" column="1" colspan="3">
+   <item row="0" column="2" colspan="3">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -193,6 +207,7 @@ border:0 px;</string>
   </layout>
  </widget>
  <resources>
+  <include location="../resources/bingo.qrc"/>
   <include location="../resources/bingo.qrc"/>
  </resources>
  <connections/>

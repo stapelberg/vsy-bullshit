@@ -19,6 +19,8 @@ namespace Bingo {
 		QString id;
 		QString creationTime;
 		QString name;
+		QString size;
+		QString wordlist;
 		QList<QVariant> participants;
 	} GameInfo;
 	/**

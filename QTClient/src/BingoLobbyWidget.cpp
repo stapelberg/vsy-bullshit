@@ -50,12 +50,14 @@ namespace Bingo {
 	// -------------------------------------------------------------------------
 	void BingoLobbyWidget::refreshList() {
 		// Retrieve current Games
-		bingoMain->jsonRequest("CurrentGames");
+		JSONCurrentGames request;
+		bingoMain->jsonRequest("CurrentGames", &request);
+
 	}
 
 	// -------------------------------------------------------------------------
 	void BingoLobbyWidget::receiveJSON(JSONRequestType type, const QVariant& data) {
-		if(type == JSON_Get) {
+		if(type == JSON_CURRENT_GAMES) {
 			ui.currentGamesList->clear();
 
 			foreach(QVariant m, data.toList()) {
@@ -73,12 +75,21 @@ namespace Bingo {
 					gameInformation[gameName].name = gameName;
 					gameInformation[gameName].id = info["id"].toString();
 
-					gameInformation[gameName].participants =
-						info["participants"].toList();
-					ui.currentGamesList->addItem(gameName);
+					gameInformation[gameName].size = info["size"].toString();
+					gameInformation[gameName].wordlist = info["wordlist"].toString();
+
+					gameInformation[gameName].participants = info["participants"].toList();
+					ui.currentGamesList->addItem(
+						new QListWidgetItem(QIcon(":/Bingo/icons/game.png"), 
+						gameName));
 				} 
 			}
 
+		} else if(type == JSON_GET_WORDLISTS) {
+			ui.wordList->clear();
+			foreach(QVariant list, data.toList()) {
+				ui.wordList->addItem(list.toString());
+			}
 		} else if(type == JSON_CREATE_GAME) {
 			QVariantMap gameData = data.toMap();
 			QString gameID = gameData["id"].toString();
@@ -125,7 +136,11 @@ namespace Bingo {
 	void BingoLobbyWidget::activate() {
 	  this->refreshList();
 	  ui.playerNickLabel->setText(tr("Connected as %1").arg(bingoMain->getNick()));
-	  this->gameListUpdateTimer->start();
+	  this->gameListUpdateTimer->start();		
+
+	  // Retrieve Wordlists
+	 // JSONGetWordlists request;
+	 // bingoMain->jsonRequest("GetWordlists", &request);
 	}
 	
 	// -------------------------------------------------------------------------
@@ -141,8 +156,12 @@ namespace Bingo {
 			lastGameName = ui.currentGamesList->currentItem()->text();
 			
 			foreach(QVariant v, gameInformation[lastGameName].participants) {
-				ui.participants->addItem(v.toString());
+				ui.participants->addItem(new QListWidgetItem(QIcon(":/Bingo/icons/User.png"), v.toString()));
 			}
+
+			ui.gameSizeInfo->setText(gameInformation[lastGameName].size);
+			ui.wordlistInfo->setText(gameInformation[lastGameName].wordlist);
+
 		}
 	}
 
@@ -157,7 +176,7 @@ namespace Bingo {
 			QString size = ui.gameSize->currentText();
 			size.truncate(1);
 			request.setSize(size);
-
+			request.setWordlist(ui.wordList->currentText());
 			bingoMain->jsonRequest("CreateGame",&request);
 		}
 	}

@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Buzzword Bingo (VSY-QTClient)</string>
+   <string>Bullshit Bingo (VSY-QTClient)</string>
   </property>
   <property name="styleSheet">
    <string notr="true"> QFrame, QLabel, QToolTip {

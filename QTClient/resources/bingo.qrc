@@ -1,7 +1,13 @@
 <RCC>
   <qresource prefix="Bingo">
+    <file>icons/user-gray.png</file>
+    <file>icons/user_small.png</file>
+    <file>icons/game.png</file>
+    <file>icons/User.png</file>
     <file>icons/01-refresh.png</file>
     <file>logo.png</file>
+    <file>icons/server-network.png</file>
+    <file>icons/plug-connect.png</file>
     <file>working.gif</file>
     <file>icon.png</file>
     <file>dropdown.png</file>

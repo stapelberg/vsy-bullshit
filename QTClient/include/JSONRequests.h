@@ -40,6 +40,12 @@ class JSONCurrentGames : public JSONRequest {
 };
 
 // -----------------------------------------------------------------------------
+class JSONGetWordlists : public JSONRequest {
+	JSONRequestType getType() { return JSON_GET_WORDLISTS; }
+	bool get() { return true; }
+};
+
+// -----------------------------------------------------------------------------
 // Register Player Request
 class JSONRegisterPlayer : public JSONRequest {
 
@@ -69,6 +75,7 @@ class JSONCreateGame : public JSONRequest {
 	Q_PROPERTY(QString token READ token WRITE setToken)
 	Q_PROPERTY(QString name READ getName WRITE setName)
 	Q_PROPERTY(QString size READ size WRITE setSize)
+	Q_PROPERTY(QString wordlist READ wordlist WRITE setWordlist)
 
 public:
 
@@ -84,13 +91,16 @@ public:
 	QString size() const { return _size; }
 	void setSize(const QString& size) { this->_size = size;}
 
+	QString wordlist() const { return _wordlist; }
+	void setWordlist(const QString& list) { this->_wordlist = list;}
+
 	JSONRequestType getType() { return JSON_CREATE_GAME; }
 
 private:
 	QString _token;
 	QString _size;
 	QString _name;
-
+	QString _wordlist;
 };
 
 // -----------------------------------------------------------------------------
@@ -121,16 +131,19 @@ private:
 
 };
 
+// -----------------------------------------------------------------------------
 class JSONLeaveGame : public JSONJoinGame {
 public:
 	JSONRequestType getType() { return JSON_LEAVE_GAME; }
 };
 
+// -----------------------------------------------------------------------------
 class JSONCheckWinner : public JSONJoinGame {
 public:
 	JSONRequestType getType() { return JSON_CHECK_WINNER; }
 };
 
+// -----------------------------------------------------------------------------
 class JSONMakeMove : public JSONRequest {
 
 	Q_OBJECT

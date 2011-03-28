@@ -162,6 +162,7 @@ namespace Bingo {
 		
 		widgets[activeWidget]->show();
 		widgets[activeWidget]->activate();
+		resizeEvent(0);
 	}
 
 	// -------------------------------------------------------------------------

@@ -22,7 +22,7 @@ namespace Bingo {
 
 			// Fill list
 			foreach(QString serverName, serverList) {
-				ui.serverList->addItem(serverName);
+				ui.serverList->addItem(QIcon(":/Bingo/icons/server-network.png"), serverName);
 			}
 
 			// Connect Actions

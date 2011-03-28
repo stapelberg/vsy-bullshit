@@ -36,7 +36,7 @@ namespace Bingo {
 
 	// -------------------------------------------------------------------------
 	void BingoGameWidget::receiveJSON(JSONRequestType type, const QVariant& data) {
-   		if(type == JSON_Get) {
+   		if(type == JSON_CURRENT_GAMES) {
 			ui.playerList->clear();
 			QList<QVariant> players;
 
@@ -47,8 +47,8 @@ namespace Bingo {
 			} 
 
 			if(!players.isEmpty()) {
-				foreach(QVariant p, players) {							 
-					ui.playerList->addItem(p.toString());
+				foreach(QVariant p, players) {
+					ui.playerList->addItem(new QListWidgetItem(QIcon(":/Bingo/icons/User.png"), p.toString()));
 				}
 			}
 		} else if(type == JSON_LEAVE_GAME) {
@@ -67,7 +67,8 @@ namespace Bingo {
 	
 	// -------------------------------------------------------------------------
 	void BingoGameWidget::updatePlayerList() {
-		bingoMain->jsonRequest("CurrentGames");
+		JSONCurrentGames request;
+		bingoMain->jsonRequest("CurrentGames", &request);
 	}
 	
 	// -------------------------------------------------------------------------
@@ -92,10 +93,21 @@ namespace Bingo {
 	void BingoGameWidget::activate() {
 		playerListUpdate->start();					 
 		
+		// Adjust Table Size
 		int size = bingoMain->getCurrentGame().size;
 		ui.wordTable->setColumnCount(size);
 		ui.wordTable->setRowCount(size);
+		ui.wordTable->setMinimumHeight(
+			ui.wordTable->verticalHeader()->defaultSectionSize()*size  
+			+ ui.wordTable->lineWidth() *size + 10
+			);
+		ui.wordTable->setMinimumWidth(
+			ui.wordTable->horizontalHeader()->defaultSectionSize()*size 
+			+ ui.wordTable->lineWidth() *size  + 10
+			);
 
+
+		// Fill table with words
 		int i = 0;
 		int y = 0;
 		foreach(QString word, bingoMain->getCurrentGame().words) {
