@@ -56,7 +56,7 @@ diesem Namen gibt. 24 Stunden nach der letzten Aktivität verfällt das Token.
 
 -------------------------------
 Request: POST /CreateGame
-Body: {"token":"939393", "size":3, "name":"bar"}
+Body: {"token":"939393", "size":3, "name":"bar", "wordlist":"wahl"}
 Response:
 {"success":true,
  "error":"",
@@ -67,6 +67,8 @@ Response:
    "Blah",
    "Management"
  ]}
+
+Wenn "wordlist" nicht angegeben wurde, wird "default" benutzt.
 
 Die Wörter müssen von links oben nach rechts verteilt werden, z.B. bei einem
 3x3 Feld folgendermaßen:

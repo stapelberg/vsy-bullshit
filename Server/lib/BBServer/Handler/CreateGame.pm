@@ -23,11 +23,11 @@ sub handle_request {
     my $player = Players->instance->by_token($token);
 
     my $game;
-    if (exists $request->{name}) {
-        $game = Game->new(size => $size, name => $request->{name});
-    } else {
-        $game = Game->new(size => $size);
+    my %opts;
+    for my $arg (qw(size name wordlist)) {
+        $opts{$arg} = $request->{$arg} if exists $request->{$arg};
     }
+    $game = Game->new(%opts);
     $game->add_player($player);
 
     Games->instance->add_game($game);
