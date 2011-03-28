@@ -92,11 +92,12 @@ public class GameManagement {
 	 * Create a game at the server
 	 * @param name name of the game
 	 * @param size 3 to 6 are possible
+	 * @param wordlist name of the wordlist to play with
 	 * @throws JSONException
 	 * @throws ClientProtocolException
 	 * @throws IOException
 	 */
-	public void createGame(String name, int size) throws JSONException, ClientProtocolException, IOException {
+	public void createGame(String name, int size, String wordlist) throws JSONException, ClientProtocolException, IOException {
 		JSONObject request = new JSONObject();
 		JSONObject response = null;
 		
@@ -104,6 +105,7 @@ public class GameManagement {
 		request.put("token", this.token);
 		request.put("size", size);
 		request.put("name", name);
+		request.put("wordlist", wordlist);
 		
 		response = reqHandler.postRequest("CreateGame", request);
 		
@@ -234,5 +236,26 @@ public class GameManagement {
 			this.error = response.getString("error");
 		
 		return winner;
+	}
+	
+	/**
+	 * Request the available wordlists from the server
+	 * @return The names of the wordlists available
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws JSONException
+	 */
+	public String[] getWordlists() throws ClientProtocolException, IOException, JSONException {
+		String[] lists = null;
+		JSONArray response = null;
+		
+		response = reqHandler.getRequest("GetWordlists");
+		lists = (response.length()>0) ? new String[response.length()] : null;
+		
+		for (int i=0; i < response.length(); i++) {
+			lists[i] = response.getString(i);
+		}
+		
+		return lists;
 	}
 }
