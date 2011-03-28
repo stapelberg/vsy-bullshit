@@ -20,6 +20,7 @@ sub describe_game {
         created => $_->created,
         size => $_->size,
         winner => (defined($_->winner) ? $_->winner->nickname : undef),
+        wordlist => $_->wordlist,
     };
 }
 

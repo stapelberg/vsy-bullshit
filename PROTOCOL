@@ -22,14 +22,16 @@ Response:
    "name":"foo",
    "created":123,
    "size":3,
-   "winner":null
+   "winner":null,
+   "wordlist":"default"
  },
  {"id":"333...",
   "participants": [ ],
    "name":"Unbenannt 29eaa93",
    "created":456,
    "size":5,
-   "winner":null
+   "winner":null,
+   "wordlist":"wahl"
  }
 ]
 
