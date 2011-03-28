@@ -228,4 +228,56 @@ Android-Plattform:
 
 Hier folgt ein großes Geheimnis :-).
 
+\clearpage
+\section{AJAX-Client}
+
+Zwar sind aller guter Dinge drei, aber wenn alle Welt vom Web 2.0 mit
+AJAX\--An\-wen\-dung\-en spricht, wollen wir natürlich etwas Praxiserfahrung damit
+sammeln und haben kurzerhand unsere vierte Oberfläche als Webanwendung
+implementiert.
+\np
+
+Zum Einsatz kommt hierbei die JavaScript-Bibliothek
+jQuery\footnote{\url{http://www.jquery.com/}}, welche JavaScript in eine kaum
+wiederzuerkennende Sprache verwandelt. Sie stellt Hilfsfunktionen für nahezu
+alles, was man mit JavaScript treiben könnte (DOM-Manipulation, asynchrone
+JSON- oder XMLHTTPRequests, Animationen, etc…).
+\np
+
+Weiterhin verwenden wir das
+bbq-Plugin\footnote{\url{http://benalman.com/projects/jquery-bbq-plugin/}} um
+innerhalb der URL als Fragmente unseren State zu speichern (das Token für den
+Spieler sowie die ID des aktuellen Spiels).
+\np
+
+Eine typische Funktion sieht beispielsweise so aus:
+\begin{verbatim}
+function click_field(token, game, cnt) {
+  $.post(
+    '/MakeMove',
+    JSON.stringify({ token: token, id: game, field: cnt }),
+    function(reply) {
+      if (reply.success) {
+        return;
+      }
+
+      alert('Fehler: ' + reply.error);
+    }
+  );
+};
+\end{verbatim}
+
+Mit dem \textdollar{}-Zeichen greift man auf jQuery zu, in diesem Fall rufen
+wir die \texttt{post}-Funktion auf, welche einen HTTP POST-Request an die
+übergebene URL schickt. Als zweites Argument serialisieren wir die
+JavaScript-Datenstruktur nach JSON und als letztes Argument übergeben wir eine
+Callback-Funktion, die aufgerufen wird, sobald die Antwort vom Server gelesen
+wurde. Da es sich hierbei um den Click-Handler für ein Feld handelt, passiert
+bei Erfolg nichts weiter (der Server hat zur Kenntnis genommen, dass das Feld
+markiert wurde).
+\np
+
+Wir waren erstaunt darüber, in wie wenig Zeilen Code sich ein Client für unser
+Bullshit-Bingo in JavaScript mithilfe von jQuery realisieren lässt.
+
 \end{document}
