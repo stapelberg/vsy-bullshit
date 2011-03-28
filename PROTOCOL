@@ -22,16 +22,26 @@ Response:
    "name":"foo",
    "created":123,
    "size":3,
-   "winner":null
+   "winner":null,
+   "wordlist":"default"
  },
  {"id":"333...",
   "participants": [ ],
    "name":"Unbenannt 29eaa93",
    "created":456,
    "size":5,
-   "winner":null
+   "winner":null,
+   "wordlist":"wahl"
  }
 ]
+
+-------------------------------
+Request: GET /GetWordlists
+Body: <ignoriert>
+Response:
+[ "wahl", "default" ]
+
+Gibt die verfügbaren Wortlisten zurück.
 
 -------------------------------
 Request: POST /RegisterPlayer
@@ -48,7 +58,7 @@ diesem Namen gibt. 24 Stunden nach der letzten Aktivität verfällt das Token.
 
 -------------------------------
 Request: POST /CreateGame
-Body: {"token":"939393", "size":3, "name":"bar"}
+Body: {"token":"939393", "size":3, "name":"bar", "wordlist":"wahl"}
 Response:
 {"success":true,
  "error":"",
@@ -59,6 +69,8 @@ Response:
    "Blah",
    "Management"
  ]}
+
+Wenn "wordlist" nicht angegeben wurde, wird "default" benutzt.
 
 Die Wörter müssen von links oben nach rechts verteilt werden, z.B. bei einem
 3x3 Feld folgendermaßen:

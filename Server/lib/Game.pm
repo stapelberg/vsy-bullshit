@@ -57,6 +57,12 @@ has 'name' => (is => 'ro', isa => 'Str', default => sub {
     my ($self) = @_;
     'Unbenannt ' . substr($self->id, 0, 5)
 });
+=head2 wordlist
+
+The name of the wordlist to use.
+
+=cut
+has 'wordlist' => (is => 'ro', isa => 'Str', default => 'default');
 =head2 created
 
 UNIX timestamp representing the creation time of this game object.
@@ -113,7 +119,7 @@ sub _build_id {
 
 sub _build_words {
     my ($self) = @_;
-    my $wordfile = _slurp 'wordlists/default.txt';
+    my $wordfile = _slurp 'wordlists/' . $self->wordlist . '.txt';
     my @words = split("\n", $wordfile);
     my @chosen;
     my $necessary = $self->size * $self->size;

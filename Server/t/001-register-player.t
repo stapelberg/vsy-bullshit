@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use Test::More;
 use Test::Exception;
+use Data::Dumper;
 
 use JSON::XS;
 use LWP::UserAgent;
@@ -149,5 +150,11 @@ is($json->{success}, JSON::XS::true, 'MakeMove successful');
 $json = post('CheckWinner', { token => $token, id => $id });
 is($json->{success}, JSON::XS::true, 'CheckWinner successful');
 is($json->{winner}, $nickname, 'I am the winner');
+
+$json = post('CreateGame', { token => $token, size => 3, wordlist => 'wahl' });
+is($json->{success}, JSON::XS::true, 'Game created');
+ok(exists $json->{id}, 'game id included in reply');
+ok(exists $json->{words}, 'game words included in reply');
+diag('words = ' . Dumper($json->{words}));
 
 done_testing;
