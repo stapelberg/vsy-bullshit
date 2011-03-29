@@ -159,7 +159,7 @@ namespace Bingo {
 				ui.participants->addItem(new QListWidgetItem(QIcon(":/Bingo/icons/User.png"), v.toString()));
 			}
 
-			ui.gameSizeInfo->setText(gameInformation[lastGameName].size);
+			ui.gameSizeInfo->setText(tr("%1x%1").arg(gameInformation[lastGameName].size));
 			ui.wordlistInfo->setText(gameInformation[lastGameName].wordlist);
 
 		}
