@@ -23,10 +23,21 @@ public class JavaBullshitBingo extends JFrame {
 		this.add(new MenuBar(), BorderLayout.NORTH);
 		
 		// TODO Draw the panel
-		this.loginPanel = new LoginPanel();
+		this.loginPanel = new LoginPanel(this);
 		this.add(this.loginPanel, BorderLayout.CENTER);
 		
 		this.pack();
+	}
+	
+	public void setManager(GameManagement manager) {
+		this.manager = manager;
+	}
+	public GameManagement getManager() {
+		return this.manager;
+	}
+	
+	public void setLoginPanelVisible(boolean visible) {
+		this.loginPanel.setVisible(visible);
 	}
 	
 	public static void main(String[] args) { 

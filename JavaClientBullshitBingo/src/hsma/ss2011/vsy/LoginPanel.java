@@ -1,13 +1,14 @@
 package hsma.ss2011.vsy;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -16,14 +17,17 @@ import javax.swing.JTextField;
  * available game sessions and to create new ones.
  */
 public class LoginPanel extends JPanel implements ActionListener {
+	private JavaBullshitBingo parent;
 	private JButton connect;
 	private JTextField server;
 	private JTextField port;
 	private JTextField nick;
 	
-	public LoginPanel() {
+	public LoginPanel(JavaBullshitBingo parent) {
 		this.setVisible(false);
 		this.setLayout(new GridLayout(2, 1));
+		
+		this.parent = parent;
 		
 		this.createGameManagementPanel();
 		this.setVisible(true);
@@ -60,8 +64,17 @@ public class LoginPanel extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+		if (e.getSource() == this.connect) {
+			try {
+				this.parent.setManager(new GameManagement(this.server.getText(), Integer.parseInt(this.port.getText()), this.nick.getText()));
+				this.parent.setLoginPanelVisible(false);
+			} catch (NumberFormatException e1) {
+				new JOptionPane(e1.toString(), JOptionPane.ERROR_MESSAGE);
+			} catch (MalformedURLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
 	}
 
 }
