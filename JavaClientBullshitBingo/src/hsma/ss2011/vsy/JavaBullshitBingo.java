@@ -11,7 +11,8 @@ import javax.swing.JLabel;
  * @since 20110320
  */
 public class JavaBullshitBingo extends JFrame {
-	private ManagementPanel gameManagement;
+	private LoginPanel loginPanel;
+	private GameManagement manager;
 	
 	public JavaBullshitBingo() {
 		this.setName("BullshitBingo");
@@ -22,8 +23,8 @@ public class JavaBullshitBingo extends JFrame {
 		this.add(new MenuBar(), BorderLayout.NORTH);
 		
 		// TODO Draw the panel
-		this.gameManagement = new ManagementPanel();
-		this.add(this.gameManagement, BorderLayout.CENTER);
+		this.loginPanel = new LoginPanel();
+		this.add(this.loginPanel, BorderLayout.CENTER);
 		
 		this.pack();
 	}

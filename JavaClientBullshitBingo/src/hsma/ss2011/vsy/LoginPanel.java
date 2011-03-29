@@ -15,13 +15,13 @@ import javax.swing.JTextField;
  * Frame to connect to a server and get a list of currently
  * available game sessions and to create new ones.
  */
-public class ManagementPanel extends JPanel implements ActionListener {
+public class LoginPanel extends JPanel implements ActionListener {
 	private JButton connect;
 	private JTextField server;
 	private JTextField port;
 	private JTextField nick;
 	
-	public ManagementPanel() {
+	public LoginPanel() {
 		this.setVisible(false);
 		this.setLayout(new GridLayout(2, 1));
 		
