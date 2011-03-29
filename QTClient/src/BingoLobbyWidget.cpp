@@ -138,9 +138,9 @@ namespace Bingo {
 	  ui.playerNickLabel->setText(tr("Connected as %1").arg(bingoMain->getNick()));
 	  this->gameListUpdateTimer->start();		
 
-	  // Retrieve Wordlists
-	 // JSONGetWordlists request;
-	 // bingoMain->jsonRequest("GetWordlists", &request);
+		// Retrieve Wordlists
+		JSONGetWordlists request;
+		bingoMain->jsonRequest("GetWordlists", &request);
 	}
 	
 	// -------------------------------------------------------------------------

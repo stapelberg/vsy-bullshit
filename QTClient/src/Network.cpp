@@ -54,20 +54,17 @@ namespace Bingo {
 		request.setUrl(QUrl("http://"+address+"/"+command));
 		request.setRawHeader("User-Agent", "VSY QTBingoClient");
 
-		// Prepare reply
 		QNetworkReply* reply;
 
-		 // If JSONRequest Data was passed, we post the request-data.
-		 if(!data->get()) {
+		if(data->get()) {
+			reply = manager->get(request);
+		} else {
 			QVariantMap variant = QJson::QObjectHelper::qobject2qvariant(data);
 			reply = manager->post(request, serializer.serialize(variant));
-		 } else {
-			 reply = manager->get(request);
-		 }
-		 
+		}
+
 		 // Map Object address to request type
 		requests[_addr(reply)] =  data->getType();
-
 
 		 connect(reply, SIGNAL(error(QNetworkReply::NetworkError)),
 			 this, SLOT(slotError(QNetworkReply::NetworkError)));
@@ -76,6 +73,8 @@ namespace Bingo {
 
 	// -------------------------------------------------------------------------
 	void Network::replyFinished(QNetworkReply* reply) {
+	//    lock.lockForWrite();
+		
 		QJson::Parser parser;
 		bool ok;
 		QVariant result = parser.parse (reply->readAll(), &ok);
@@ -83,14 +82,14 @@ namespace Bingo {
 		if(ok) {
 			parent->jsonResult(result, requests[_addr(reply)]);
 		} else {
-			parent->reportError(parser.errorString());
+			parent->reportError("Parser Error");
 		}
 
 		requests.remove(_addr(reply));
 		
 		reply->deleteLater();
 		busy = false;
-		
+	//	lock.unlock();
 	}
 
 

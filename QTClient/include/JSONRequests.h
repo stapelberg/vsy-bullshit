@@ -35,12 +35,22 @@ public:
 // -----------------------------------------------------------------------------
 // List Current Games
 class JSONCurrentGames : public JSONRequest {
-		JSONRequestType getType() { return JSON_CURRENT_GAMES; }
-		bool get() { return true; }
+	Q_OBJECT
+public: 
+	JSONCurrentGames(QObject* parent = 0) : JSONRequest(parent) {}
+	~JSONCurrentGames() {}
+
+	JSONRequestType getType() { return JSON_CURRENT_GAMES; }
+	bool get() { return true; }
 };
 
 // -----------------------------------------------------------------------------
 class JSONGetWordlists : public JSONRequest {
+	Q_OBJECT
+public: 
+	JSONGetWordlists(QObject* parent = 0) : JSONRequest(parent) {}
+	~JSONGetWordlists() {}
+
 	JSONRequestType getType() { return JSON_GET_WORDLISTS; }
 	bool get() { return true; }
 };

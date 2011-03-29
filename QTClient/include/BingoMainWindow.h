@@ -62,7 +62,7 @@ namespace Bingo {
 		* Send a JSON request to a remote host, as specified in the Network instance.
 		* @note setupNetwork has to be called prior to using this function.
 		*/
-		void jsonRequest(const QString& command, JSONRequest* requestData = 0);
+		void jsonRequest(const QString& command, JSONRequest* requestData);
 		
 		/**
 		* Callback for the Network manager.

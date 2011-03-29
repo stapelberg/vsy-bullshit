@@ -96,13 +96,13 @@ namespace Bingo {
 
 	// -------------------------------------------------------------------------
 	void BingoMainWindow::jsonResult(const QVariant& data, JSONRequestType type) {
-		if(type == JSON_Get) {
-			widgets[activeWidget]->receiveJSON(JSON_Get, data);
+		if(type == JSON_CURRENT_GAMES || type == JSON_GET_WORDLISTS) {
+			widgets[activeWidget]->receiveJSON(type, data);
 		} else {
 			if(data.toMap()["success"].toBool()) {
 				widgets[activeWidget]->receiveJSON(type, data);
 			} else {
-				reportError(data.toMap()["error"].toString());
+				reportError(tr("JSON Error: %1").arg(data.toMap()["error"].toString()));
 			}
 		}
 
@@ -182,13 +182,16 @@ namespace Bingo {
 
 	// -------------------------------------------------------------------------
 	void BingoMainWindow::reportError(const QString& msg) {
-		//QMessageBox::critical(this,tr("Bingo"),msg,QMessageBox::Ok);
-		ui.indicator->setVisible(false);
-		ui.errorMessage->setVisible(true);
-		ui.errorMessage->setText(msg.isEmpty() ? tr("Unknown Error occurred.") : msg);
+		if(msg.length() > 80) {
+			QMessageBox::critical(this,tr("Bingo"),msg,QMessageBox::Ok);
+		} else {
+			ui.indicator->setVisible(false);
+			ui.errorMessage->setVisible(true);
+			ui.errorMessage->setText(msg.isEmpty() ? tr("Unknown Error occurred.") : msg);
 
-		if(msg.compare(tr("Network error")) == 0) {
-			setActiveWidget(WIDGET_CONNECTION);
+			if(msg.compare(tr("Network error")) == 0) {
+				setActiveWidget(WIDGET_CONNECTION);
+			}
 		}
 	}
 

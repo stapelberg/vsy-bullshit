@@ -15,7 +15,7 @@
 #include <QUrl>
 #include <QNetworkRequest>
 #include <QNetworkReply>
-
+#include <QReadWriteLock>
 
 #include "serializer.h"
 
@@ -41,7 +41,7 @@ namespace Bingo {
 		/**
 		* Request JSON Data with the given request and POST Data to use.
 		*/
-		void requestJSON(const QString& request, JSONRequest* data = 0);
+		void requestJSON(const QString& request, JSONRequest* data);
 
 		/**
 		* Can be used to check whether the Network Manager is currently busy 
@@ -58,9 +58,10 @@ namespace Bingo {
 
 	private:
 		QString address;
-		 BingoMainWindow *parent;
+		BingoMainWindow *parent;
 		QNetworkAccessManager *manager;
 		QJson::Serializer serializer;
+		QReadWriteLock lock;
 
 		QMap<QString, JSONRequestType> requests;
 
