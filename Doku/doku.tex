@@ -151,9 +151,34 @@ is(@{$json->{words}}, 9, 'nine words for a 3x3 game delivered');
 
 Qt (gesprochen: cute) ist ein GUI-Framework für C++, welches
 plattformunabhängig zur Verfügung steht und von Nokia entwickelt wird.
+
+Da Qt-Kenntnisse in der Gruppe bereits vorhanden waren und man zur Abwechslung mal wieder einen Abstieg in die C++-Pointerhölle unternehmen konnte, entschieden wir uns prompt dazu eine solche Variante unseres Clients zu implementieren.
 \np
 
-% TODO: mehr über den qt-client
+\subsection{Eingesetzte Bibliotheken \& Software}
+Da sich C++-Programme nur nativ übersetzen lassen und wir unterschiedlichste 
+Betriebssysteme sowohl privat als auch zur Bearbeitung dieser Aufgaben im Einsatz 
+haben, setzen wir anstatt der klassischen Makefiles CMake
+\footnote{"Cross-Platform Make", \url{http://www.cmake.org/}} als Buildsystem ein.
+\np
+ 
+Qt liefert eine Anzahl an nützlichen Bibliotheken von Haus aus mit, demnach
+können wir für Netzwerk-Funktionalität einfach die QNetwork-Bibliothek verwenden.
+Um JSON-Daten vom Server auszuwerten, müssen wir jedoch auf Drittsoftware
+zurückgreifen und benutzen die bewährte QJson\footnote{\url{http://qjson.sourceforge.net/}}-Bibliothek.
+\np
+\subsection{Architektur}
+Grob umrissen wird folgendes Kommunikationskonzept eingesetzt:
+
+\begin{itemize}
+	\item Clientseitig spezielle JSON-Requestobjekte serialisieren und per POST/GET via http an den Server senden.
+	\item Antworten in Rohform in Nutzdaten wandeln und auswerten.
+\end{itemize}
+
+Dabei wird stark auf Qt-spezifische Features zurückgegriffen, unter anderem Q\_Properties, die mithilfe des MOC\footnote{Meta Object Compiler} in einfach serialisierbare Klassen übersetzt werden können, sowie das QVariant-Konstrukt als Container für beliebige Nutzdaten.   
+\np
+
+% TODO: Noch mehr über den qt-client, Klassendiagramme usw.
 
 \clearpage
 \section{Java-Client}
