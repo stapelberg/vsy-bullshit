@@ -48,7 +48,7 @@ Thorsten Töpper\\
 \section{Architektur}
 
 Als Architektur haben wir uns für ein Client/Server-Modell entschieden, da es
-deutlich einfacher zu implementieren ist als ein Peer-to-peer-Netz. Bei
+deutlich einfacher zu implementieren ist als ein Peer-to-Peer-Netz. Bei
 letzterem gibt es das Problem des Nachrichtentransports: Entweder müssen alle
 Peers sich mit allen anderen verbinden um in der Lage zu sein, Nachrichten an
 alle zu senden (Full-Mesh) oder man braucht eine Form der
@@ -187,6 +187,44 @@ Im Studium an der HS-Mannheim lernt man Java. Den kleinsten gemeinsamen Nenner
 in Sachen Programmiersprache auf die Praxis-Probe zu stellen ist daher nur
 logisch.
 \np
+
+\subsection{Verwendete Bibliotheken}
+Zur grafischen Darstellung der Benutzeroberfläche verwenden wir das
+\texttt{Swing} Framework, da dies viele Dinge gegenüber dem vorherigen 
+\texttt{AWT} Framework vereinfacht.
+\np
+
+Zur Serialisierung und Deserialisierung verwenden wir die von JSON.org gebotene
+Bibliothek\footnote{\url{https://github.com/douglascrockford/JSON-java}}. Diese
+ermöglicht das angenehm einfache Arbeiten mit den Klassen \texttt{JSONObject}
+und \texttt{JSONArray}, welche für die direkte Nutzung in unserem Client ausreichen.
+\np
+
+Die HTTP Kommunikation wickeln wir mit Hilfe der \texttt{HTTPClient}\footnote{
+\url{http://hc.apache.org/}} Bibliothek der Apache Foundation\footnote{
+\url{http://www.apache.org}} sehr einfach ab. Zur Kommunikation mussten war nur
+die Implementierung zwei Funktionen notewendig, je eine für \texttt{POST} und
+\texttt{GET} Requests. Die Funktionen erhalten die bereits serialisierten Daten
+als Parameter.
+\np
+
+\subsection{Architektur}
+Der Client basiert aus einer das \texttt{JFrame} erweiternden Hauptklasse,
+welche Objekte der genutzten - auf der \texttt{JPanel} Klasse aufbauenden
+- Klassen verwaltet.
+\np
+
+Wir verwenden ein Panel für den Login Prozess, eines als Lobby zur Auswahl
+des Spiels, welches ebenfalls die Möglichkeit auf das Panel zur Erstellung
+eines eigenen Spiels bereitstellt. Das vierte Panel verwaltet den Spielprozess,
+es nutzt einen Thread, welcher in kurzen Zeitabständen prüft, ob ein Spieler
+das Spiel gewonnen hat und in etwas größeren Zeitabständen die Liste der
+teilnehmenden Spieler aktualisiert.
+\np
+
+Der Wechsel zwischen den angezeigten Panels erfolgt über Methodenaufrufe der
+Hauptklasse, welche die Eigenschaften dortiger Objekte verändern respektive
+die Objekte entfernen.
 
 % TODO: mehr über den java-client
 
