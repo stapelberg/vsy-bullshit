@@ -4,18 +4,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 public class BullshitButton extends JButton implements ActionListener {
+	private GameManagement manager;
+	private int field;
 	
-	public BullshitButton(String word) {
+	public BullshitButton(GameManagement manager, String word, int field) {
 		this.setText(word);
+		this.manager = manager;
+		this.field = field;
 		this.addActionListener(this);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO JSON Call, that the button was hit.
-		
+		try {
+			this.manager.makeMove(this.field);
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(null, e1.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
 		this.setEnabled(false);
 	}
 
