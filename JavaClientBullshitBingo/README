@@ -8,18 +8,20 @@ dieser Stelle statt.
 
 Klassen:
 	- JavaBullshitBingo: Hauptframe, enthält main()
-	- ManagementPanel: Panel zur Spielverwaltung
+	- LoginPanel: Eingabe der Logindaten, Erstellung eines GameManagement Objekts,
+		dieses wird zwischen den Panels durchgereicht
+		-> LobbyPanel
+	- LobbyPanel: Liste der laufenden Spiele, Anzeige der zugehörigen Informationen
+		-> CreateGamePanel oder bei Spielauswahl GamePanel
+	- CreateGamePanel: Panel zur Erstellung eines neuen Spiels
+		-> GamePanel oder bei Abbruch LobbyPanel
+	- GamePanel: Enthält in einem Unterpanel das Spielfeld bestehend aus BullshitButtons
+		im GridLayout, einer Liste der Spieler und bietet die Möglichkeit zur Lobby zurückzukehren
+		-> LobbyPanel
 	- MenuBar: Die Menübar des Hauptframe
 	- BullshitButton: modifizierter JButton, ActionListener ruft den MakeMove Call
-		mit dem position-Attribut auf und deaktiviert anschließend den Button.
-	- MainPanel: links wird in einem Panel(Grid) das Spielfeld gehalten,
-		rechts werden die teilnehmenden Spieler gelistet. Ein Button zum
-		verlassen der Session wird unter der Liste platziert.
-	- Communication: eine statische Klasse, enthält die Methoden zur Kommunikation
-		mit dem Server(JSON).
-	- Settings: statische Klasse, die die notwendigen Daten sichert, Spielername,
-		Token, SessionID, etc.
-
+		mit dem field-Attribut auf und deaktiviert anschließend den Button.
+		
 Zusätzlich verwendete Komponenten:
  - http://hc.apache.org/
  - https://github.com/douglascrockford/JSON-java
