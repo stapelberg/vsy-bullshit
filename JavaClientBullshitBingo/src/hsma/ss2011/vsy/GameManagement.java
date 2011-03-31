@@ -259,4 +259,39 @@ public class GameManagement {
 		
 		return lists;
 	}
+	
+	/**
+	 * Keep refreshing the playerlist of the given game with low overhead
+	 * @param gameID
+	 * @return the names of the participants
+	 * @throws ClientProtocolException
+	 * @throws IOException
+	 * @throws JSONException
+	 */
+	public String[] getPlayers(String gameID) throws ClientProtocolException, IOException, JSONException {
+		String[] players = null;
+		JSONArray response = null;
+		
+		response = reqHandler.getRequest("CurrentGames");
+		players = (response.length()>0) ? new String[response.length()] : null;
+		
+		// Get the players of this game from CurrentGames
+		for (int i=0; i < response.length(); i++) {
+			JSONObject item = response.getJSONObject(i);
+			
+			// we just want the players from this game
+			if (item.getString("id").equals(gameID)) {
+				JSONArray participants = item.getJSONArray("participants");
+				
+				players = new String[participants.length()];
+				for (int j=0; j< players.length; j++)
+					players[j] = participants.getString(j);
+				
+				break; // we have the players - leave the loop
+			}
+			item = null;
+		}
+		
+		return players;
+	}
 }
