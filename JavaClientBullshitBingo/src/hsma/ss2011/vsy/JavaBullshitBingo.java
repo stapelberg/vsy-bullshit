@@ -3,7 +3,7 @@ package hsma.ss2011.vsy;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * The Java based Client for Bullshit Bingo
@@ -11,8 +11,7 @@ import javax.swing.JLabel;
  * @since 20110320
  */
 public class JavaBullshitBingo extends JFrame {
-	private LoginPanel loginPanel;
-	private GameManagement manager;
+	private JPanel currentPanel;
 	
 	public JavaBullshitBingo() {
 		this.setName("BullshitBingo");
@@ -23,21 +22,14 @@ public class JavaBullshitBingo extends JFrame {
 		this.add(new MenuBar(), BorderLayout.NORTH);
 		
 		// TODO Draw the panel
-		this.loginPanel = new LoginPanel(this);
-		this.add(this.loginPanel, BorderLayout.CENTER);
+		this.currentPanel = new LoginPanel(this);
+		this.add(this.currentPanel, BorderLayout.CENTER);
 		
 		this.pack();
 	}
 	
-	public void setManager(GameManagement manager) {
-		this.manager = manager;
-	}
-	public GameManagement getManager() {
-		return this.manager;
-	}
-	
-	public void setLoginPanelVisible(boolean visible) {
-		this.loginPanel.setVisible(visible);
+	public void setCurrentPanel(JPanel panel) {
+		this.currentPanel = panel;
 	}
 	
 	public static void main(String[] args) { 

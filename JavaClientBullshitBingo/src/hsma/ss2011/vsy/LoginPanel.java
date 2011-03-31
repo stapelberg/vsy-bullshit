@@ -66,10 +66,11 @@ public class LoginPanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.connect) {
 			try {
-				this.parent.setManager(new GameManagement(this.server.getText(), Integer.parseInt(this.port.getText()), this.nick.getText()));
-				this.parent.setLoginPanelVisible(false);
-			} catch (NumberFormatException e1) {
-				new JOptionPane(e1.toString(), JOptionPane.ERROR_MESSAGE);
+				GameManagement manager = new GameManagement(this.server.getText(),
+						Integer.parseInt(this.port.getText()), this.nick.getText());
+				// this.parent.setCurrentPanel(new Lobby(this.parent, manager);
+			} catch (NumberFormatException error_1) {
+				JOptionPane.showMessageDialog(null, error_1.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 			} catch (MalformedURLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
