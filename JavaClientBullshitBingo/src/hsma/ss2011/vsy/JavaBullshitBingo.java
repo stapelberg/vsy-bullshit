@@ -3,6 +3,7 @@ package hsma.ss2011.vsy;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -28,8 +29,16 @@ public class JavaBullshitBingo extends JFrame {
 		this.pack();
 	}
 	
+	/**
+	 * Set the panel object that shall be shown next.
+	 * @param panel The new JPanel
+	 */
 	public void setCurrentPanel(JPanel panel) {
+		this.currentPanel.removeAll(); //  get rid of the current Panel
 		this.currentPanel = panel;
+		this.add(this.currentPanel, BorderLayout.CENTER);
+		this.currentPanel.setVisible(true);
+		this.pack(); // repack the Frame to get the correct size.
 	}
 	
 	public static void main(String[] args) { 

@@ -42,6 +42,7 @@ public class LoginPanel extends JPanel implements ActionListener {
 		
 		// create the objects
 		this.connect = new JButton("Verbinden");
+		this.connect.addActionListener(this);
 		this.server = new JTextField(20);
 		this.port = new JTextField(5);
 		this.nick = new JTextField(10);
@@ -68,9 +69,13 @@ public class LoginPanel extends JPanel implements ActionListener {
 			try {
 				GameManagement manager = new GameManagement(this.server.getText(),
 						Integer.parseInt(this.port.getText()), this.nick.getText());
-				// this.parent.setCurrentPanel(new Lobby(this.parent, manager);
+				manager.registerPlayer();
+				this.parent.setCurrentPanel(new LobbyPanel(manager, this.parent));
 			} catch (Exception error_1) { // we just want to show the error
 				JOptionPane.showMessageDialog(null, error_1.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+			} catch (Throwable e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
 			}
 		}
 	}
