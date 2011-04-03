@@ -77,10 +77,9 @@ public class GameManagement {
 			
 			// extract the playernames from the participants JSONArray
 			String[] players = new String[participants.length()];
-			for (int j=0; j< players.length; j++)
+			for (int j=0; j< participants.length(); j++)
 				players[j] = participants.getString(j);
 			entry.setParticipants(players);
-			
 			
 			gameSessions[i] = entry;
 			item = null; // just to make sure, that nothing happens by accident
