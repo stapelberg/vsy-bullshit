@@ -11,11 +11,13 @@ import javax.swing.JMenuItem;
  * The menu used by the main frame.
  */
 public class MenuBar extends JMenuBar implements ActionListener {
+	private JavaBullshitBingo parent;
 	private JMenu file;
 	private JMenuItem fileDisconnect;
 	private JMenuItem fileQuit;
 	
-	public MenuBar() {
+	public MenuBar(JavaBullshitBingo parent) {
+		this.parent = parent;
 		this.generateFileMenu();
 		this.add(file);
 	}
@@ -40,7 +42,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.fileDisconnect) {
-			// TODO disconnect and clean the settings.
+			this.parent.setCurrentPanel(new LoginPanel(parent));
 		} else if (e.getSource() == this.fileQuit) {
 			System.exit(0);
 		} 

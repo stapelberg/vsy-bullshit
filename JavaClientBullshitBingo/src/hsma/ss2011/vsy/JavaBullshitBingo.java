@@ -20,12 +20,13 @@ public class JavaBullshitBingo extends JFrame {
 		this.setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		this.add(new MenuBar(), BorderLayout.NORTH);
+		this.add(new MenuBar(this), BorderLayout.NORTH);
 		
 		// TODO Draw the panel
 		this.currentPanel = new LoginPanel(this);
 		this.add(this.currentPanel, BorderLayout.CENTER);
 		
+		this.setResizable(false);
 		this.pack();
 	}
 	
@@ -38,6 +39,7 @@ public class JavaBullshitBingo extends JFrame {
 		this.currentPanel = panel;
 		this.add(this.currentPanel, BorderLayout.CENTER);
 		this.currentPanel.setVisible(true);
+		
 		this.pack(); // repack the Frame to get the correct size.
 	}
 	
