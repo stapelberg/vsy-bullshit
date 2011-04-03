@@ -19,22 +19,18 @@ public class GamePanel extends JPanel implements ActionListener {
 	private JavaBullshitBingo parent;
 	private JButton leaveButton;
 	private JList playerList;
-	private String gameID;
+	private JPanel infoPanel;
 	
 	public GamePanel(JavaBullshitBingo parent, GameManagement manager)
 		throws ClientProtocolException, IOException, JSONException {
-		
-		this.gameID = manager.getGameID();
 		this.manager = manager;
 		this.parent = parent;
-		
-		this.playerList = new JList(manager.getPlayers(this.gameID));
-		this.setLayout(new BorderLayout(10, 10));
+
+		this.setLayout(new BorderLayout());
+		this.manager.joinGame(this.manager.getGameID());
 		
 		this.drawFieldPanel();
 		this.drawInformationPanel();
-		
-		this.parent.pack();
 	}
 	
 	/**
@@ -48,7 +44,6 @@ public class GamePanel extends JPanel implements ActionListener {
 		for (int i=0; i<words.length; i++) {
 			fieldPanel.add(new BullshitButton(manager, words[i], i));
 		}
-		
 		this.add(fieldPanel, BorderLayout.WEST);
 	}
 	
@@ -56,21 +51,27 @@ public class GamePanel extends JPanel implements ActionListener {
 	 * Draw the Panel containing the playerList and leaveButton
 	 */
 	private void drawInformationPanel() {
-		JPanel infoPanel = new JPanel(new BorderLayout());
+		this.infoPanel = new JPanel(new BorderLayout());
 		
-		this.playerList.setSize(120, 386);
-		this.leaveButton = new JButton();
+		this.playerList = new JList();
+		this.playerList.setSize(120, 450);
+		this.leaveButton = new JButton("Spiel verlassen");
 		this.leaveButton.addActionListener(this);
-		this.leaveButton.setName("Spiel verlassen");
 		
-		infoPanel.add(this.playerList, BorderLayout.NORTH);
-		infoPanel.add(this.leaveButton, BorderLayout.SOUTH);
-		
+		this.infoPanel.add(this.playerList, BorderLayout.CENTER);
+		this.infoPanel.add(this.leaveButton, BorderLayout.SOUTH);
+		this.add(this.infoPanel, BorderLayout.EAST);
 	}
 	
+	/**
+	 * 
+	 * @param playerList
+	 */
 	public void renewPlayerList(JList playerList) {
+		this.infoPanel.remove(this.playerList);
 		this.playerList = playerList;
-		this.playerList.setSize(120, 386);
+		this.playerList.setSize(120, 450);
+		this.infoPanel.add(this.playerList, BorderLayout.CENTER);
 	}
 	
 	@Override
@@ -78,7 +79,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		if (e.getSource() == this.leaveButton) {
 			try {
 				this.manager.leaveGame();
-				//this.parent.setCurrentPanel(new Lobby(this.parent, this.manager));
+				this.parent.setCurrentPanel(new LobbyPanel(this.manager, this.parent));
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, e1.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 			}

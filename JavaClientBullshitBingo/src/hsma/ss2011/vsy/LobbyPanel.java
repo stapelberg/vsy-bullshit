@@ -84,7 +84,8 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 		sub.add(new JLabel("Size:"));
 		sub.add(this.sizeLabel);
 		
-		this.playerList = new JList();
+		String[] fill = {""};
+		this.playerList = new JList(fill);
 		this.playerList.setSize(150, 340);
 		
 		this.joinButton = new JButton("Spiel beitreten");
@@ -113,7 +114,8 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 		
 			this.gameList = new JList(names);
 		} else {
-			this.gameList = new JList();
+			String[] fill = {""};
+			this.gameList = new JList(fill);
 		}
 		this.gameList.setSize(150, 300);
 		this.gameList.addListSelectionListener(this);
@@ -126,7 +128,8 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 			String[] players = this.sessions[index].getParticipants();
 			this.playerList = new JList(players);
 		} else {
-			this.playerList = new JList();
+			String[] fill = {""};
+			this.playerList = new JList(fill);
 		}
 		this.playerList.setSize(320, 400);
 		this.playerList.setEnabled(false);
@@ -137,7 +140,6 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.joinButton) {
 			try {
-				this.manager.joinGame(this.manager.getGameID());
 				this.parent.setCurrentPanel(new GamePanel(this.parent, this.manager));
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
@@ -155,7 +157,7 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getSource() == this.gameList) { // just update the gameID in the manager
 			int index = this.gameList.getSelectedIndex();
-			manager.setGameID(this.sessions[index].getName());
+			this.manager.setGameID(this.sessions[index].getId());
 			this.refreshPlayerList(index);
 			this.wordlistLabel.setText(this.sessions[index].getWordlist());
 			this.sizeLabel.setText(String.valueOf(this.sessions[index].getSize()));
