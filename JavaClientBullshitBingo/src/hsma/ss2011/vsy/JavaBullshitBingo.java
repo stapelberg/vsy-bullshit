@@ -36,6 +36,7 @@ public class JavaBullshitBingo extends JFrame {
 	 */
 	public void setCurrentPanel(JPanel panel) {
 		this.currentPanel.removeAll(); //  get rid of the current Panel
+		this.remove(this.currentPanel);
 		this.currentPanel = panel;
 		this.add(this.currentPanel, BorderLayout.CENTER);
 		this.currentPanel.setVisible(true);
