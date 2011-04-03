@@ -58,30 +58,44 @@ public class GameManagement {
 	public GameSession[] currentGames() throws ClientProtocolException, JSONException, IOException {
 		GameSession[] gameSessions = null;
 		JSONArray response = null;
+		int len = 0;
 		
 		response = reqHandler.getRequest("CurrentGames");
-		gameSessions = (response.length()>0) ? new GameSession[response.length()] : null;
+		
+		// get the amount of games not finished.
+		if (response != null) {
+			for (int i=0; i<response.length(); i++) {
+				if (response.getJSONObject(i).getString("winner") == null) {
+					len++;
+				}
+			}
+		}
+		gameSessions = (len>0) ? new GameSession[len] : null;
 		
 		// Convert the JSONArray to a GameSession Array
+		len = 0;
 		for (int i=0; i < response.length(); i++) {
 			JSONObject item = response.getJSONObject(i);
-			JSONArray participants = item.getJSONArray("participants");
+			if (item.getString("winner") == null) {
+				JSONArray participants = item.getJSONArray("participants");
 			
-			GameSession entry = new GameSession();
-			entry.setCreated(item.getInt("created"));
-			entry.setId(item.getString("id"));
-			entry.setName(item.getString("name"));
-			entry.setSize(item.getInt("size"));
-			entry.setWinner(item.getString("winner"));
-			entry.setWordlist(item.getString("wordlist"));
+				GameSession entry = new GameSession();
+				entry.setCreated(item.getInt("created"));
+				entry.setId(item.getString("id"));
+				entry.setName(item.getString("name"));
+				entry.setSize(item.getInt("size"));
+				entry.setWinner(item.getString("winner"));
+				entry.setWordlist(item.getString("wordlist"));
 			
-			// extract the playernames from the participants JSONArray
-			String[] players = new String[participants.length()];
-			for (int j=0; j< participants.length(); j++)
-				players[j] = participants.getString(j);
-			entry.setParticipants(players);
+				// extract the playernames from the participants JSONArray
+				String[] players = new String[participants.length()];
+				for (int j=0; j< participants.length(); j++)
+					players[j] = participants.getString(j);
+				entry.setParticipants(players);
 			
-			gameSessions[i] = entry;
+				gameSessions[len] = entry;
+				len++;
+			}
 			item = null; // just to make sure, that nothing happens by accident
 		}
 		

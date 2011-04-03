@@ -45,6 +45,7 @@ public class RequestHandler {
 		JSONObject responseAsJSON = null;
 		
 		// Send request
+		System.err.println(path + " request: " + request.toString());
 		req.setEntity(new ByteArrayEntity(request.toString().getBytes()));
 		rawResponse = httpclient.execute(req);
 		
@@ -56,7 +57,7 @@ public class RequestHandler {
 		}
 		
 		responseAsJSON = new JSONObject(new JSONTokener(reader));
-		
+		System.err.println(path + " response: " + responseAsJSON.toString());
 		return responseAsJSON;
 	}
 
@@ -79,7 +80,7 @@ public class RequestHandler {
 		}
 		
 		responseAsJSON = new JSONArray(new JSONTokener(reader));
-		
+		System.err.println(path + " response: " + responseAsJSON.toString());
 		return responseAsJSON;
 	}
 }
