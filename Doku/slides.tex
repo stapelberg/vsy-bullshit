@@ -1,0 +1,200 @@
+\documentclass{beamer}
+%\documentclass[draft]{beamer} %Zum schnelleren Kompilieren beim Entwickeln
+%\documentclass[notes=show]{beamer}
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage{ngerman}
+\usepackage{rotating}
+\usepackage{verbatim}
+\usepackage{latexsym}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\usepackage{eurosym}
+\selectlanguage{german}
+
+%\definecolor{lightblue}{rgb}{0.8,0.9,1.0}
+%\usetheme{PaloAlto}
+%\usetheme{Darmstadt}
+\usetheme{Frankfurt}
+
+% LaTeX-interne Einstellungen zum Umbruch etc.
+% \nofiles    % Inhaltsverzeichnis nicht ändern.
+\hbadness 10000
+\sloppy
+\frenchspacing
+
+%\usecolortheme{crane}
+%\usecolortheme{lily}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}%
+\newcolumntype{Z}{>{\hfill\arraybackslash}X}%
+
+\usepackage{amsmath,amssymb}
+
+\setbeamercovered{dynamic}
+
+%notes:
+\setbeamertemplate{note page}[plain] 
+%compressed
+
+\newcommand{\datum}{8.4.2011}
+\newcommand{\autor}{Gruppe 4}
+\newcommand{\vorlesung}{Verteilte Systeme}
+\newcommand{\semester}{SS2011}
+\newcommand{\ort}{Hochschule Mannheim}
+
+\title[]{Bullshit-Bingo\\ Gruppe 4}
+\author{Faraz Ahmed\\
+Felix Bruckner\\
+Dennis Cisowski\\
+Michael Stapelberg\\
+Thorsten Töpper
+}
+\institute{Fakultät für Informatik\\
+           Hochschule Mannheim}
+\date{\datum}
+\beamertemplatetransparentcovereddynamic
+\setbeamerfont{note page}{size=\small}
+%\renewcommand{\>}{\rangle}
+%\newcommand{\<}{\langle} 
+%\usebeamercolor[fg]{[page number]}
+
+\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{note page}{}
+
+%Zum Abschalten der kleinen Navigationsleiste am unteren Rand reicht folgende Zeile aus:
+%\beamertemplatenavigationsymbolsempty
+
+\setbeamersize{text margin left=0.2cm}
+\setbeamersize{text margin right=0.25cm}
+\setbeamersize{sidebar width right=0cm}
+\setbeamersize{sidebar width left=0cm}
+
+%Inhalt der Fußzeile festlegen
+\setbeamertemplate{footline}
+{
+\begin{beamercolorbox}{title}
+\hspace*{0.2cm}
+% \copyright 
+\autor\ -- \vorlesung\ -- \ort\ -- \semester
+\hfill
+%  \insertslidenavigationsymbol
+%  \insertframenavigationsymbol
+%  \insertsubsectionnavigationsymbol
+%  \insertsectionnavigationsymbol
+%  \insertdocnavigationsymbol
+%  \insertbackfindforwardnavigationsymbol
+ \hfill\insertframenumber/\inserttotalframenumber
+ \hspace*{0.2cm}
+\end{beamercolorbox}
+}
+
+%\newcommand{\markNote}[1]{	\textsuperscript{\tiny [#1]} }
+\newcommand{\markNote}[1]{	 }
+
+% Bei jeder Section ein Inhaltsverzeichnis ausgeben
+% \AtBeginSection[]{
+% \begin{frame}
+% \frametitle{Outline}
+% \tableofcontents[current,hideallsubsections] % Nur die sections ausgeben
+% \end{frame}
+% }
+
+% Die Zeile definieren, die ganz oben ist und die Abschnitte enthält
+% Das sind die Maße wenn es die Folie "nächste Vorlesung gibt"
+% \setbeamertemplate{headline}
+% {%
+%   \begin{beamercolorbox}{section in head/foot}
+%     \vskip5pt\insertnavigation{12.4cm}\vskip5pt
+%   \end{beamercolorbox}%
+% }
+
+\setbeamertemplate{headline}
+{%
+  \begin{beamercolorbox}{section in head/foot}
+    \vskip5pt\insertnavigation{12.75cm}\vskip5pt
+  \end{beamercolorbox}%
+}
+
+\begin{document}
+
+% Deckblatt generieren
+\begin{frame}
+\titlepage
+\end{frame}
+
+% Inhaltsverzeichnis am Anfang des Dokuments
+% \begin{frame}
+%   \frametitle{Heute}
+%   %\tableofcontents[hideallsubsections]  % Nur die sections ausgeben
+%   \tableofcontents                       % sections und subsections ausgeben
+% \end{frame}
+
+
+\section{Agenda}
+
+\subsection{Agenda}
+
+\begin{frame}[fragile]
+% [fragile] braucht man, wenn man \verb oder \verbatim auf der Folie verwendet!
+\frametitle{Agenda}
+\begin{itemize}
+\item Grundlagen
+\item Server
+\item Qt-Client
+\item Java-Client
+\item Android-Client
+\item AJAX-basierte Web-Anwendung
+\end{itemize}
+\end{frame}
+
+\section{Grundlagen}
+
+\subsection{Architektur}
+\begin{frame}[fragile]
+\frametitle{Architektur}
+\end{frame}
+
+\subsection{HTTP \& JSON}
+\begin{frame}[fragile]
+\frametitle{HTTP \& JSON}
+\end{frame}
+
+\section{Server}
+
+\subsection{Perl}
+\begin{frame}[fragile]
+\frametitle{Architektur}
+
+\end{frame}
+
+\section{Qt-Client}
+
+\subsection{C++}
+\begin{frame}[fragile]
+\frametitle{C++}
+\end{frame}
+
+\section{Java-Client}
+
+\subsection{Java \& JSON}
+\begin{frame}[fragile]
+\frametitle{Architektur}
+\end{frame}
+
+\section{Android-Client}
+
+\subsection{Mirah}
+\begin{frame}[fragile]
+\frametitle{Mirah}
+\end{frame}
+
+\section{AJAX-Client}
+\subsection{JQuery}
+\begin{frame}[fragile]
+\frametitle{JQuery}
+\end{frame}
+
+\end{document}

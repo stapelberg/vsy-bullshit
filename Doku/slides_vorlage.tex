@@ -1,0 +1,443 @@
+\documentclass{beamer}
+%\documentclass[draft]{beamer} %Zum schnelleren Kompilieren beim Entwickeln
+%\documentclass[notes=show]{beamer}
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage{ngerman}
+\usepackage{rotating}
+\usepackage{verbatim}
+\usepackage{latexsym}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\usepackage{eurosym}
+\selectlanguage{german}
+
+%\definecolor{lightblue}{rgb}{0.8,0.9,1.0}
+%\usetheme{PaloAlto}
+%\usetheme{Darmstadt}
+\usetheme{Frankfurt}
+
+% LaTeX-interne Einstellungen zum Umbruch etc.
+% \nofiles    % Inhaltsverzeichnis nicht ändern.
+\hbadness 10000
+\sloppy
+\frenchspacing
+
+%\usecolortheme{crane}
+%\usecolortheme{lily}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}%
+\newcolumntype{Z}{>{\hfill\arraybackslash}X}%
+
+\usepackage{amsmath,amssymb}
+
+\setbeamercovered{dynamic}
+
+%notes:
+\setbeamertemplate{note page}[plain] 
+%compressed
+
+\newcommand{\datum}{1.3.2011}
+\newcommand{\autor}{Christian Baun}
+\newcommand{\vorlesung}{Verteilte Systeme}
+\newcommand{\semester}{SS2011}
+\newcommand{\ort}{Hochschule Mannheim}
+
+\title[]{Verteilte Systeme\\ \ort}
+\author{\autor}
+\institute{Fakultät für Informatik\\
+           Hochschule Mannheim\\
+          \texttt{cray@unix-ag.uni-kl.de}}
+\date{\datum}
+\beamertemplatetransparentcovereddynamic
+\setbeamerfont{note page}{size=\small}
+%\renewcommand{\>}{\rangle}
+%\newcommand{\<}{\langle} 
+%\usebeamercolor[fg]{[page number]}
+
+\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{note page}{}
+
+%Zum Abschalten der kleinen Navigationsleiste am unteren Rand reicht folgende Zeile aus:
+%\beamertemplatenavigationsymbolsempty
+
+\setbeamersize{text margin left=0.2cm}
+\setbeamersize{text margin right=0.25cm}
+\setbeamersize{sidebar width right=0cm}
+\setbeamersize{sidebar width left=0cm}
+
+%Inhalt der Fußzeile festlegen
+\setbeamertemplate{footline}
+{
+\begin{beamercolorbox}{title}
+\hspace*{0.2cm}
+% \copyright 
+\autor\ -- \vorlesung\ -- \ort\ -- \semester
+\hfill
+%  \insertslidenavigationsymbol
+%  \insertframenavigationsymbol
+%  \insertsubsectionnavigationsymbol
+%  \insertsectionnavigationsymbol
+%  \insertdocnavigationsymbol
+%  \insertbackfindforwardnavigationsymbol
+ \hfill\insertframenumber/\inserttotalframenumber
+ \hspace*{0.2cm}
+\end{beamercolorbox}
+}
+
+%\newcommand{\markNote}[1]{	\textsuperscript{\tiny [#1]} }
+\newcommand{\markNote}[1]{	 }
+
+% Bei jeder Section ein Inhaltsverzeichnis ausgeben
+% \AtBeginSection[]{
+% \begin{frame}
+% \frametitle{Outline}
+% \tableofcontents[current,hideallsubsections] % Nur die sections ausgeben
+% \end{frame}
+% }
+
+% Die Zeile definieren, die ganz oben ist und die Abschnitte enthält
+% Das sind die Maße wenn es die Folie "nächste Vorlesung gibt"
+% \setbeamertemplate{headline}
+% {%
+%   \begin{beamercolorbox}{section in head/foot}
+%     \vskip5pt\insertnavigation{12.4cm}\vskip5pt
+%   \end{beamercolorbox}%
+% }
+
+\setbeamertemplate{headline}
+{%
+  \begin{beamercolorbox}{section in head/foot}
+    \vskip5pt\insertnavigation{12.75cm}\vskip5pt
+  \end{beamercolorbox}%
+}
+
+\begin{document}
+
+% Deckblatt generieren
+\begin{frame}
+\titlepage
+\end{frame}
+
+% Inhaltsverzeichnis am Anfang des Dokuments
+% \begin{frame}
+%   \frametitle{Heute}
+%   %\tableofcontents[hideallsubsections]  % Nur die sections ausgeben
+%   \tableofcontents                       % sections und subsections ausgeben
+% \end{frame}
+
+
+\section{Grundlagen}
+
+\subsection{README}
+
+\begin{frame}[fragile]
+% [fragile] braucht man, wenn man \verb oder \verbatim auf der Folie verwendet!
+\frametitle{README}
+\begin{itemize}
+\item Das hier ist die Folienvorlage für die praktische Übung der Vorlesung Verteilte Systeme im Sommersemester 2011
+\item Diese Vorlage soll den Einstieg in \LaTeX\ und speziell Bib\TeX\ erleichtern
+\item Wird unter Linux im Verzeichnis mit der Quelldatei (\texttt{.tex}) das Kommando \texttt{make} eingegeben, erzeugt \verb!pdflatex! eine PDF-Datei
+\item Ein aktuelles \LaTeX\ (z.B. TeX Live\footnote{\texttt{http://www.tug.org/texlive/}}) sollte installiert sein
+\item Wer unter Windows die Folien machen möchte, dem empfehle ich MiK\TeX\footnote{\texttt{http://www.miktex.org}} und \TeX nicCenter\footnote{\texttt{http://www.texniccenter.org}}
+\item Ein leistungsfähiger Editor für \LaTeX\ unter MacOS X ist TeXShop\footnote{\texttt{http://pages.uoregon.edu/koch/texshop/}}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{\LaTeX Beamer}
+\begin{itemize}
+\item Diese Vorlage nutzt die \LaTeX-Klasse \texttt{beamer}.
+\item Gute Dokumentation zur Klasse \texttt{beamer}:
+\verb!http://www2.informatik.hu-berlin.de/~mischulz/beamer.html!
+\end{itemize}
+\end{frame}
+
+\section{Erfolgreich präsentieren}
+\begin{frame}
+\frametitle{Medieneinsatz}
+\begin{itemize}
+\item Auf den folgenden Folien kommen ein paar Ratschläge zum erfolgreichen Präsentieren
+\item Ablauf einer Präsentation
+\begin{itemize}
+\item Einleitung mit Agenda
+\begin{itemize}
+\item Vorstellung des Referenten und des Themas
+\item Aufmerksamkeit beim Auditorium erwecken
+\end{itemize}
+\item Hauptteil
+\begin{itemize}
+\item An die in der Inhaltsangabe aufgeführten
+\item Roter Faden muss erkennbar sein
+\end{itemize}
+\item Schluss mit Zusammenfassung und Fazit/Resümee
+\begin{itemize}
+\item Gesamtaussage des Vortrages noch einmal kurz wiederholen
+\item Wichtige Erkenntnisse zusammenfassen
+\item Für die Aufmerksamkeit danken und Fragen zulassen
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\subsection{Gute Folien machen}
+\begin{frame}
+\frametitle{Gute Folien machen}
+\begin{itemize}
+\item Serifenlose Schriften verwenden. Diese sind besser (leichter) lesbar
+\item Nicht zu viel Text auf den Folien
+\item Text durch Punkte und Kästen gliedern
+\item Sätze sollten nicht zu lang sein
+\item Ein Bild sagt mehr als 1000 Worte
+\item Durchgängig Großschreibung am Anfang oder durchgängig darauf verzichten
+\item Entweder immer ein Punkt am Ende oder nie
+\item Rechtschreibung durch geeignete Software und Freunde/Verwandte kontrollieren lassen
+\end{itemize}
+\end{frame}
+
+\subsection{Dauer einer Präsentation}
+\begin{frame}
+\frametitle{Dauer einer Präsentation}
+\begin{itemize}
+\item Versuchen Sie auf jeden Fall die Gesamtzeitvorgaben einzuhalten
+\item Überziehen gilt als Unhöflichkeit gegenüber dem Auditorium weil dadurch eventuell die  vorgesehene Diskussionszeit beschnitten oder bestehende Terminplanungen beeinflusst werden
+\item Eine Ausnahme ist, wenn während der Präsentation Fragen entstehen
+\begin{itemize}
+\item Wichtige Fragen während der Präsentation sollten sie zulassen
+\item Eventuelle, daraus resultierende Verzögerungen sind dem Vortragenden nicht anzulasten
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\subsection{Vortragstechnik}
+\begin{frame}
+\frametitle{Vortragstechnik}
+\begin{itemize}
+\item Klar und deutlich zum Auditorium sprechen
+\item Möglichst frei sprechen
+\item Auf aufgelegte Folien eingehen ohne diese 1:1 herunterzulesen
+\item Nicht mit dem Rücken zum Auditorium vortragen
+\item Das Auditorium motivieren, indem begründet wird, warum das gesagte wichtig ist
+\item Das Auditorium nicht durch zu monotonen Redefluss einschläfern
+\item Aufmerksamkeit von Unruhestiftern kann durch Blickkontakt zurückgewonnen werden
+\end{itemize}
+\end{frame}
+
+
+
+\subsection{Medieneinsatz}
+\begin{frame}
+\frametitle{Medieneinsatz}
+\begin{itemize}
+\item Ein paar Worte zum Medieneinsatz in Präsentationen
+\item Beim Zuhörer wird durch das gleichzeitige Sehen und Hören eine bessere Wirkung erzielt
+\item Es existieren Erfahrungswerte, wie stark die Aufnahme von Informationen von der entsprechenden Darbietung abhängig ist
+\item Demnach behält ein Mensch ca.
+\begin{itemize}
+\item 20\% von dem was er hört
+\item 30\% von dem was er sieht
+\item 50\% von dem was er hört und sieht
+\end{itemize}
+\item Aufgelegte Folien sollten nicht zu schnell wechseln
+\item Das Auditorium muss die Folien leicht nachvollziehen und mitlesen können
+\end{itemize}
+\end{frame}
+
+\subsection{Anglizismen}
+\begin{frame}
+\frametitle{Anglizismen (Deppenapostroph)}
+\begin{itemize}
+\item Anglizismengebrauch ist häufig nichts weiter als Angeberei oder Imponiergehabe
+\item Vermeiden sie das Deppenapostroph
+\begin{itemize}
+\item Dabei wird das \emph{s} im Genitiv oder Plural durch einen Apostroph abgetrennt, was  grammatikalisch völlig falsch ist
+\item Beispiele: \glqq CD's\grqq\ oder \glqq Microsoft's neue Software\grqq
+\end{itemize}
+\item Passende Literatur zum Thema Anglizismen: \emph{Speak German!: Warum Deutsch manchmal besser ist.} Wolf Schneider. Rowohlt (2008)
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Anglizismen (Beispiele)}
+\begin{itemize}
+\item Verwenden sie wo möglich etablierte Wörter der deutschen Sprache
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+Speicher             & Storage     \\\hline
+Hauptspeicher        & Memory      \\\hline
+Bildlaufleiste       & Scrollbar   \\\hline
+Knopf                & Button      \\\hline
+Leistung/Durchsatz   & Performance \\\hline
+Folien               & Slides      \\\hline
+Vortrag              & Talk        \\\hline
+Treffen              & Meeting     \\\hline
+Pause                & Break       \\\hline
+Bildschirm           & Display     \\\hline
+Netzauftritt         & Website     \\\hline
+Mobiltelefon         & Handy\footnote{Bedeutung ist im Englischen ganz anders. Korrekt wäre \emph{mobile phone} oder \emph{cell phone}} \\\hline
+\end{tabular}
+\end{center}
+\end{frame}
+
+\subsection{Bindestrich}
+\begin{frame}
+\frametitle{Bindestrich}
+\begin{itemize}
+\item In der deutschen Sprache werden Bindestriche nur sparsam eingesetzt
+\item Werden in einem deutschen Text deutsche und englische Wörter verknüpft, ist ein Bindestrich angebracht
+\begin{itemize}
+\item Beispiele: Web-Anwendung, Cloud-Dienst, PDF-Datei, UNIX-Derivat, Scheduling-Lösung, EC2-Instanz
+\end{itemize}
+\item Bei englischen Begriffen, die aus zwei Wörtern bestehen, kann auf den Bindestrich verzichtet werden
+\begin{itemize}
+\item Beispiele: Cloud Computing, Grid Computing, Web Service, Open Source, Xen Hypervisor
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Textformatierung}
+
+\subsection{Schriften und Sonderzeichen}
+
+\begin{frame}[fragile]
+\frametitle{Schriften und Sonderzeichen}
+\begin{itemize}
+\item Es gibt verschiedene Schriftsätze: \textbf{Bild Face}, \textrm{Roman}, \textit{Italic}, \texttt{Typewriter}, \textsf{Sans Serif}, \textsl{Slanted}, \textsc{Small Caps}
+\item \textcolor{blue}{Farben} sollte man \textcolor{red}{sparsam} einsetzen
+\item Ein paar Sonderzeichen: \textbackslash, \$, \&, \euro, \%, \#, \textunderscore, \textasciitilde, \textasciicircum, \textbar, \{, \}
+\item Weitere Sonderzeichen: \copyright, \textregistered, \texttrademark, \S, \P, \pounds, \dag, \ddag, \textbullet
+\item Fortsetzungspunkte macht das Kommando \verb!\dots!. Ergebnis: \dots
+\end{itemize}
+\end{frame}
+
+\subsection{Punkte}
+\begin{frame}
+\frametitle{Punkte}
+\begin{itemize}
+\item Punkt 1
+\item Punkt 2
+\begin{itemize}
+\item Unterpunkt 1
+\item Unterpunkt 2
+\begin{itemize}
+\item Unterunterpunkt 1
+\item Unterunterpunkt 2
+\item Unterunterpunkt 3
+\item Unterunterpunkt 4
+\end{itemize}
+\item Unterpunkt 3
+\end{itemize}
+\item Punkt 3
+\item Punkt 4
+\end{itemize}
+\end{frame}
+
+
+\subsection{Blöcke}
+
+\begin{frame}[t]
+% [t] legt fest, dass der Text oben auf der Folie platziert wird.
+\frametitle{Blöcke}
+\begin{itemize}
+\item Es gibt verschiedene Arten von Blöcken:
+\end{itemize}
+\begin{block}{Blocktitel}
+Blocktext
+\end{block}
+
+\begin{exampleblock}{Blocktitel}
+Blocktext
+\end{exampleblock}
+
+\begin{alertblock}{Blocktitel}
+Blocktext
+\end{alertblock}
+\end{frame}
+
+\subsection{Bilder}
+
+\begin{frame}
+% [t] legt fest, dass der Text oben auf der Folie platziert wird.
+\frametitle{Bilder}
+\begin{itemize}
+\item Hier ist ein Bild:
+\end{itemize}
+\begin{center}
+\includegraphics[height=4cm]{Pinguin}
+% Die Dateiendung muss man nicht angeben.
+% Man hätte auch alternativ die Breite mit "width" angeben können.
+\end{center}
+\begin{itemize}
+\item Bilder sollten im Dateiformat (\texttt{.pdf}) vorliegen. Dieses Dateiformat kann mit GIMP und vielen anderen Programmen erzeugt werden
+\end{itemize}
+\end{frame}
+
+\subsection{Tabellen}
+
+\begin{frame}[fragile]
+\frametitle{Tabellen}
+\begin{itemize}
+\item Es gibt mehrere Umgebungen, um Tabellen zu setzen. \texttt{tabular} ist nur eine von vielen
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{|c|l|c|r|}
+\hline
+  \textbf{Zeile} & \textbf{Linksbündig} & \textbf{Zentriert} & \textbf{Rechtsbündig} \\
+\hline\hline
+  1 & Zeile 1 & Zeile 1 & Zeile 1 \\
+  2 & Zeile 2 & Zeile 2 & Zeile 2 \\
+  3 & Zeile 3 & Zeile 3 & Zeile 3 \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{itemize}
+\item Das geht auch ohne Rahmen
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{clcr}
+  \textbf{Zeile} & \textbf{Linksbündig} & \textbf{Zentriert} & \textbf{Rechtsbündig} \\
+  1 & Zeile 1 & Zeile 1 & Zeile 1 \\
+  2 & Zeile 2 & Zeile 2 & Zeile 2 \\
+  3 & Zeile 3 & Zeile 3 & Zeile 3 \\
+\end{tabular}
+\end{center}
+\end{frame}
+
+\subsection{Mehrspaltige Folien}
+
+\begin{frame}
+\frametitle{Mehrspaltige Folien}
+\begin{columns}
+        \column{.45\textwidth}
+                Mehrspaltige Folien können einfach mit \texttt{columns} realisiert werden
+        \column{.45\textwidth}
+                \begin{enumerate}
+                \item Ein Eintrag
+                \item Noch ein Eintrag
+                \item Ein weiterer Eintrag
+                \end{enumerate}
+\end{columns}
+\end{frame}
+
+\subsection{Quellen}
+
+\begin{frame}[fragile]
+\frametitle{Quellen}
+\begin{itemize}
+\item \verb!http://www2.informatik.hu-berlin.de/~mischulz/beamer.html!
+\item {\small \verb!http://www.physik.uni-freiburg.de/~tooleh/latex_beamerkurs.pdf!}
+\item Google findet sehr viele hilfreiche Links zum Thema \textbf{LaTeX Beamer}
+\end{itemize}
+\end{frame}
+
+\end{document}
