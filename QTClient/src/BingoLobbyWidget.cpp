@@ -134,6 +134,7 @@ namespace Bingo {
 		
 	// -------------------------------------------------------------------------
 	void BingoLobbyWidget::activate() {
+	  ui.participants->clear();
 	  this->refreshList();
 	  ui.playerNickLabel->setText(tr("Connected as %1").arg(bingoMain->getNick()));
 	  this->gameListUpdateTimer->start();		
