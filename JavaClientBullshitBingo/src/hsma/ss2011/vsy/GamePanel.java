@@ -54,7 +54,6 @@ public class GamePanel extends JPanel implements ActionListener {
 		this.infoPanel = new JPanel(new BorderLayout());
 		
 		this.playerList = new JList();
-		this.playerList.setSize(120, 450);
 		this.leaveButton = new JButton("Spiel verlassen");
 		this.leaveButton.addActionListener(this);
 		
@@ -70,7 +69,6 @@ public class GamePanel extends JPanel implements ActionListener {
 	public void renewPlayerList(JList playerList) {
 		this.infoPanel.remove(this.playerList);
 		this.playerList = playerList;
-		this.playerList.setSize(120, 450);
 		this.infoPanel.add(this.playerList, BorderLayout.CENTER);
 	}
 	

@@ -36,8 +36,16 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 		this.setVisible(false);
 		this.manager = manager;
 		this.parent = parent;
+		try {
+			this.sessions = this.manager.currentGames();
+		} catch (JSONException e) {
+			JOptionPane.showMessageDialog(null, this.manager.getError(), "Fehler", JOptionPane.ERROR_MESSAGE);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "LobbyPanel(): currentGames Call scheitert.",
+					"Fehler", JOptionPane.ERROR_MESSAGE);
+		}
 
-		this.setLayout(new BorderLayout());
+		this.setLayout(new BorderLayout(10, 3));
 		
 		this.drawLeftPanel();
 		this.drawRightPanel();
@@ -68,14 +76,16 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
 		}
 		
-		this.leftPanel.setSize(320, 480);
 		this.add(this.leftPanel, BorderLayout.WEST);
 	}
 	
+	/**
+	 * Draw the Panel containing the list of players, joinButton and information labels
+	 */
 	private void drawRightPanel() {
 		this.rightPanel = new JPanel(new BorderLayout());
 		
-		// the panel contaning the information labels
+		// the panel containing the information labels
 		JPanel sub = new JPanel(new GridLayout(2, 2));
 		this.wordlistLabel = new JLabel("");
 		this.sizeLabel = new JLabel("");
@@ -86,7 +96,6 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 		
 		String[] fill = {""};
 		this.playerList = new JList(fill);
-		this.playerList.setSize(150, 340);
 		
 		this.joinButton = new JButton("Spiel beitreten");
 		this.joinButton.addActionListener(this);
@@ -95,7 +104,6 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 		this.rightPanel.add(sub, BorderLayout.CENTER);
 		this.rightPanel.add(this.joinButton, BorderLayout.SOUTH);
 		
-		this.rightPanel.setSize(320, 480);
 		this.add(this.rightPanel, BorderLayout.EAST);
 	}
 	
@@ -106,24 +114,29 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 	 * @throws IOException
 	 */
 	private void refreshGameList() throws ClientProtocolException, JSONException, IOException {
-		this.sessions = this.manager.currentGames();
+		// if there's a list, remove that one
+		if (this.gameList != null)
+			this.leftPanel.remove(this.gameList);
+		
 		if (this.sessions != null) {
 			String[] names = new String[this.sessions.length];
 			for (int i=0; i<names.length; i++)
 				names[i] = this.sessions[i].getName();
-		
 			this.gameList = new JList(names);
 		} else {
 			String[] fill = {""};
 			this.gameList = new JList(fill);
 		}
-		this.gameList.setSize(150, 300);
-		this.gameList.addListSelectionListener(this);
 		
+		this.gameList.addListSelectionListener(this);
 		this.leftPanel.add(new JScrollPane(this.gameList), BorderLayout.CENTER);
 	}
 	
 	private void refreshPlayerList(int index) {
+		// if there's a list, remove that one
+		if (this.playerList != null)
+			this.rightPanel.remove(this.playerList);
+		
 		if (this.sessions != null) {
 			String[] players = this.sessions[index].getParticipants();
 			this.playerList = new JList(players);
@@ -131,7 +144,6 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 			String[] fill = {""};
 			this.playerList = new JList(fill);
 		}
-		this.playerList.setSize(320, 400);
 		this.playerList.setEnabled(false);
 		this.rightPanel.add(new JScrollPane(this.playerList), BorderLayout.NORTH);
 	}
@@ -146,10 +158,13 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 			}
 		} else if (e.getSource() == this.refreshButton) {
 			try {
+				this.sessions = this.manager.currentGames();
 				this.refreshGameList();
 			} catch (Exception e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
 			}
+		} else if (e.getSource() == this.createButton) {
+			parent.setCurrentPanel(new CreateGamePanel(parent, manager));
 		}
 	}
 
