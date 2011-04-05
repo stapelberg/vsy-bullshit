@@ -141,7 +141,7 @@ Thorsten Töpper
 % [fragile] braucht man, wenn man \verb oder \verbatim auf der Folie verwendet!
 \frametitle{Agenda}
 \begin{itemize}
-\item Grundlagen
+\item Architektur \& Kommunikationskonzept
 \item Server
 \item Qt-Client
 \item Java-Client
@@ -150,51 +150,147 @@ Thorsten Töpper
 \end{itemize}
 \end{frame}
 
-\section{Grundlagen}
+\section{Architektur}
 
 \subsection{Architektur}
 \begin{frame}[fragile]
 \frametitle{Architektur}
+\begin{center}
+\includegraphics[height=4cm]{bingoclientserver.png}
+\end{center}
+\begin{itemize}
+\item Klassisches Client/Server-Modell
+\item Leicht zu implementieren
+\item Im Bingo-Kontext sinniger als z.B. Peer-2-Peer
+\end{itemize}
 \end{frame}
 
-\subsection{HTTP \& JSON}
 \begin{frame}[fragile]
-\frametitle{HTTP \& JSON}
+\frametitle{Spiel-Architektur, Persistenz}
+\begin{itemize}
+\item Jeder Spieler erhält ein "'Token"'
+\begin{itemize}
+\item Eine eindeutige ID
+\item Wird beim ersten Login zum Nick gemappt
+\item Verfällt nach 24 Stunden
+\end{itemize}
+\item Spieler kann nur an einem Spiel gleichzeitig teilnehmen
+\end{itemize}
+\end{frame}
+
+
+\subsection{Kommunikation: HTTP \& JSON}
+\begin{frame}[fragile]
+\frametitle{Kommunikation: HTTP \& JSON}
+\begin{itemize}
+\item Protokoll: HTTP
+\begin{itemize}
+\item ASCII - leicht zu parsen
+\item Implementierungen für (fast) jede Programmiersprache
+\item Load-Balancing/Proxies möglich
+\end{itemize}
+\item Serialisierung: JSON
+\begin{itemize}
+\item JavaScript Object Notation
+\item Leichtgewichtiger, textbasierter Datenaustausch
+\item Eingebaute Datenstrukturen, u.a. Arrays, HashMaps, Strings, ...
+\item Selbstdefiniertes Bingo-Protokoll: \\
+\includegraphics[height=2cm]{protocol.png}
+\end{itemize}
+\end{itemize}
 \end{frame}
 
 \section{Server}
 
 \subsection{Perl}
 \begin{frame}[fragile]
-\frametitle{Architektur}
+\frametitle{Server}
+\begin{itemize}
+\item Geschrieben in Perl
+\item Test-Driven Development
+\item Verwendete Module:
+\begin{itemize}
+\item Moose (Objektsystem für OOP)
+\item Tatsumaki (Asynchrones Web-Framework)
+\item JSON::XS (JSON En-/Decode)
+\item Test::More (Test-Framework)
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Clients}
+
+\subsection{Qt-Client}
+\begin{frame}[fragile]
+\frametitle{Qt-Client - Eingesetzte Software}
+\begin{itemize}
+\item Qt
+\begin{itemize}
+\item GUI-Bibliothek für C++
+\item Für alle gängigen Plattformen verfügbar
+\item Viele Zusatzbibliotheken (z.B. QNetwork)
+\end{itemize}
+\item CMake
+\begin{itemize}
+\item = "'Cross-Platform Make"'
+\item Eine Art Meta-Makefile
+\item Ein Makefile für alle Plattformen
+\end{itemize}
+\item QJson
+\begin{itemize}
+\item JSON-Erweiterung für Qt
+\item Serialisiert Klassen in Request-Daten
+\item Liefert Antworten als abstrakten \texttt{QVariant} Datentypen
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Qt-Client - Architektur}
 
 \end{frame}
 
-\section{Qt-Client}
-
-\subsection{C++}
 \begin{frame}[fragile]
-\frametitle{C++}
+\frametitle{Qt-Client - Demo}
+Live demo?
 \end{frame}
 
-\section{Java-Client}
-
-\subsection{Java \& JSON}
+\subsection{Java-Client}
 \begin{frame}[fragile]
-\frametitle{Architektur}
+\frametitle{Java-Client}
+\begin{itemize}
+\item GUI in Swing
+\item JSON.org Java Implementierung
+\item POST/GET via HTTPClient-Bibliothek der Apache Foundation
+\end{itemize}
 \end{frame}
 
-\section{Android-Client}
+\subsection{Android-Client}
 
-\subsection{Mirah}
 \begin{frame}[fragile]
-\frametitle{Mirah}
+\frametitle{Android-Client}
+\begin{itemize}
+\item Geschrieben in Mirah
+\end{itemize}
 \end{frame}
 
-\section{AJAX-Client}
-\subsection{JQuery}
 \begin{frame}[fragile]
-\frametitle{JQuery}
+\frametitle{Android-Client - Großes Geheimnis}
+\begin{itemize}
+\item Lüften des großen Geheimnisses
+\end{itemize}
+\end{frame}
+
+\subsection{AJAX-Client}
+
+\begin{frame}[fragile]
+\frametitle{AJAX-basierte Web-Andwendung}
+\begin{itemize}
+\item Variante Nummer 4 :)
+\item Basierend auf jQuery
+\item JSON-Support durch jQuery gegeben
+\item bbq-Plugin für Zustände (Token/Spiel-ID)
+\end{itemize}
 \end{frame}
 
 \end{document}
