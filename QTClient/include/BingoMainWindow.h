@@ -101,11 +101,16 @@ namespace Bingo {
 		Network* getNetwork() {
 			return network;
 		}
-public slots:
 
 	protected:
 		void closeEvent(QCloseEvent *event);
 		void resizeEvent(QResizeEvent * evt);
+
+	private slots:
+		void menuExit();
+		void menuAbout();
+		void menuWebsite();
+		void menuDropToken();
 
 	private:
 		Ui::BingoMainUI ui;

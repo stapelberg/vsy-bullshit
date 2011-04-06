@@ -24,8 +24,8 @@ namespace Bingo {
 			playerListUpdate->setInterval(5000);
 			playerListUpdate->stop();
 
-			// Check for Game status every 500 ms
-			gameTimer->setInterval(500);
+			// Check for Game status every 1000 ms
+			gameTimer->setInterval(1000);
 			gameTimer->stop();
 
 			connect(playerListUpdate,SIGNAL(timeout()),this,SLOT(updatePlayerList()));

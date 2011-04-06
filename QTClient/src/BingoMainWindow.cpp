@@ -41,6 +41,11 @@ namespace Bingo {
 	}
 	// -------------------------------------------------------------------------
 	void BingoMainWindow::setupApplication() {
+		connect(ui.action_Quit, SIGNAL(triggered()), this, SLOT(menuQuit()));
+		connect(ui.actionProject_Website, SIGNAL(triggered()), this, SLOT(menuWebsite()));
+		connect(ui.actionDrop_Token, SIGNAL(triggered()), this, SLOT(menuDropToken()));
+		connect(ui.actionAbout, SIGNAL(triggered()), this, SLOT(menuAbout()));
+
 
 		ui.indicator->setMovie(indicator);
 		indicator->start();
@@ -214,5 +219,31 @@ namespace Bingo {
 	void BingoMainWindow::closeEvent(QCloseEvent *event) {
 		// We can catch the event here to annoy the user, asking
 		// if he really wants to quit.
+	}
+
+	// -------------------------------------------------------------------------
+	void BingoMainWindow::menuExit() {
+		qApp->exit(EXIT_SUCCESS);
+	}
+
+	// -------------------------------------------------------------------------
+	void BingoMainWindow::menuAbout(){
+		QMessageBox::aboutQt(this);
+	}
+	
+	// -------------------------------------------------------------------------
+	void BingoMainWindow::menuWebsite() {
+		QDesktopServices::openUrl(QUrl("http://www.github.com/mstap/vsy-bullshit"));
+	}
+
+	// -------------------------------------------------------------------------
+	void BingoMainWindow::menuDropToken() {
+		int ret = QMessageBox::question(this,tr("Bingo"),
+			tr("Drop Token <%1> locally?\nYour username will be unavailable to anyone until the token expires (24h).").arg(playerToken),
+			QMessageBox::Yes, QMessageBox::No);
+		if(ret == QMessageBox::Yes) {
+			this->playerToken.clear();
+			this->setActiveWidget(WIDGET_CONNECTION);
+		}
 	}
 }
