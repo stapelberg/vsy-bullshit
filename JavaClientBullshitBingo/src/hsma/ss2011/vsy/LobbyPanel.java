@@ -36,6 +36,7 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 		this.setVisible(false);
 		this.manager = manager;
 		this.parent = parent;
+		
 		try {
 			this.sessions = this.manager.currentGames();
 		} catch (JSONException e) {
@@ -45,6 +46,7 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 					"Fehler", JOptionPane.ERROR_MESSAGE);
 		}
 
+		this.setSize(320, 350);
 		this.setLayout(new BorderLayout(10, 3));
 		
 		this.drawLeftPanel();
@@ -96,6 +98,7 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 		
 		String[] fill = {""};
 		this.playerList = new JList(fill);
+		this.playerList.setSize(150, 300);
 		
 		this.joinButton = new JButton("Spiel beitreten");
 		this.joinButton.addActionListener(this);
@@ -129,6 +132,7 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 		}
 		
 		this.gameList.addListSelectionListener(this);
+		this.gameList.setSize(150, 300);
 		this.leftPanel.add(new JScrollPane(this.gameList), BorderLayout.CENTER);
 	}
 	
@@ -144,6 +148,7 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 			String[] fill = {""};
 			this.playerList = new JList(fill);
 		}
+		this.playerList.setSize(150, 300);
 		this.playerList.setEnabled(false);
 		this.rightPanel.add(new JScrollPane(this.playerList), BorderLayout.NORTH);
 	}
@@ -154,7 +159,8 @@ public class LobbyPanel extends JPanel implements ActionListener, ListSelectionL
 			try {
 				this.parent.setCurrentPanel(new GamePanel(this.parent, this.manager));
 			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(null, e1.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "LobbyPanel - kann Spiel nicht beitreten: "
+						+ e1.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (e.getSource() == this.refreshButton) {
 			try {

@@ -72,7 +72,8 @@ public class LoginPanel extends JPanel implements ActionListener {
 				manager.registerPlayer();
 				this.parent.setCurrentPanel(new LobbyPanel(manager, this.parent));
 			} catch (Exception error_1) { // we just want to show the error
-				JOptionPane.showMessageDialog(null, error_1.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Login nicht möglich: Fehlerhafte Angaben."
+						+ error_1.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 			} catch (Throwable e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();

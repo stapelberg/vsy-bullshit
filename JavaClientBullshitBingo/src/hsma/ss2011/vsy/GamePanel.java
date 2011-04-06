@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		throws ClientProtocolException, IOException, JSONException {
 		this.manager = manager;
 		this.parent = parent;
-
+		
 		this.setLayout(new BorderLayout());
 		this.manager.joinGame(this.manager.getGameID());
 		
@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		String[] words = this.manager.getBuzzwords();
 		
 		for (int i=0; i<words.length; i++) {
-			fieldPanel.add(new BullshitButton(manager, words[i], i));
+			fieldPanel.add(new BullshitButton(this, manager, words[i], i));
 		}
 		this.add(fieldPanel, BorderLayout.WEST);
 	}
@@ -66,10 +66,21 @@ public class GamePanel extends JPanel implements ActionListener {
 	 * 
 	 * @param playerList
 	 */
-	public void renewPlayerList(JList playerList) {
-		this.infoPanel.remove(this.playerList);
-		this.playerList = playerList;
-		this.infoPanel.add(this.playerList, BorderLayout.CENTER);
+	public void renewPlayerList(String winner) {
+		if (winner != null) {
+			// someone won the game so finish it
+			JOptionPane.showMessageDialog(null, "Spieler " + winner + " hat gewonnen!",
+					"Sieger!", JOptionPane.INFORMATION_MESSAGE);
+			this.parent.setCurrentPanel(new LobbyPanel(manager, parent));
+		} else {
+			this.infoPanel.remove(this.playerList);
+			try {
+				this.playerList = new JList(this.manager.getPlayers(manager.getGameID()));
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "Aktualisierung der Spielerliste schlug fehl(GamePanel)", "Fehler" , JOptionPane.ERROR_MESSAGE);
+			}
+			this.infoPanel.add(this.playerList, BorderLayout.CENTER);
+		}
 	}
 	
 	@Override
@@ -84,4 +95,7 @@ public class GamePanel extends JPanel implements ActionListener {
 		}
 	}
 	
+	public GameManagement getManager() {
+		return this.manager;
+	}
 }

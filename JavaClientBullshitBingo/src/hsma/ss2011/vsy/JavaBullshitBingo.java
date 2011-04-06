@@ -40,7 +40,6 @@ public class JavaBullshitBingo extends JFrame {
 		this.currentPanel = panel;
 		this.add(this.currentPanel, BorderLayout.CENTER);
 		this.currentPanel.setVisible(true);
-		
 		this.pack(); // repack the Frame to get the correct size.
 	}
 	

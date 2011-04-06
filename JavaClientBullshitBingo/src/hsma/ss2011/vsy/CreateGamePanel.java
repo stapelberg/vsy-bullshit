@@ -27,7 +27,7 @@ public class CreateGamePanel extends JPanel implements ActionListener {
 	public CreateGamePanel(JavaBullshitBingo parent, GameManagement manager) {
 		this.parent = parent;
 		this.manager = manager;
-		
+
 		this.setLayout(new GridLayout(4,2));
 		
 		// first row: name
@@ -72,8 +72,8 @@ public class CreateGamePanel extends JPanel implements ActionListener {
 				int size = Integer.parseInt(this.sizeBox.getSelectedItem().toString());
 				
 				this.manager.createGame(this.nameField.getText(), size, wordlist);
-				this.manager.joinGame(this.manager.getGameID()); // dbg
 				this.parent.setCurrentPanel(new GamePanel(parent, manager));
+				
 			} catch (ClientProtocolException error) {
 				JOptionPane.showMessageDialog(null, error.getMessage(), "Fehler", JOptionPane.ERROR_MESSAGE);
 			} catch (IOException error) {
@@ -81,6 +81,7 @@ public class CreateGamePanel extends JPanel implements ActionListener {
 			} catch (JSONException error) {
 				JOptionPane.showMessageDialog(null, this.manager.getError(), "Fehler", JOptionPane.ERROR_MESSAGE);
 			}
+			
 		} else if ( e.getSource() == this.cancelButton) {
 			this.parent.setCurrentPanel(new LobbyPanel(manager, parent));
 		}
