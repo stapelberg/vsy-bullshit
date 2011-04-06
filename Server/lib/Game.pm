@@ -199,7 +199,14 @@ Removes the given L<Player> from this game.
 sub del_player {
     my ($self, $player) = @_;
 
+    my $winner = $self->winner;
+
     $self->_participants([ grep { $_->player ne $player } @{$self->_participants} ]);
+
+    # The winner has left the game, so remove it from the games list
+    if ($winner eq $player) {
+        Games->instance->del_game($self);
+    }
 }
 
 =head2 make_move($player, $field)

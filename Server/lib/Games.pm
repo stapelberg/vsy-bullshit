@@ -7,12 +7,13 @@ use MooseX::Singleton;
 
 has '_games' => (
     traits => ['Array'],
-    is => 'ro',
+    is => 'rw',
     isa => 'ArrayRef',
     default => sub { [] },
     handles => {
         games => 'elements',
         add_game => 'push',
+        filter => 'grep',
     }
 );
 
@@ -21,6 +22,14 @@ sub by_id {
 
     my @matches = grep { $_->id eq $id } $self->games;
     return (@matches > 0 ? $matches[0] : undef);
+}
+
+sub del_game {
+    my ($self, $game) = @_;
+
+    my $id = $game->id;
+
+    $self->_games([ $self->filter(sub { $_->id ne $id }) ]);
 }
 
 __PACKAGE__->meta->make_immutable;
