@@ -49,7 +49,7 @@ public class CreateGamePanel extends JPanel implements ActionListener {
 		this.add(this.wordlistBox);
 		
 		// third row: size:
-		String[] possibleFieldSize = {"3", "4", "5"};
+		String[] possibleFieldSize = {"3", "4", "5", "6"};
 		this.sizeBox = new JComboBox(possibleFieldSize);
 		this.add(new JLabel("Größe:"));
 		this.add(this.sizeBox);
