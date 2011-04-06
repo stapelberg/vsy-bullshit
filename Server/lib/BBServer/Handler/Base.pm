@@ -24,14 +24,16 @@ sub get {
     my ($self) = @_;
 
     my $result;
+    my $json;
     try {
         $result = $self->handle_request;
+        $json = encode_json($result);
     } catch {
         $result = $self->error('Error in handler: ' . $_);
     };
 
     $self->response->content_type('application/json');
-    $self->write(encode_json($result));
+    $self->write($json);
     $self->finish;
 }
 
