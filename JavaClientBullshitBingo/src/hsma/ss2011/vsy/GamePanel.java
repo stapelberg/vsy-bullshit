@@ -53,33 +53,37 @@ public class GamePanel extends JPanel implements ActionListener {
 	private void drawInformationPanel() {
 		this.infoPanel = new JPanel(new BorderLayout());
 		
-		this.playerList = new JList();
 		this.leaveButton = new JButton("Spiel verlassen");
 		this.leaveButton.addActionListener(this);
 		
-		this.infoPanel.add(this.playerList, BorderLayout.CENTER);
 		this.infoPanel.add(this.leaveButton, BorderLayout.SOUTH);
+		this.renewPlayerList(null);
 		this.add(this.infoPanel, BorderLayout.EAST);
 	}
 	
+	
 	/**
-	 * 
+	 * Refresh the list at the right side of the Panel
 	 * @param playerList
 	 */
-	public void renewPlayerList(String winner) {
+	private void renewPlayerList(String winner) {
 		if (winner != null) {
 			// someone won the game so finish it
 			JOptionPane.showMessageDialog(null, "Spieler " + winner + " hat gewonnen!",
 					"Sieger!", JOptionPane.INFORMATION_MESSAGE);
 			this.parent.setCurrentPanel(new LobbyPanel(manager, parent));
 		} else {
-			this.infoPanel.remove(this.playerList);
+			// we don't want a NPE
+			if (this.playerList != null)
+				this.infoPanel.remove(this.playerList);
+			
 			try {
 				this.playerList = new JList(this.manager.getPlayers(manager.getGameID()));
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "Aktualisierung der Spielerliste schlug fehl(GamePanel)", "Fehler" , JOptionPane.ERROR_MESSAGE);
 			}
 			this.infoPanel.add(this.playerList, BorderLayout.CENTER);
+			this.parent.pack();
 		}
 	}
 	
