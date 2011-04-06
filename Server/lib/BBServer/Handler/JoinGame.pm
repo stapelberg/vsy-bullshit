@@ -3,6 +3,7 @@ package BBServer::Handler::JoinGame;
 
 use strict;
 use parent qw(BBServer::Handler::Base);
+use List::Util qw(shuffle);
 use JSON::XS;
 use Data::Dumper;
 use Game;
@@ -26,7 +27,7 @@ sub handle_request {
     # if he wants to. (Makes reload handling in JavaScript easier)
     $game->add_player($player);
 
-    return { size => $game->size, words => $game->words };
+    return { size => $game->size, words => [ shuffle(@{$game->words}) ] };
 }
 
 1
