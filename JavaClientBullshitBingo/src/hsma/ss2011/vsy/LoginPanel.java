@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -66,13 +65,21 @@ public class LoginPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == this.connect) {
+			// An vergessenen Nickname erinnern
+			if (this.nick.getText().hashCode() == "".hashCode()) {
+				JOptionPane.showMessageDialog(null, "Nickname nicht vergessen!",
+						"Erinnerung", JOptionPane.INFORMATION_MESSAGE);
+				return;
+			}
+			
+			// Login - Exceptions sagen, was nicht passt.
 			try {
 				GameManagement manager = new GameManagement(this.server.getText(),
 						Integer.parseInt(this.port.getText()), this.nick.getText());
 				manager.registerPlayer();
 				this.parent.setCurrentPanel(new LobbyPanel(manager, this.parent));
 			} catch (Exception error_1) { // we just want to show the error
-				JOptionPane.showMessageDialog(null, "Login nicht möglich: Fehlerhafte Angaben."
+				JOptionPane.showMessageDialog(null, "Login nicht möglich: Fehlerhafte Angaben.\n"
 						+ error_1.toString(), "Error", JOptionPane.ERROR_MESSAGE);
 			} catch (Throwable e2) {
 				// TODO Auto-generated catch block
