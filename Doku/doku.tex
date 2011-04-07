@@ -168,6 +168,9 @@ Um JSON-Daten vom Server auszuwerten, müssen wir jedoch auf Drittsoftware
 zurückgreifen und benutzen die bewährte QJson\footnote{\url{http://qjson.sourceforge.net/}}-Bibliothek.
 \np
 \subsection{Architektur}
+Die Architektur des Qt-Clients
+
+\subsubsection{Grundidee}
 Grob umrissen wird folgendes Kommunikationskonzept eingesetzt:
 
 \begin{itemize}
@@ -176,9 +179,20 @@ Grob umrissen wird folgendes Kommunikationskonzept eingesetzt:
 \end{itemize}
 
 Dabei wird stark auf Qt-spezifische Features zurückgegriffen, unter anderem Q\_Properties, die mithilfe des MOC\footnote{Meta Object Compiler} in einfach serialisierbare Klassen übersetzt werden können, sowie das QVariant-Konstrukt als Container für beliebige Nutzdaten.   
+
+
+\subsubsection{Programm-Architektur}
+\begin{center}
+\includegraphics[height=10cm]{qt-klassendiagramm.png}
+\end{center}
 \np
 
-% TODO: Noch mehr über den qt-client, Klassendiagramme usw.
+Das Herzstück bildet das \textbf{BingoMainWindow}\footnote{Erweitert QMainWindow, stell also ein Applikations-Hauptfenster mit Menü, Statusleiste und Fensterdekoration dar.}, durch welches die gesamte Benutzerinteraktion handhabt und den Widgets erlaubt, Netzwerkzugriffe abzusetzen.\np
+
+Des Weiteren wird eine Art Observer-Pattern eingesetzt: Jedes \textbf{Widget} ist automatisch Listener
+für Netzwerk-Antworten, welche die Netzwerkkomponente empfängt - das zurzeit aktive (= für den Benutzer sichtbare) erhält die Daten.\np
+
+Die \textbf{Network}-Klasse ist mehr oder minder ein Wrapper einiger QNetwork-Funktionen, um Objekte vom Typ JSONRequest anhand ihrer Properties\footnote{Siehe \url{http://doc.qt.nokia.com/latest/qobject.html\#Q_PROPERTY}} in valides JSON zu serialisieren, daraus eine HTTP-Anfrage zu formen, diese asynchron abzusetzen und mithilfe eines Callbacks die Anwort zu erhalten und weiterzureichen.
 
 \clearpage
 \section{Java-Client}
