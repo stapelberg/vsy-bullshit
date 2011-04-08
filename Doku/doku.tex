@@ -340,9 +340,31 @@ Android-Plattform:
 	Gewinnermitteilung.
 \end{description}
 
-\subsection{Großes Geheimnis}
+\subsection{Voice Input}
 
-Hier folgt ein großes Geheimnis :-).
+Für das Erreichen aller Coolness-Punkte haben wir Spracheingabe implementiert.
+Die Android-API für Spracheingabe zeichnet Ton auf (sie erkennt anhand der
+Lautstärke wann der Benutzer anfängt und aufhört zu sprechen) und schickt
+diesen an Google-Server. Nachdem diese den Sound ausgewertet haben, kriegt man
+eine Liste mit den möglichen Ergebnissen zurück.
+\np
+
+Diese Liste vergleichen wir nun mit dem derzeitigen Spielfeld mithilfe der
+Levenshtein-Distanz\footnote{\url{http://de.wikipedia.org/wiki/Levenshtein-Distanz}}.
+Diese gibt an, wieviele Modifikationen an Wort A erforderlich sind, damit man
+Wort B erhält. Sofern die Levenshtein-Distanz kleiner als die Hälfte der
+Wortlänge ist, gelten die Wörter bei uns als identisch. Damit erreichen wir
+eine verblüffend hohe Trefferrate, zumal die von Google zurückgelieferten
+Treffer in der großen Mehrheit der Fälle bereits exakt einem Wort zugeordnet
+werden kann.
+\np
+
+Die Nutzung der Spracheingabe erfolgt derzeit "`Wort für Wort"'. Das heißt, man
+startet die Spracheingabe, spricht sein Wort, das Programm wertet aus, man
+spricht das nächste Wort. Auch denkbar ist es, das Telefon einfach im Meeting
+mitlaufen zu lassen und ganze Sätze auszuwerten. Dazu müsste man allerdings die
+Wörter innerhalb der erkannten Sätze finden, beispielsweise mit dem
+Boyer-Moore-Algorithmus\footnote{\url{http://de.wikipedia.org/wiki/Boyer-Moore-Algorithmus}}.
 
 \clearpage
 \section{AJAX-Client}
