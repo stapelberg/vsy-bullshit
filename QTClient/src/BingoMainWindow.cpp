@@ -41,7 +41,7 @@ namespace Bingo {
 	}
 	// -------------------------------------------------------------------------
 	void BingoMainWindow::setupApplication() {
-		connect(ui.action_Quit, SIGNAL(triggered()), this, SLOT(menuQuit()));
+		connect(ui.action_Quit, SIGNAL(triggered()), this, SLOT(menuExit()));
 		connect(ui.actionProject_Website, SIGNAL(triggered()), this, SLOT(menuWebsite()));
 		connect(ui.actionDrop_Token, SIGNAL(triggered()), this, SLOT(menuDropToken()));
 		connect(ui.actionAbout, SIGNAL(triggered()), this, SLOT(menuAbout()));
