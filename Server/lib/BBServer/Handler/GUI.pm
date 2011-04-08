@@ -15,7 +15,7 @@ __PACKAGE__->asynchronous(1);
 sub get {
     my ($self, $query) = @_;
     
-    my $contents = io('AJAXGUI/' . $query)->slurp;
+    my $contents = io('AJAXGUI/' . $query)->utf8->slurp;
     $self->write($contents);
     $self->finish;
 }
