@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+<!-- GAME TITLE -->
+
+<TextView
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Game title:"
+/>
+<EditText
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cg_name"
+    android:text="Game Name"
+/>
+
+<!-- GAME SIZE -->
+
+<TextView
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Game size:"
+/>
+<EditText
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cg_size"
+    android:text="3"
+/>
+
+<!-- WORDLIST -->
+
+<TextView
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="Wordlist:"
+/>
+<Spinner
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cg_wordlist"
+    android:prompt="@string/cg_wordlist_prompt"
+/>
+
+<!-- CREATE BUTTON -->
+
+<Button
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:id="@+id/cg_createbtn"
+  android:text="Create Game"
+/>
+
+</LinearLayout>

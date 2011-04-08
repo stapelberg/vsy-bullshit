@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bullshitdroid</string>
+    <string name="word_id">Dummy word-ID</string>
+    <string name="cg_wordlist_prompt">Chose wordlist:</string>
+</resources>

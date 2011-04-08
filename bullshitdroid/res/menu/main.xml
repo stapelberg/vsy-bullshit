@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+  android:title="Create game"
+  android:alphabeticShortcut="c"
+  android:id="@+id/m_create"
+  android:icon="@android:drawable/ic_menu_share"
+/>
+
+<item
+  android:title="Preferences"
+  android:alphabeticShortcut="p"
+  android:id="@+id/m_prefs"
+  android:icon="@android:drawable/ic_menu_preferences"
+/>
+</menu>

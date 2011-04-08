@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This layout displays the current status of the voice recognition.
+  It is displayed when the voice recognition is enabled.
+-->
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+ >
+
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content"
+  android:id="@+id/vs_toplayout"
+ >
+<ImageView
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_alignParentLeft="true"
+  android:layout_alignParentTop="true"
+  android:paddingLeft="20dp"
+  android:paddingRight="20dp"
+  android:src="@drawable/mic_base"
+  android:id="@+id/vs_mic"
+/>
+
+<TextView
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:layout_toRightOf="@id/vs_mic"
+  android:layout_centerVertical="true"
+  android:text="Listening..."
+  android:textSize="20dp"
+  android:textStyle="bold"
+  android:id="@+id/vs_status"
+/>
+
+</RelativeLayout>
+
+<Button
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:layout_below="@id/vs_toplayout"
+   android:layout_centerHorizontal="true"
+   android:text="cancel voice input"
+   android:id="@+id/vs_cancel"
+ />
+
+</RelativeLayout>
