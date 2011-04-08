@@ -12,6 +12,7 @@
 \usepackage{tabularx}
 \usepackage{ragged2e}
 \usepackage{eurosym}
+\usepackage{listings}
 \selectlanguage{german}
 
 %\definecolor{lightblue}{rgb}{0.8,0.9,1.0}
@@ -168,13 +169,10 @@ Thorsten Töpper
 \begin{frame}[fragile]
 \frametitle{Spiel-Architektur, Persistenz}
 \begin{itemize}
-\item Jeder Spieler erhält ein "'Token"'
-\begin{itemize}
-\item Eine eindeutige ID
-\item Wird beim ersten Login zum Nick gemappt
-\item Verfällt nach 24 Stunden
-\end{itemize}
-\item BLAH BLAH
+\item Jeder Spieler erhält ein "`Token"' (24h gültig), jedes Spiel eine "`ID"'
+\item Wortlisten auf dem Server, werden pro Spiel und pro Spieler gemischt
+\item Spielzüge werden gespeichert und ausgewertet
+\item Clients holen sich wiederholt die Spielerliste und fragen nach Gewinner
 \end{itemize}
 \end{frame}
 
@@ -193,7 +191,7 @@ Thorsten Töpper
 \begin{itemize}
 \item JavaScript Object Notation
 \item Leichtgewichtiger, textbasierter Datenaustausch
-\item Eingebaute Datenstrukturen, u.a. Arrays, HashMaps, Strings, ...
+\item Elementare Datenstrukturen: Arrays, Hashes/Objects, Strings, ...
 \item Selbstdefiniertes Bingo-Protokoll: \\
 \includegraphics[height=2cm]{protocol.png}
 \end{itemize}
@@ -206,7 +204,7 @@ Thorsten Töpper
 \begin{frame}[fragile]
 \frametitle{Server}
 \begin{itemize}
-\item Geschrieben in Perl
+\item Geschrieben in modernem Perl, objekt-orientiert
 \item Test-Driven Development
 \item Verwendete Module:
 \begin{itemize}
@@ -216,6 +214,27 @@ Thorsten Töpper
 \item Test::More (Test-Framework)
 \end{itemize}
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Code-Beispiel (Server)}
+\begin{lstlisting}
+package Player;
+use Moose;
+use Digest::SHA1 qw(sha1_hex);
+
+has 'nickname' => (is => 'ro', isa => 'Str',
+                   required => 1);
+has 'token' => (is => 'ro', isa => 'Str',
+                builder => 'build_token');
+
+sub build_token {
+    my @random_values;
+    push @random_values, rand(255) for (1..10);
+    return sha1_hex(join('', @random_values));
+}
+1
+\end{lstlisting}
 \end{frame}
 
 \section{Clients}
@@ -240,7 +259,7 @@ Thorsten Töpper
 \begin{itemize}
 \item JSON-Erweiterung für Qt
 \item Serialisiert Klassen in Request-Daten
-\item Liefert Antworten als abstrakten \texttt{QVariant} Datentypen
+\item Liefert Antworten als abstrakten \texttt{QVariant} Datentyp
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -276,7 +295,24 @@ Thorsten Töpper
 \frametitle{Android-Client}
 \begin{itemize}
 \item Geschrieben in Mirah
+\item Ruby-ähnliche Sprache für die JVM
 \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Code-Beispiel}
+\begin{lstlisting}
+import android.preference.PreferenceActivity
+
+class Preferences < PreferenceActivity
+  def onCreate(saved:Bundle)
+    super(saved)
+
+    addPreferencesFromResource R.xml.preferences
+  end
+end
+\end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -295,6 +331,7 @@ Thorsten Töpper
 \item Basierend auf jQuery
 \item JSON-Support durch jQuery gegeben
 \item bbq-Plugin für Zustände (Token/Spiel-ID)
+\item Quick \& Dirty, mal schauen was so geht (in \textless{} 2 Stunden implementiert)
 \end{itemize}
 \end{frame}
 
